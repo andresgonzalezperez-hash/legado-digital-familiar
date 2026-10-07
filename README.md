@@ -8,29 +8,29 @@ Este proyecto es una plantilla de código abierto diseñada para ayudarte a orga
 
 ---
 
-## ⚙️ ¿Cómo funciona?
+## 🚀 Características Principales (v1.1.0)
 
-El sistema está diseñado bajo una arquitectura híbrida física/digital:
-1.  **Guía Visual Interactiva**: Un panel HTML local (`index.html`) que sirve como mapa de ruta para tus beneficiarios.
-2.  **Cero Dependencias en la Nube**: Las contraseñas se almacenan localmente con **KeePassXC** y los documentos se cifran con **Picocrypt** de forma totalmente desconectada de internet.
-3.  **Manual Físico**: Instrucciones preparadas para imprimirse en papel y guardarse en un sobre de seguridad con la clave maestra manuscrita.
-
----
-
-## 📂 Estructura del Proyecto
-
-*   **`PRE/`**: Entorno de desarrollo y pruebas. Se utiliza para validar cambios de diseño o nuevos módulos. Tiene desactivada la pantalla de bloqueo.
-*   **`PRO/`**: Entorno de producción estable y limpio para el uso real de la familia.
-*   **`TOOLS/`**: Carpeta destinada a alojar los ejecutables portables oficiales (como `Picocrypt.exe` o `KeePassXC.exe`), los cuales no se incluyen en este repositorio por seguridad.
+*   **Cifrado Local (Web Crypto API)**: Todo el inventario se cifra matemáticamente en tu navegador (AES-256-GCM y PBKDF2). Los datos nunca tocan internet.
+*   **PWA Offline**: Se instala como aplicación de escritorio independiente y funciona al 100% sin conexión a la red.
+*   **Modo Familiar (Solo Lectura)**: Interfaz simplificada a prueba de fallos para que los beneficiarios puedan leer la información sin riesgo a borrarla accidentalmente.
+*   **Exportación a PDF**: Generación automatizada de un "Documento Maestro" formal listo para imprimir y guardar en la caja fuerte.
+*   **Auditoría Anti-Degradación**: Cálculo de huellas criptográficas (Hash SHA-256) de los documentos físicos para garantizar que no han sido alterados con los años.
 
 ---
 
-## 🚀 Puesta en Marcha
+## 📁 Estructura del Proyecto
 
-Para iniciar el sistema en cualquier ordenador:
-1.  Introduce el USB de contingencia o abre la carpeta descargada localmente.
-2.  Haz doble clic en **`inicio.html`** (en la raíz de la carpeta) para abrir el cuadro de mando en tu navegador.
-3.  Utiliza la sección de **Ayuda!** ante cualquier contingencia de recuperación.
+*   **`APP/`**: Contiene el motor lógico, la interfaz de usuario dividida en módulos (`core/` y `modules/`), el Service Worker y las librerías offline.
+*   **`START/`**: Scripts de conveniencia (por ejemplo, utilidades de automatización).
+*   **`TOOLS/`**: Directorio pensado para alojar tus binarios de cifrado (Picocrypt, KeePassXC).
+
+---
+
+## ⚙️ Puesta en Marcha
+
+1.  Descarga este repositorio en tu equipo o USB de seguridad.
+2.  Haz doble clic en **`inicio.html`** (en la raíz) para abrir el cuadro de mando en tu navegador.
+3.  *(Opcional)*: Instala la aplicación (PWA) pulsando el icono de instalación en la barra de direcciones de Chrome o Edge.
 
 ---
 
