@@ -1,0 +1,32 @@
+# =========================================================================
+#             GITIGNORE - LEGADO DIGITAL FAMILIAR
+# =========================================================================
+
+# Bases de datos y llaves de cifrado
+*.kdbx
+*.pcv
+*.key
+*.cryptomator
+*.bkup
+*.c9r
+
+# Bóveda Documental (carpetas con PDFs reales de escrituras, seguros, etc.)
+**/BOVEDA_DOCUMENTAL/
+**/BOVEDA_DOCUMENTAL/**/*
+
+# Datos privados del usuario
+**/DATA/inventario.json
+**/DATA/checklist.json
+**/DATA/perfiles.json
+**/DATA/config.local.json
+
+# Archivos del sistema operativo y basura
+Thumbs.db
+Desktop.ini
+.DS_Store
+.directory
+
+# Carpetas de caché, tareas del asistente e información del sistema
+.system_generated/
+scratch/
+*.log

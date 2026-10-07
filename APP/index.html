@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[PRE] Legado Digital Familiar - Dashboard</title>
+    <link rel="stylesheet" href="index.css?v=6">
+</head>
+<body>
+    <!-- GLOWING BACKGROUND NODES (AviFly Style) -->
+    <div class="bg-glow-node blue"></div>
+    <div class="bg-glow-node purple"></div>
+
+    <!-- LANDING OVERLAY (SELECT MODE) -->
+    <div id="landing-overlay" class="landing-overlay">
+        <div class="landing-card">
+            <div class="landing-header">
+                <div class="logo-icon-large">L</div>
+                <h2>Legado Digital</h2>
+                <p>Selecciona una opción para continuar</p>
+            </div>
+            
+            <div class="landing-options" id="landing-options-step">
+                <button class="landing-option-btn actualizar" onclick="selectLandingMode('actualizar')">
+                    <span class="option-title" style="color: var(--primary);">Soy el Titular</span>
+                    <span class="option-desc">Configuración, edición de inventario, checklists y administración general del sistema.</span>
+                </button>
+                <button class="landing-option-btn recuperar" onclick="selectLandingMode('recuperar')">
+                    <span class="option-title" style="color: #ef4444;">Soy un Familiar</span>
+                    <span class="option-desc">Acceso rápido familiar en caso de emergencia. Muestra instrucciones paso a paso detalladas y visor de activos.</span>
+                </button>
+            </div>
+            
+            <!-- Password Form Step -->
+            <div class="landing-password-step" id="landing-password-step" style="display: none;">
+                <button class="back-btn" onclick="goBackToLandingOptions()">← Volver</button>
+                <h3 id="password-step-title">Introduce la Clave Maestra</h3>
+                <p class="password-step-subtitle" id="password-step-subtitle">Introduce la clave para acceder al protocolo.</p>
+                
+                <form onsubmit="submitMasterPassword(event)">
+                    <div style="position: relative; display: flex; align-items: center;">
+                        <input type="password" id="master-password-input" placeholder="Clave Maestra" required autocomplete="current-password" style="padding-right: 2.75rem;">
+                        <button type="button" onclick="togglePasswordVisibility('master-password-input')" style="position: absolute; right: 12px; background: none; border: none; font-size: 1.1rem; cursor: pointer; padding: 0; outline: none; user-select: none;">👁️</button>
+                    </div>
+                    <div id="password-error-msg" class="password-error-msg" style="display: none; margin-top: 0.5rem;">Clave incorrecta. Inténtalo de nuevo.</div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1.25rem;">Validar y Entrar</button>
+                </form>
+                
+                <!-- Sugerencias de Seguridad / Clave Maestra -->
+                <div style="margin-top: 1.5rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 1rem; border-radius: 8px; font-size: 0.8rem; text-align: left;">
+                    <strong style="color: var(--accent-orange); display: block; margin-bottom: 0.5rem; font-size: 0.85rem;">🔑 Nota sobre la Clave de Acceso</strong>
+                    <p style="color: var(--text-muted); line-height: 1.5; margin-bottom: 0.75rem;">
+                        Esta contraseña fue configurada por el usuario en el primer arranque. Si deseas definir una nueva clave o empezar de cero:
+                    </p>
+                    <button type="button" onclick="resetCredentialsAndSetup()" class="btn btn-secondary" style="width: 100%; font-size: 0.8rem; padding: 0.5rem; margin-bottom: 0.75rem; border-color: rgba(239, 68, 68, 0.4); color: #fca5a5;">Restablecer Contraseñas y Empezar de Cero</button>
+                    <strong style="color: var(--primary); display: block; margin-bottom: 0.25rem; font-size: 0.85rem;">💡 Consejos para recordar</strong>
+                    <ul style="color: var(--text-muted); padding-left: 1.1rem; line-height: 1.5; display: flex; flex-direction: column; gap: 0.25rem; margin: 0;">
+                        <li>Deberías tener la clave apuntada a mano en tu <strong>Manual Maestro físico en papel</strong> (en el sobre de emergencia).</li>
+                        <li>Nunca guardes la clave maestra en un bloc de notas digital sin cifrar.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Setup Form Step (First Run) -->
+            <div class="landing-password-step" id="landing-setup-step" style="display: none;">
+                <h3 style="color: var(--accent-orange); margin-bottom: 0.5rem;">🔑 Configuración Inicial del Legado</h3>
+                <p class="password-step-subtitle" style="margin-bottom: 1.5rem;">Crea las contraseñas locales para proteger tu información familiar en este navegador. No se enviarán a ningún servidor.</p>
+                
+                <form onsubmit="setupMasterPasswords(event)">
+                    <div class="form-group" style="margin-bottom: 1.25rem; text-align: left;">
+                        <label for="setup-pass-actualizar" style="color: #a78bfa; font-size: 0.85rem; display: block; margin-bottom: 0.15rem; font-weight: 600;">Contraseña Maestra (Modo Edición)</label>
+                        <small style="color: var(--text-muted); display: block; margin-bottom: 0.5rem; font-size: 0.75rem; line-height: 1.4;">Esta clave la usarás tú en el día a día para administrar las cuentas, checklists y editar los datos del sistema.</small>
+                        <div style="position: relative; display: flex; align-items: center;">
+                            <input type="password" id="setup-pass-actualizar" placeholder="Mínimo 8 caracteres" required minlength="8" style="padding-right: 2.75rem;">
+                            <button type="button" onclick="togglePasswordVisibility('setup-pass-actualizar')" style="position: absolute; right: 12px; background: none; border: none; font-size: 1.1rem; cursor: pointer; padding: 0; outline: none; user-select: none;">👁️</button>
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 1.5rem; text-align: left;">
+                        <label for="setup-pass-recuperar" style="color: #60a5fa; font-size: 0.85rem; display: block; margin-bottom: 0.15rem; font-weight: 600;">Contraseña Familiar (Modo Lectura)</label>
+                        <small style="color: var(--text-muted); display: block; margin-bottom: 0.5rem; font-size: 0.75rem; line-height: 1.4;">Esta clave la usarán tus familiares en caso de emergencia para ver la guía de recuperación y el inventario sin riesgo de borrar nada.</small>
+                        <div style="position: relative; display: flex; align-items: center;">
+                            <input type="password" id="setup-pass-recuperar" placeholder="Mínimo 8 caracteres" required minlength="8" style="padding-right: 2.75rem;">
+                            <button type="button" onclick="togglePasswordVisibility('setup-pass-recuperar')" style="position: absolute; right: 12px; background: none; border: none; font-size: 1.1rem; cursor: pointer; padding: 0; outline: none; user-select: none;">👁️</button>
+                        </div>
+                    </div>
+                    <div id="setup-error-msg" class="password-error-msg" style="display: none; margin-bottom: 1rem;">Las contraseñas no cumplen con los requisitos.</div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.75rem;">Guardar y Bloquear Sistema</button>
+                </form>
+
+                <!-- Recomendaciones -->
+                <div style="margin-top: 1.5rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 1rem; border-radius: 8px; font-size: 0.8rem; text-align: left;">
+                    <strong style="color: var(--primary); display: block; margin-bottom: 0.25rem; font-size: 0.85rem;">💡 Consejos para una contraseña robusta</strong>
+                    <ul style="color: var(--text-muted); padding-left: 1.1rem; line-height: 1.5; display: flex; flex-direction: column; gap: 0.25rem; margin: 0;">
+                        <li>Usa la técnica de <strong>Frase de Contraseñas</strong>: junta 4 palabras aleatorias fáciles de recordar para ti pero difíciles de adivinar (ej: <code>avion-rojo-guitarra-llave</code>).</li>
+                        <li>Evita fechas de cumpleaños, nombres de mascotas o datos personales fáciles de encontrar en redes sociales.</li>
+                        <li>Escríbela de forma manuscrita en tu <strong>Manual Maestro físico en papel</strong>. Nunca la dejes guardada en un bloc de notas digital sin cifrar.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- MOBILE OVERLAY -->
+    <div id="sidebar-overlay" class="sidebar-overlay" onclick="toggleMobileMenu()"></div>
+
+    <!-- MOBILE HEADER -->
+    <div class="mobile-header">
+        <div class="logo-container" style="margin-bottom: 0;">
+            <div class="logo-icon" style="width: 32px; height: 32px; font-size: 1rem;">L</div>
+            <div class="logo-text" style="font-size: 1.1rem;">Legado Familiar</div>
+        </div>
+        <button class="hamburger-btn" onclick="toggleMobileMenu()" aria-label="Abrir menú">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+    </div>
+
+    <!-- SIDEBAR -->
+    <aside id="main-sidebar">
+        <div class="logo-container">
+            <div class="logo-icon">L</div>
+            <div>
+                <div class="logo-text">Legado Familiar</div>
+                <div class="logo-subtitle">Protocolo de Emergencia</div>
+            </div>
+        </div>
+
+        <ul class="nav-links">
+            <li class="actualizar-only">
+                <a class="nav-item active" onclick="switchTab('dashboard')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+                    Dashboard
+                </a>
+            </li>
+            <li class="recuperar-only">
+                <a class="nav-item" onclick="switchTab('recuperar-guia')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    Guía de Recuperación
+                </a>
+            </li>
+            <li>
+                <a class="nav-item" onclick="switchTab('inventario')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+                    Inventario Cuentas
+                </a>
+            </li>
+            <li class="actualizar-only">
+                <a class="nav-item" onclick="switchTab('boveda')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    Bóveda Documental
+                </a>
+            </li>
+            <li class="actualizar-only">
+                <a class="nav-item" onclick="switchTab('checklist')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                    Checklist Operativo
+                </a>
+            </li>
+            <li>
+                <a class="nav-item" onclick="switchTab('maestro')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                    Documento Maestro
+                </a>
+            </li>
+            <li class="actualizar-only">
+                <a class="nav-item" onclick="switchTab('scripts')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                    Herramientas
+                </a>
+            </li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <ul class="nav-links" style="margin-bottom: 0.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem;">
+                <li>
+                    <a class="nav-item" onclick="switchTab('ayuda')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                        Ayuda!
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-item" onclick="switchTab('faqs')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                        Preguntas Frecuentes
+                    </a>
+                </li>
+            </ul>
+            <button class="btn btn-secondary" onclick="backToMainMenu()" style="width: 100%; font-size: 0.85rem; padding: 0.5rem; margin-top: 0.5rem; border-color: rgba(255,255,255,0.08); background: rgba(255,255,255,0.02); display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                Volver al Menú Principal
+            </button>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main>
+
+        <!-- RECUPERAR GUIA TAB -->
+        <section id="recuperar-guia" class="tab-content">
+            <header class="section-header">
+                <span class="badge-tag" style="background-color: rgba(239, 68, 68, 0.15); color: #f87171;">PROTOCOLO DE EMERGENCIA</span>
+                <h1>Guía de Recuperación del Legado</h1>
+                <p class="subtitle">Sigue estos pasos ordenadamente para acceder a las contraseñas, documentos y activos en caso de contingencia.</p>
+            </header>
+
+            <div class="grid-container">
+                <!-- Paso 1: El Sobre Físico -->
+                <div class="card" style="grid-column: span 12;">
+                    <div style="display: flex; gap: 1.25rem; align-items: flex-start;">
+                        <div style="background: rgba(239, 68, 68, 0.1); color: #f87171; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; flex-shrink: 0;">1</div>
+                        <div>
+                            <h3 class="card-title" style="margin-top: 0.25rem; font-size: 1.2rem;">Paso 1: Localizar el Sobre Físico</h3>
+                            <p style="color: var(--text-muted); line-height: 1.6; margin-top: 0.5rem;">
+                                Busca el <strong>Sobre de Emergencia de Papel</strong>. Este sobre está ubicado en el cajón del despacho o caja fuerte acordada (o la ubicación acordada con el cónyuge).
+                                <br><br>
+                                <strong>En el interior del sobre encontrarás:</strong>
+                            </p>
+                            <ul style="color: var(--text-muted); line-height: 1.6; padding-left: 1.25rem; margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.35rem;">
+                                <li>El <strong>Manual Maestro Impreso</strong> con las claves anotadas a mano.</li>
+                                <li>El <strong>USB de contingencia offline</strong>.</li>
+                                <li>El <strong>PIN y PUK de los teléfonos móviles</strong> de Andrés y Maeva (críticos para recibir códigos de doble factor SMS o Google Authenticator).</li>
+                                <li>Las claves de acceso de los correos electrónicos de recuperación principal de Gmail.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paso 2: Desbloquear los Dispositivos Móviles -->
+                <div class="card" style="grid-column: span 6;">
+                    <div style="display: flex; gap: 1rem; align-items: flex-start;">
+                        <div style="background: rgba(59, 130, 246, 0.1); color: var(--primary); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; font-weight: bold; flex-shrink: 0;">2</div>
+                        <div>
+                            <h3 class="card-title" style="margin-top: 0.15rem;">Paso 2: Acceso a Dispositivos</h3>
+                            <p style="color: var(--text-muted); line-height: 1.6; margin-top: 0.5rem; font-size: 0.95rem;">
+                                Enciende y desbloquea el móvil del titular (Andrés o Maeva). Usa el código de patrón o PIN anotado en el manual maestro del sobre.
+                                <br><br>
+                                <strong style="color: var(--text-main);">¿Por qué es necesario?</strong>
+                                <br>
+                                Muchos bancos, correos y gestores de contraseñas pedirán un código SMS o una app de 2FA (como Google Authenticator) instalada en el móvil para autorizar el inicio de sesión.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paso 3: Conectar el USB de Contingencia -->
+                <div class="card" style="grid-column: span 6;">
+                    <div style="display: flex; gap: 1rem; align-items: flex-start;">
+                        <div style="background: rgba(16, 185, 129, 0.1); color: var(--accent-emerald); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; font-weight: bold; flex-shrink: 0;">3</div>
+                        <div>
+                            <h3 class="card-title" style="margin-top: 0.15rem;">Paso 3: Acceder al Almacenamiento</h3>
+                            <p style="color: var(--text-muted); line-height: 1.6; margin-top: 0.5rem; font-size: 0.95rem;">
+                                Introduce el USB de contingencia en cualquier ordenador con Windows o macOS.
+                                <br><br>
+                                <strong style="color: var(--text-main);">Si el USB no está disponible:</strong>
+                                <br>
+                                Entra en la cuenta de Google Drive familiar descrita en el manual maestro (<code>correo.familiar@gmail.com</code>) y descarga la carpeta comprimida del legado digital a tu ordenador.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paso 4: Recuperación de Contraseñas (KeePassXC Offline) -->
+                <div class="card" style="grid-column: span 12;">
+                    <div style="display: flex; gap: 1.25rem; align-items: flex-start;">
+                        <div style="background: rgba(245, 158, 11, 0.1); color: var(--accent-orange); width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; flex-shrink: 0;">4</div>
+                        <div>
+                            <h3 class="card-title" style="margin-top: 0.25rem; font-size: 1.2rem;">Paso 4: Abrir el Gestor de Contraseñas Offline (KeePassXC)</h3>
+                            <p style="color: var(--text-muted); line-height: 1.6; margin-top: 0.5rem;">
+                                Para obtener contraseñas de bancos, seguros, correos, etc., de forma local y 100% sin internet:
+                            </p>
+                            <ol style="color: var(--text-muted); line-height: 1.6; padding-left: 1.25rem; margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.35rem;">
+                                <li>En el USB o carpeta descargada, entra a la carpeta <code>SOFTWARE_PORTABLE/KeePassXC</code>.</li>
+                                <li>Ejecuta el programa <strong>KeePassXC</strong> (no requiere instalación).</li>
+                                <li>Haz clic en "Abrir base de datos existente" y selecciona el archivo <code>legado_contraseñas.kdbx</code> ubicado en la raíz del USB o Drive.</li>
+                                <li>Introduce la <strong>Frase Maestra de Contraseñas</strong> anotada en tu manual maestro en papel.</li>
+                                <li>Tendrás acceso visual instantáneo a todos los nombres de usuario y contraseñas organizadas por categorías (Bancos, Seguros, Hogar).</li>
+                             </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paso 5: Desbloquear los Documentos Cifrados (Picocrypt) -->
+                <div class="card" style="grid-column: span 12;">
+                    <div style="display: flex; gap: 1.25rem; align-items: flex-start;">
+                        <div style="background: rgba(139, 92, 246, 0.1); color: var(--accent-indigo); width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; flex-shrink: 0;">5</div>
+                        <div style="flex-grow: 1;">
+                            <h3 class="card-title" style="margin-top: 0.25rem; font-size: 1.2rem;">Paso 5: Desbloquear la Bóveda de Documentos (Picocrypt)</h3>
+                            <p style="color: var(--text-muted); line-height: 1.6; margin-top: 0.5rem;">
+                                Para ver las escrituras, contratos de seguros, testamentos y PDFs de valor de forma offline usando <strong>Picocrypt</strong>:
+                            </p>
+                            
+                            <div style="margin-top: 1rem; background: rgba(16, 185, 129, 0.04); padding: 1.25rem; border-radius: 8px; border-left: 3px solid var(--accent-emerald);">
+                                <ol style="color: var(--text-muted); line-height: 1.6; padding-left: 1.25rem; margin: 0; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.95rem;">
+                                    <li>Ve a la carpeta <code>TOOLS/Picocrypt</code> en el USB o Google Drive.</li>
+                                    <li>Ejecuta el archivo <code>Picocrypt.exe</code> (es una herramienta portable, no requiere instalación).</li>
+                                    <li>Arrastra a la ventana de Picocrypt el archivo cifrado <code>.pcv</code> que desees abrir (ubicados en tu carpeta <code>BOVEDA_DOCUMENTAL</code>).</li>
+                                    <li>Introduce la <strong>Contraseña Maestra de Documentos</strong> que está anotada a mano en el sobre de seguridad.</li>
+                                    <li>Haz clic en el botón <strong>"Decrypt"</strong>. El archivo original descifrado aparecerá de inmediato en la misma carpeta.</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Paso 6: Consultar el Directorio de Activos -->
+                <div class="card" style="grid-column: span 12; background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.15);">
+                    <div style="display: flex; gap: 1.25rem; align-items: flex-start;">
+                        <div style="background: rgba(16, 185, 129, 0.1); color: var(--accent-emerald); width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; flex-shrink: 0;">6</div>
+                        <div>
+                            <h3 class="card-title" style="margin-top: 0.25rem; font-size: 1.2rem; color: var(--accent-emerald);">Paso 6: Consultar el Directorio de Activos</h3>
+                            <p style="color: var(--text-muted); line-height: 1.6; margin-top: 0.5rem;">
+                                En el menú lateral izquierdo, haz clic en la pestaña <strong>"Inventario Cuentas"</strong>.
+                                <br><br>
+                                Allí podrás ver una lista completa de todas las cuentas existentes (Bancos, Seguros, Suministros) registradas por el titular, qué usuario tienen asociado, dónde encontrar sus claves exactas y, lo más importante, <strong>qué acción urgente realizar en caso de fallecimiento o invalidez</strong> (ej. llamar a tal teléfono, reclamar indemnización, cancelar suscripción, etc.).
+                            </p>
+                            <div style="margin-top: 1rem; background: rgba(16, 185, 129, 0.08); border-left: 3px solid var(--accent-emerald); padding: 0.75rem; border-radius: 6px; font-size: 0.9rem;">
+                                <strong style="color: var(--accent-emerald);">Nota para equipos nuevos / contingencia:</strong> Al abrir esta web en otro ordenador (o si se borran los datos del navegador), el inventario se mostrará en blanco. Para restaurarlo, simplemente introduce las contraseñas para inicializar el acceso y usa el botón <strong>"Importar JSON"</strong> seleccionando tu archivo de copia de seguridad (.json) exportado previamente.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        
+        <!-- DASHBOARD TAB -->
+        <section id="dashboard" class="tab-content active">
+            <header class="section-header">
+                <span class="badge-tag">Resumen del Estado</span>
+                <h1>Panel de Legado Digital</h1>
+                <p class="subtitle">Estado actual de implementación de las capas de seguridad y copias físicas de emergencia.</p>
+            </header>
+
+            <div class="grid-container">
+                <!-- Capacidad Global -->
+                <div class="card progress-card" style="grid-column: span 12;">
+                    <div class="progress-header">
+                        <div>
+                            <h3 class="card-title" style="font-size: 1.4rem;">Progreso de Implementación</h3>
+                            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.2rem;">Porcentaje total de tareas iniciales completadas.</p>
+                        </div>
+                        <span class="percentage-text" id="global-progress-pct">0%</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" id="global-progress-bar"></div>
+                    </div>
+                </div>
+
+                <!-- Capa 1: Credenciales -->
+                <div class="card" style="grid-column: span 4;">
+                    <div class="card-header">
+                        <h4 class="card-title">Capa 1: Credenciales</h4>
+                        <span class="badge-2fa yes" style="background-color:rgba(16, 185, 129, 0.1); color:var(--accent-emerald);">Passbolt</span>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; margin-bottom: 1.25rem;">
+                        Gestor principal de contraseñas privado y compartido. Permite delegar accesos y organizar claves familiares (Netflix, bancos, seguros).
+                    </p>
+                    <div style="font-size: 0.8rem; color: var(--text-muted);">
+                        Estado: <strong style="color: white;" id="capa1-status">Configurando...</strong>
+                    </div>
+                </div>
+
+                <!-- Capa 2: Documentos -->
+                <div class="card" style="grid-column: span 4;">
+                    <div class="card-header">
+                        <h4 class="card-title">Capa 2: Documentos</h4>
+                        <span class="badge-2fa yes" style="background-color:rgba(99, 102, 241, 0.1); color:var(--accent-indigo); border-color:rgba(99, 102, 241, 0.2);">MiniPC Local</span>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; margin-bottom: 1.25rem;">
+                        Bóveda cifrada hospedada físicamente en tu MiniPC doméstico. Almacena testamentos, pólizas, escrituras y documentos personales bajo llave.
+                    </p>
+                    <div style="font-size: 0.8rem; color: var(--text-muted);">
+                        Estado: <strong style="color: white;" id="capa2-status">Configurando...</strong>
+                    </div>
+                </div>
+
+                <!-- Capa 3: Soportes -->
+                <div class="card" style="grid-column: span 4;">
+                    <div class="card-header">
+                        <h4 class="card-title">Capa 3: Soporte Físico</h4>
+                        <span class="badge-2fa yes" style="background-color:rgba(245, 158, 11, 0.1); color:var(--accent-orange); border-color:rgba(245, 158, 11, 0.2);">Sobre + USB + Drive</span>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; margin-bottom: 1.25rem;">
+                        Kit de Arranque en Frío: sobre impreso con claves móviles base, USB portable y respaldo cifrado espejo en Google Drive.
+                    </p>
+                    <div style="font-size: 0.8rem; color: var(--text-muted);">
+                        Estado: <strong style="color: white;" id="capa3-status">Configurando...</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fases Checklist Rápido -->
+            <div class="grid-container">
+                <div class="card" style="grid-column: span 8;">
+                    <div class="card-header">
+                        <h3 class="card-title">Estado de Fases de Trabajo</h3>
+                    </div>
+                    <div class="timeline" id="dashboard-timeline">
+                        <div class="timeline-item" id="timeline-fase1">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">Fase 1: Inventario Inicial <span class="timeline-badge" id="badge-fase1">Pendiente</span></div>
+                                <p style="color: var(--text-muted); font-size: 0.85rem;">Creación de la lista de activos digitales detallada (bancos, seguros, suscripciones, etc.).</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item" id="timeline-keepass">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">Fase 2 y 3: Configuración de Passbolt & Accesos <span class="timeline-badge" id="badge-keepass">Pendiente</span></div>
+                                <p style="color: var(--text-muted); font-size: 0.85rem;">Creación de cuenta, importación/ordenación de claves y configuración de la compartición familiar.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item" id="timeline-cryptomator">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">Fase 5: Bóveda Documental Cifrada (Picocrypt) <span class="timeline-badge" id="badge-cryptomator">Pendiente</span></div>
+                                <p style="color: var(--text-muted); font-size: 0.85rem;">Cifrado y organización de documentos sensibles en el MiniPC/USB mediante contenedores de Picocrypt.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item" id="timeline-google-antigravity">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">Fase 6: Inactividad ("Google Antigravity") <span class="timeline-badge" id="badge-antigravity">Pendiente</span></div>
+                                <p style="color: var(--text-muted); font-size: 0.85rem;">Configuración del gestor de inactividad de Google con las instrucciones de delegación familiar.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item" id="timeline-protocolo">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">Fase 7 y 8: Sobre Físico, USB y Espejo Drive <span class="timeline-badge" id="badge-protocolo">Pendiente</span></div>
+                                <p style="color: var(--text-muted); font-size: 0.85rem;">Impresión del manual maestro, preparación del USB de contingencia offline y sincronización en Google Drive.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="grid-column: span 4;">
+                    <div class="card-header">
+                        <h3 class="card-title">Resumen de Inventario</h3>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
+                            <span style="color: var(--text-muted);">Bancos y Brokers</span>
+                            <strong id="summary-bancos">0</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
+                            <span style="color: var(--text-muted);">Seguros y Salud</span>
+                            <strong id="summary-seguros">0</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
+                            <span style="color: var(--text-muted);">Suministros y Proveedores</span>
+                            <strong id="summary-proveedores">0</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
+                            <span style="color: var(--text-muted);">Dispositivos y Apps</span>
+                            <strong id="summary-apps">0</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
+                            <span style="color: var(--text-muted);">Cuentas Principales</span>
+                            <strong id="summary-principales">0</strong>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1.25rem;">
+                        <h4 style="font-size: 0.85rem; font-weight: 600; text-transform: uppercase; color: var(--primary-hover); margin-bottom: 0.25rem; letter-spacing: 0.05em;">Por Perfil</h4>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
+                            <span style="color: var(--text-muted);">Andrés</span>
+                            <strong id="summary-andres">0</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
+                            <span style="color: var(--text-muted);">Maeva</span>
+                            <strong id="summary-maeva">0</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
+                            <span style="color: var(--text-muted);">Compartidos</span>
+                            <strong id="summary-shared">0</strong>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-secondary" onclick="switchTab('inventario')" style="width: 100%; margin-top: 2rem;">Ver Inventario Completo</button>
+                    <button class="btn btn-primary" onclick="window.generateMasterPDF()" style="width: 100%; margin-top: 0.5rem; background-color: #b91c1c; border-color: #b91c1c; color: white;">Descargar PDF Notarial</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- BOVEDA TAB -->
+        <section id="boveda" class="tab-content">
+            <header class="section-header">
+                <span class="badge-tag" style="background-color:rgba(139, 92, 246, 0.1); color:var(--primary);">Cifrado Máximo</span>
+                <h1>Bóveda Documental en MiniPC</h1>
+                <p class="subtitle">Tus archivos personales (PDFs, testamentos, pólizas) residen cifrados en el MiniPC local y respaldados en la nube/USB.</p>
+            </header>
+
+            <div class="grid-container">
+                <div class="card" style="grid-column: span 12;">
+                    <h3 style="margin-top:0; color:var(--text-main);">Guía Paso a Paso para la Familia: Cómo acceder</h3>
+                    
+                    <div style="background: rgba(0, 113, 227, 0.04); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-left: 4px solid var(--primary);">
+                        <h4 style="margin: 0 0 0.5rem 0; color: var(--primary);">Paso 1: Conectar con el MiniPC (Local o Red)</h4>
+                        <p style="margin: 0 0 1rem 0; color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">
+                            Asegúrate de estar en la red de casa. Desde cualquier ordenador de casa, abre el explorador de archivos y entra a la red local buscando la dirección IP del MiniPC o la ruta: <code>\\minipc.local\legado</code> (Windows) o <code>smb://minipc.local/legado</code> (Mac).
+                        </p>
+                    </div>
+
+                    <div style="background: rgba(255, 149, 0, 0.04); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-left: 4px solid var(--accent-orange);">
+                        <h4 style="margin: 0 0 0.5rem 0; color: var(--accent-orange);">Paso 2: Ejecutar la herramienta de cifrado (Picocrypt)</h4>
+                        <p style="margin: 0 0 1rem 0; color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">
+                            Abre tu USB de contingencia o descarga tu backup de Drive. Entra en la carpeta <code>TOOLS/Picocrypt</code> y ejecuta <code>Picocrypt.exe</code> (es una utilidad portable, no requiere instalación).
+                        </p>
+                    </div>
+
+                    <div style="background: rgba(52, 199, 89, 0.04); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-left: 4px solid var(--accent-emerald);">
+                        <h4 style="margin: 0 0 0.5rem 0; color: var(--accent-emerald);">Paso 3: Desencriptar archivos</h4>
+                        <p style="margin: 0 0 1rem 0; color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">
+                            Arrastra el archivo cifrado <code>.pcv</code> (que se encuentra en tu carpeta <code>BOVEDA_DOCUMENTAL</code>) a la ventana de Picocrypt, introduce la <strong>Contraseña Maestra de Documentos</strong> y haz clic en <strong>"Decrypt"</strong>. El archivo original se descifrará y aparecerá al lado de inmediato.
+                        </p>
+                    </div>
+
+                    <div style="background: rgba(255, 59, 48, 0.04); padding: 1rem; border-radius: 8px; border-left: 4px solid var(--accent-red);">
+                        <h4 style="margin: 0 0 0.5rem 0; color: var(--accent-red);">Paso 4: Contingencia (Sin MiniPC / Servidor caído)</h4>
+                        <p style="margin: 0; color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">
+                            Si el MiniPC está apagado o roto, todas tus herramientas (KeePassXC, Picocrypt) son totalmente funcionales directamente desde el USB de emergencia o tu copia descargada de Google Drive. Tienes acceso inmediato offline.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card" style="grid-column: span 12; background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.2);">
+                    <h3 style="margin-top:0; color:var(--accent-emerald);">Aviso del Sistema: Guardado de Archivos</h3>
+                    <p style="color:var(--text-muted); line-height: 1.6; font-size: 0.95rem;">
+                        Esta página web <strong>no guarda archivos en claro directamente</strong> por seguridad. <br><br>
+                        Para archivar nuevos contratos, seguros o documentos de valor: cífrelos localmente en el USB o MiniPC usando Picocrypt (generando un archivo <code>.pcv</code>). Las copias de seguridad automáticas en la nube y el USB asegurarán su persistencia.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- INVENTARIO TAB -->
+        <section id="inventario" class="tab-content">
+            <header class="section-header">
+                <span class="badge-tag">Fase 1: Inventario</span>
+                <h1>Directorio de Activos y Cuentas</h1>
+                <p class="subtitle">Registra qué existe y dónde encontrar su acceso seguro (Passbolt o MiniPC). <strong>No guardes contraseñas reales aquí.</strong></p>
+            </header>
+
+            <div class="alert-box info">
+                <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                <div class="alert-content">
+                    <strong>Importante:</strong> Esta herramienta funciona enteramente en tu navegador. Tus datos se guardan de forma local en tu ordenador. Puedes exportar o importar tu directorio completo como un archivo JSON en cualquier momento mediante los botones de la derecha.
+                </div>
+            </div>
+
+            <div class="inventory-controls" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; gap: 1rem; flex-wrap: wrap;">
+                <div style="display:flex; gap: 0.5rem;">
+                    <button class="btn btn-primary" onclick="openAddModal()">+ Añadir Cuenta</button>
+                </div>
+                
+                <div style="flex: 1; min-width: 200px; position: relative;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; color: var(--text-muted);"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <input type="text" placeholder="Buscar en el inventario..." style="width: 100%; padding: 0.5rem 0.5rem 0.5rem 2.25rem; font-size: 0.95rem; border-radius: 8px; border: 1px solid var(--border-color);" onkeyup="renderInventory(this.value)">
+                </div>
+
+                <div style="display:flex; gap: 0.5rem;">
+                    <button class="btn btn-secondary" onclick="exportData()">Exportar JSON</button>
+                    <button class="btn btn-secondary" onclick="triggerImport()">Importar JSON</button>
+                    <input type="file" id="import-file-input" style="display:none;" onchange="handleImport(event)">
+                </div>
+            </div>
+
+            <div class="tab-headers" style="margin-bottom: 1.5rem;">
+                <button class="tab-btn active" id="btn-cat-all" onclick="filterCategory('all')">Todos</button>
+                <button class="tab-btn" id="btn-cat-principales" onclick="filterCategory('Principales')">Principales</button>
+                <button class="tab-btn" id="btn-cat-bancos" onclick="filterCategory('Bancos')">Bancos</button>
+                <button class="tab-btn" id="btn-cat-seguros" onclick="filterCategory('Seguros')">Seguros</button>
+                <button class="tab-btn" id="btn-cat-suministros" onclick="filterCategory('Suministros')">Suministros</button>
+                <button class="tab-btn" id="btn-cat-suscripciones" onclick="filterCategory('Suscripciones')">Suscripciones</button>
+                <button class="tab-btn" id="btn-cat-apps" onclick="filterCategory('Apps')">Apps</button>
+                <button class="tab-btn" id="btn-cat-otros" onclick="filterCategory('Otros')">Otros</button>
+            </div>
+
+            <div style="margin-bottom: 2rem; display: flex; gap: 0.5rem; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem;">
+                <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; margin-right: 0.5rem;">Filtrar Titular:</span>
+                <button class="tab-btn active" id="btn-holder-all" onclick="filterHolder('all')" style="font-size: 0.9rem; padding: 0.25rem 0.75rem;">Todos</button>
+                <button class="tab-btn" id="btn-holder-andres" onclick="filterHolder('Andrés')" style="font-size: 0.9rem; padding: 0.25rem 0.75rem;">Andrés</button>
+                <button class="tab-btn" id="btn-holder-maeva" onclick="filterHolder('Maeva')" style="font-size: 0.9rem; padding: 0.25rem 0.75rem;">Maeva</button>
+                <button class="tab-btn" id="btn-holder-shared" onclick="filterHolder('Compartido')" style="font-size: 0.9rem; padding: 0.25rem 0.75rem;">Compartidos</button>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Servicio / Nombre</th>
+                            <th>Categoría</th>
+                            <th>Titular</th>
+                            <th>Correo / Usuario</th>
+                            <th>2FA</th>
+                            <th>Ubicación Secreto</th>
+                            <th>Documento Físico</th>
+                            <th>Acción Emergencia</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inventory-table-body">
+                        <!-- Cargar entradas con JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- CHECKLIST TAB -->
+        <section id="checklist" class="tab-content">
+            <header class="section-header">
+                <span class="badge-tag">Puesta en Marcha</span>
+                <h1>Checklist de Implementación</h1>
+                <p class="subtitle">Hoja de ruta paso a paso para la configuración del legado digital de la familia.</p>
+            </header>
+
+            <div class="grid-container">
+                <!-- Semana 1 -->
+                <div class="card" style="grid-column: span 6;">
+                    <div class="card-header">
+                        <h3 class="card-title">Semana 1: Inventario Inicial y Passbolt</h3>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+                        <label class="checklist-item"><input type="checkbox" id="chk-s1-1" onchange="updateChecklist()"> <span class="checklist-text">Crear el inventario inicial de activos, bancos y seguros.</span></label>
+                        <label class="checklist-item"><input type="checkbox" id="chk-s1-2" onchange="updateChecklist()"> <span class="checklist-text">Configurar cuenta y extensión familiar en Passbolt.</span></label>
+                        <label class="checklist-item"><input type="checkbox" id="chk-s1-3" onchange="updateChecklist()"> <span class="checklist-text">Compartir contraseñas comunes (ej. Netflix, suministros) en Passbolt.</span></label>
+                        <label class="checklist-item"><input type="checkbox" id="chk-s1-4" onchange="updateChecklist()"> <span class="checklist-text">Exportar claves privadas de Passbolt (archivos .asc) y guardarlas en local.</span></label>
+                        <label class="checklist-item"><input type="checkbox" id="chk-s1-5" onchange="updateChecklist()"> <span class="checklist-text">Exportar un respaldo cifrado offline (Passbolt export / KeePassXC).</span></label>
+                        <label class="checklist-item"><input type="checkbox" id="chk-s1-6" onchange="updateChecklist()"> <span class="checklist-text">Borrar de forma segura los archivos temporales no cifrados.</span></label>
+                    </div>
+                </div>
+
+                <!-- Semana 2 -->
+                <div class="card" style="grid-column: span 6;">
+                    <div class="card-header">
+                        <h3 class="card-title">Semana 2: Servidor local (MiniPC) y Bóveda</h3>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+                        <label class="checklist-item"><input type="checkbox" id="chk-s2-1" onchange="updateChecklist()"> <span class="checklist-text">Configurar el MiniPC doméstico como servidor de archivos local (Samba).</span></label>
+                        <label class="checklist-item"><input type="checkbox" id="chk-s2-2" onchange="updateChecklist()"> <span class="checklist-text">Configurar la herramienta de cifrado offline (Picocrypt).</span></label>
+                        <label class="checklist-item"><input type="checkbox" id="chk-s2-3" onchange="updateChecklist()"> <span class="checklist-text">Cifrar documentos individuales en formato (.pcv) usando Picocrypt.</span></label>
+                        <label class="checklist-item"><input type="checkbox" id="chk-s2-4" onchange="updateChecklist()"> <span class="checklist-text">Crear la estructura de carpetas (Finanzas, Salud, Seguros, Hogar).</span></label>
+                        <label class="checklist-item"><input type="checkbox" id="chk-s2-5" onchange="updateChecklist()"> <span class="checklist-text">Digitalizar y almacenar documentos esenciales (DNI, escrituras, pólizas).</span></label>
+                        <label class="checklist-item"><input type="checkbox" id="chk-s2-6" onchange="updateChecklist()"> <span class="checklist-text">Configurar accesos directos locales para los familiares.</span></label>
+                    </div>
+                </div>
+
+                <!-- Semana 3 -->
+                <div class="card" style="grid-column: span 6;">
+                    <div class="card-header">
+                        <h3 class="card-title">Semana 3: Espejo en Drive y Kit Físico (USB + Sobre)</h3>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+                        <label class="checklist-item"><input type="checkbox" id="chk-s3-1" onchange="updateChecklist()"> <span class="checklist-text">Configurar Google Drive for Desktop en el MiniPC para backups automáticos.</span></label>
+                        <label class="checklist-item"><input type="checkbox" id="chk-s3-2" onchange="updateChecklist()"> <span class="checklist-text">Programar la sincronización espejo de la bóveda cifrada en Drive.</span></label>
+                        <label class="checklist-item"><input type="checkbox" id="chk-s3-3" onchange="updateChecklist()"> <span class="checklist-text">Preparar el USB de contingencia con Picocrypt, KeePassXC y copias de seguridad.</span></label>
+                        <label class="checklist-item"><input type="checkbox" id="chk-s3-4" onchange="updateChecklist()"> <span class="checklist-text">Copiar las llaves privadas .asc de Passbolt y el backup cifrado al USB.</span></label>
+                        <label class="checklist-item"><input type="checkbox" id="chk-s3-5" onchange="updateChecklist()"> <span class="checklist-text">Redactar e imprimir el Documento Maestro (Kit de Arranque en Frío).</span></label>
+                        <label class="checklist-item"><input type="checkbox" id="chk-s3-6" onchange="updateChecklist()"> <span class="checklist-text">Meter el papel y el USB en el Sobre de Emergencia y guardarlo en lugar seguro.</span></label>
+                        <label class="checklist-item"><input type="checkbox" id="chk-s3-7" onchange="updateChecklist()"> <span class="checklist-text">Documentar herencia de criptoactivos y referencias blockchain (Smart Contracts, wallets).</span></label>
+                    </div>
+                </div>
+
+                <!-- Semana 4 -->
+                <div class="card" style="grid-column: span 6;">
+                    <div class="card-header">
+                        <h3 class="card-title">Semana 4: Validación y Pruebas Offline</h3>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+                        <label class="checklist-item"><input type="checkbox" id="chk-s4-1" onchange="updateChecklist()"> <span class="checklist-text">Simular una recuperación total desde un ordenador secundario limpio.</span></label>
+                        <label class="checklist-item"><input type="checkbox" id="chk-s4-2" onchange="updateChecklist()"> <span class="checklist-text">Validar que el cónyuge o heredero comprende el proceso usando el sobre físico.</span></label>
+                        <label class="checklist-item"><input type="checkbox" id="chk-s4-3" onchange="updateChecklist()"> <span class="checklist-text">Verificar la restauración del backup offline de Passbolt.</span></label>
+                        <label class="checklist-item"><input type="checkbox" id="chk-s4-4" onchange="updateChecklist()"> <span class="checklist-text">Marcar la Versión 2.0 (Legado Conectado y Portable) como completada.</span></label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DOCUMENTO MAESTRO TAB -->
+        <section id="maestro" class="tab-content">
+            <header class="section-header">
+                <span class="badge-tag">Fase 7: Papel de Emergencia</span>
+                <h1>Creador de Documento Maestro</h1>
+                <p class="subtitle">Rellena el formulario interactivo para autocompletar e imprimir el documento maestro de recuperación física.</p>
+            </header>
+
+            <div class="alert-box" style="margin-bottom: 2rem;">
+                <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                <div class="alert-content">
+                    Este documento impreso es la <strong>pieza más importante</strong> de tu protocolo de emergencia. Debe guardarse en un lugar seguro (por ejemplo, una caja fuerte en casa o notaría) y su ubicación física debe ser conocida por tu cónyuge o personas de absoluta confianza.
+                </div>
+            </div>
+
+            <div class="grid-container">
+                <div class="card" style="grid-column: span 12;">
+                    <!-- Formulario Maestro -->
+                    <div class="master-form-section">
+                        <h4 class="section-subtitle">1. Datos e Ubicación de Recursos (Kit de Contingencia)</h4>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="m-keepass-loc">¿Ubicación del Servidor y llaves de Passbolt?</label>
+                                <input type="text" id="m-keepass-loc" value="Servidor: local en MiniPC. Llaves privadas (.asc) y backup offline de contraseñas guardados en el USB y en Google Drive." oninput="updatePrintView()">
+                            </div>
+                            <div class="form-group">
+                                <label for="m-key-clue">Pista de la Frase Maestra (No la contraseña real)</label>
+                                <input type="text" id="m-key-clue" value="Nuestra frase acordada de 4 palabras en minúscula, la misma que el cifrado del servidor." oninput="updatePrintView()">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="m-usb-loc">¿Dónde están guardados físicamente los USBs de emergencia?</label>
+                                <input type="text" id="m-usb-loc" value="USB 1: En el sobre de emergencia del cajón del despacho. USB 2: En casa de mis padres." oninput="updatePrintView()">
+                            </div>
+                            <div class="form-group">
+                                <label for="m-drive-account">Cuenta de Google Drive que almacena el espejo de seguridad</label>
+                                <input type="text" id="m-drive-account" value="correo.familiar@gmail.com" oninput="updatePrintView()">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="master-form-section">
+                        <h4 class="section-subtitle">3. Reglas de Seguridad ("Qué NO Hacer")</h4>
+                        <div class="form-group">
+                            <label for="m-rules-notodo">Instrucciones críticas sobre qué evitar hacer inicialmente</label>
+                            <textarea id="m-rules-notodo" oninput="updatePrintView()">1. NO borres ni formatees ningún teléfono móvil u ordenador antes de haber extraído las claves de Passbolt o los códigos 2FA.
+2. NO intentes adivinar la frase maestra de Passbolt o la contraseña de Picocrypt más de 3 veces seguidas sin verificar la pista.
+3. NO canceles las cuentas de correo principales de inmediato, ya que son necesarias para recuperar accesos y recibir notificaciones.</textarea>
+                        </div>
+                    </div>
+
+                    <div style="display:flex; justify-content: flex-end; gap: 1rem; margin-top: 1rem;">
+                        <button class="btn btn-primary" onclick="window.print()">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                            Imprimir Documento Maestro
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SCRIPTS TAB -->
+        <section id="scripts" class="tab-content">
+            <header class="section-header">
+                <span class="badge-tag" style="background-color: rgba(99, 102, 241, 0.15); color: #a5b4fc;">UTILIDADES Y SCRIPTS</span>
+                <h1>Herramientas del Legado</h1>
+                <p class="subtitle">Acceso directo a ejecutables portables, carpetas locales y scripts auxiliares de soporte.</p>
+            </header>
+
+            <div class="grid-container">
+                <!-- Herramienta 1 -->
+                <div class="card" style="grid-column: span 4;">
+                    <div class="card-header" style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; gap: 0.5rem;">
+                        <div>
+                            <span class="badge-tag" style="background-color: rgba(59, 130, 246, 0.15); color: #60a5fa; margin-bottom: 0.5rem; display: inline-block;">CLAVES</span>
+                            <h3 class="card-title" style="font-size: 1.15rem;">KeePassXC</h3>
+                        </div>
+                        <button class="btn btn-secondary" onclick="copyToolPath('SOFTWARE_PORTABLE/KeePassXC/KeePassXC.exe')" style="font-size: 0.75rem; padding: 0.35rem 0.6rem; min-width: auto; margin: 0; background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.08); color: var(--text-main); display: flex; align-items: center; gap: 0.25rem; flex-shrink: 0;">
+                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                            Copiar ruta
+                        </button>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.6;">
+                        Gestor de contraseñas local offline. Úsalo para abrir la base de datos de claves cifrada (<code>.kdbx</code>).
+                    </p>
+                </div>
+
+                <!-- Herramienta 2 -->
+                <div class="card" style="grid-column: span 4;">
+                    <div class="card-header" style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; gap: 0.5rem;">
+                        <div>
+                            <span class="badge-tag" style="background-color: rgba(16, 185, 129, 0.15); color: #34d399; margin-bottom: 0.5rem; display: inline-block;">CIFRADO</span>
+                            <h3 class="card-title" style="font-size: 1.15rem;">Picocrypt</h3>
+                        </div>
+                        <button class="btn btn-secondary" onclick="copyToolPath('TOOLS/Picocrypt/Picocrypt.exe')" style="font-size: 0.75rem; padding: 0.35rem 0.6rem; min-width: auto; margin: 0; background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.08); color: var(--text-main); display: flex; align-items: center; gap: 0.25rem; flex-shrink: 0;">
+                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                            Copiar ruta
+                        </button>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.6;">
+                        Cifrado ultra-portable. Úsalo para desencriptar y encriptar archivos sueltos de forma segura (<code>.pcv</code>).
+                    </p>
+                </div>
+
+                <!-- Herramienta 3 -->
+                <div class="card" style="grid-column: span 4;">
+                    <div class="card-header" style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; gap: 0.5rem;">
+                        <div>
+                            <span class="badge-tag" style="background-color: rgba(139, 92, 246, 0.15); color: #a78bfa; margin-bottom: 0.5rem; display: inline-block;">BÓVEDA</span>
+                            <h3 class="card-title" style="font-size: 1.15rem;">Bóveda Docs</h3>
+                        </div>
+                        <button class="btn btn-secondary" onclick="copyToolPath('BOVEDA_DOCUMENTAL')" style="font-size: 0.75rem; padding: 0.35rem 0.6rem; min-width: auto; margin: 0; background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.08); color: var(--text-main); display: flex; align-items: center; gap: 0.25rem; flex-shrink: 0;">
+                            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                            Copiar ruta
+                        </button>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.6;">
+                        Directorio local que almacena toda la documentación familiar sensible en contenedores cifrados.
+                    </p>
+                </div>
+
+                <!-- Separador / Sección de Scripts -->
+                <div style="grid-column: span 12; margin: 1rem 0 0.5rem 0; border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
+                    <h2 style="font-size: 1.25rem; color: var(--text-main); display: flex; align-items: center; gap: 0.5rem;">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                        Scripts Automatizados
+                    </h2>
+                </div>
+                <!-- Script 1 -->
+                <div class="card" style="grid-column: span 6;">
+                    <div class="card-header">
+                        <h3 class="card-title">1. Copia de Seguridad a Google Drive</h3>
+                        <span class="badge-2fa yes">respaldo_drive.ps1</span>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; margin-bottom: 1.5rem;">
+                        Este script automatiza el empaquetado cifrado y la subida espejo del directorio del legado (incluyendo el backup offline de Passbolt y la bóveda del MiniPC) a Google Drive.
+                    </p>
+                    <div class="alert-box info" style="padding: 0.75rem 1rem; margin-bottom: 1.5rem;">
+                        <div class="alert-content" style="font-size:0.8rem;">
+                            <strong>Instrucciones:</strong> Configura tu cuenta de Drive for Desktop y ejecuta este script en PowerShell para programar un backup automático cada semana.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Script 2 -->
+                <div class="card" style="grid-column: span 6;">
+                    <div class="card-header">
+                        <h3 class="card-title">2. Sincronización con USB de Contingencia</h3>
+                        <span class="badge-2fa yes">sincronizar_usb.ps1</span>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; margin-bottom: 1.5rem;">
+                        Detecta automáticamente la unidad de tu USB de emergencia e importa la última copia cifrada de los documentos y el llavero offline.
+                    </p>
+                    <div class="alert-box info" style="padding: 0.75rem 1rem; margin-bottom: 1.5rem;">
+                        <div class="alert-content" style="font-size:0.8rem;">
+                            <strong>Instrucciones:</strong> Conecta tu USB físico, ejecuta el script en PowerShell y se encargará de realizar el espejo local.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQS TAB -->
+        <section id="faqs" class="tab-content">
+            <header class="section-header">
+                <span class="badge-tag" style="background-color: rgba(59, 130, 246, 0.1); color: var(--primary);">Soporte Informativo</span>
+                <h1>Preguntas Frecuentes (FAQ)</h1>
+                <p class="subtitle">Respuestas rápidas para entender y gestionar el Legado Digital Familiar.</p>
+            </header>
+            
+            <div class="grid-container">
+                <div class="card" style="grid-column: span 12;">
+                    <div style="display: flex; flex-direction: column; gap: 1.75rem;">
+                        <div>
+                            <h3 style="color: var(--primary); margin-bottom: 0.5rem; font-size: 1.15rem;">1. ¿Qué es este sistema y para qué sirve?</h3>
+                            <p style="color: var(--text-muted); line-height: 1.6; font-size: 0.95rem;">Es un "Kit de Legado Digital" híbrido. Sirve para inventariar todas las cuentas y servicios de la familia, permitiendo que una persona de confianza pueda recuperarlas en caso de emergencia usando el sobre físico y el USB de contingencia.</p>
+                        </div>
+                        
+                        <div>
+                            <h3 style="color: var(--primary); margin-bottom: 0.5rem; font-size: 1.15rem;">2. ¿Es seguro? ¿Dónde se guardan mis datos?</h3>
+                            <p style="color: var(--text-muted); line-height: 1.6; font-size: 0.95rem;">Sí, los datos están bajo tu control directo en tu MiniPC local. Las contraseñas reales se gestionan en Passbolt (cifradas en tránsito y en reposo) y las copias de seguridad offline están fuertemente encriptadas.</p>
+                        </div>
+                        
+                        <div>
+                            <h3 style="color: var(--primary); margin-bottom: 0.5rem; font-size: 1.15rem;">3. ¿Qué papel juega Google Drive?</h3>
+                            <p style="color: var(--text-muted); line-height: 1.6; font-size: 0.95rem;">Google Drive actúa únicamente como un almacenamiento espejo en la nube. Guarda una réplica idéntica y cifrada de lo que hay en el USB y en el MiniPC, permitiendo el acceso en caso de pérdida física de los dispositivos.</p>
+                        </div>
+                        
+                        <div>
+                            <h3 style="color: var(--primary); margin-bottom: 0.5rem; font-size: 1.15rem;">4. ¿Qué herramientas de cifrado se recomiendan para archivos y documentos (Picocrypt, ZIP AES-256)?</h3>
+                            <p style="color: var(--text-muted); line-height: 1.6; font-size: 0.95rem;">
+                                • <strong>Picocrypt (Recomendado)</strong>: Genera contenedores cifrados individuales (archivos <code>.pcv</code>). Es ultraligero, 100% portable y no requiere instalación ni privilegios de administrador. Es idóneo para su uso offline directo desde el USB de seguridad.
+                                <br>• <strong>ZIP cifrado con AES-256</strong>: Máxima compatibilidad de lectura, se puede abrir con 7-Zip en cualquier equipo, ideal para documentos maestros estáticos.
+                                <br>• <strong>KeePassXC (Adjuntos)</strong>: Ideal para guardar archivos pequeños y vitales (ej. foto del DNI, llaves de recuperación) directamente dentro de la base de datos de contraseñas ya cifrada (<code>.kdbx</code>).
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 style="color: var(--primary); margin-bottom: 0.5rem; font-size: 1.15rem;">5. ¿Cómo puedo gestionar la herencia de mis criptoactivos e integrar blockchain en el legado?</h3>
+                            <p style="color: var(--text-muted); line-height: 1.6; font-size: 0.95rem;">
+                                La integración en el Legado Digital Familiar se realiza de forma pasiva y documental para mantener la seguridad offline:
+                                <br>1. <strong>Registro de hardware wallets</strong>: Registra la existencia de tus dispositivos (Ledger, Trezor, etc.) en el Inventario. Detalla en qué carpeta de KeePassXC o sobre físico se encuentra la pista de su contraseña o la semilla de recuperación de 24 palabras (<strong>nunca guardes las 24 palabras en texto plano en la app web</strong>).
+                                <br>2. <strong>Direcciones Públicas</strong>: Guarda las direcciones públicas principales en el Inventario para que tus familiares puedan verificar el balance de los activos de forma pasiva sin comprometer las llaves privadas.
+                                <br>3. <strong>Notarización Blockchain</strong>: Puedes registrar el hash SHA-256 de tu Documento Maestro firmado o de tu testamento en una blockchain (notarización pasiva) para garantizar la inmutabilidad de la fecha y del contenido del legado frente a disputas futuras.
+                                <br>4. <strong>Herencia activa</strong>: Si utilizas multifirma, time-locks (CLTV) o mecanismos de "botón de hombre muerto" (dead man's switch), documenta detalladamente en el Inventario o en un archivo cifrado las instrucciones exactas de cómo reclamar los fondos tras el período de inactividad.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 style="color: var(--primary); margin-bottom: 0.5rem; font-size: 1.15rem;">6. ¿Qué pasa si el servidor de Passbolt o el MiniPC fallan?</h3>
+                            <p style="color: var(--text-muted); line-height: 1.6; font-size: 0.95rem;">No hay problema. El USB de contingencia y Google Drive contienen copias de seguridad offline independientes: la base de datos de contraseñas (<code>.kdbx</code>) que puedes abrir con la herramienta portable KeePassXC, y el archivo de respaldo (<code>.json</code>) de este inventario de cuentas que puedes importar directamente en este panel web.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AYUDA TAB -->
+        <section id="ayuda" class="tab-content">
+            <header class="section-header">
+                <span class="badge-tag" style="background-color: rgba(239, 68, 68, 0.1); color: var(--accent-red);">Protocolo de Emergencia</span>
+                <h1>Ayuda de Contingencia</h1>
+                <p class="subtitle">Si te encuentras en una situación de contingencia o pérdida del titular, sigue estos pasos de manera estricta y ordenada para recuperar el Legado Digital:</p>
+            </header>
+            
+            <div class="grid-container">
+                <div class="card" style="grid-column: span 12; border-left: 4px solid var(--accent-red);">
+                    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                        <div style="background: rgba(255, 59, 48, 0.04); padding: 1.25rem; border-radius: 8px; border-left: 3px solid var(--accent-red);">
+                            <h4 style="margin: 0 0 0.5rem 0; color: var(--accent-red); font-size: 1.1rem;">Paso 1: Localiza el Sobre Físico de Emergencia</h4>
+                            <p style="margin: 0; color: var(--text-muted); line-height: 1.6; font-size: 0.95rem;">
+                                Búscalo en el despacho o caja fuerte familiar acordada. Contiene el manual maestro impreso con anotaciones manuscritas críticas y el USB físico de contingencia.
+                            </p>
+                        </div>
+
+                        <div style="background: rgba(255, 149, 0, 0.04); padding: 1.25rem; border-radius: 8px; border-left: 3px solid var(--accent-orange);">
+                            <h4 style="margin: 0 0 0.5rem 0; color: var(--accent-orange); font-size: 1.1rem;">Paso 2: Accede a los Teléfonos Móviles de los Titulares</h4>
+                            <p style="margin: 0; color: var(--text-muted); line-height: 1.6; font-size: 0.95rem;">
+                                Enciéndelos y desbloquéalos usando el PIN o patrón anotado a mano en el sobre. Los necesitarás obligatoriamente para recibir códigos de doble factor (SMS o Google Authenticator) de bancos y correos.
+                            </p>
+                        </div>
+
+                        <div style="background: rgba(0, 113, 227, 0.04); padding: 1.25rem; border-radius: 8px; border-left: 3px solid var(--primary);">
+                            <h4 style="margin: 0 0 0.5rem 0; color: var(--primary); font-size: 1.1rem;">Paso 3: Introduce el USB en un Ordenador Limpio</h4>
+                            <p style="margin: 0; color: var(--text-muted); line-height: 1.6; font-size: 0.95rem;">
+                                Si no dispones del USB físico, inicia sesión en la cuenta de correo familiar descrita en el manual, entra en Google Drive y descarga la carpeta completa del legado digital.
+                            </p>
+                        </div>
+
+                        <div style="background: rgba(88, 86, 214, 0.04); padding: 1.25rem; border-radius: 8px; border-left: 3px solid var(--accent-indigo);">
+                            <h4 style="margin: 0 0 0.5rem 0; color: var(--accent-indigo); font-size: 1.1rem;">Paso 4: Consigue las Contraseñas (KeePassXC)</h4>
+                            <p style="margin: 0; color: var(--text-muted); line-height: 1.6; font-size: 0.95rem;">
+                                Entra a la carpeta <code>SOFTWARE_PORTABLE/KeePassXC</code> en tu USB o Drive y ejecuta el programa. Carga la base de datos cifrada <code>.kdbx</code> y usa la Contraseña Maestra del sobre para abrirla. Allí verás todas las claves organizadas.
+                            </p>
+                        </div>
+
+                        <div style="background: rgba(52, 199, 89, 0.04); padding: 1.25rem; border-radius: 8px; border-left: 3px solid var(--accent-emerald);">
+                            <h4 style="margin: 0 0 0.5rem 0; color: var(--accent-emerald); font-size: 1.1rem;">Paso 5: Desencripta los Documentos Personales (Picocrypt)</h4>
+                            <p style="margin: 0; color: var(--text-muted); line-height: 1.6; font-size: 0.95rem;">
+                                Entra a <code>TOOLS/Picocrypt</code> y ejecuta <code>Picocrypt.exe</code>. Arrastra a la ventana los archivos cifrados con extensión <code>.pcv</code> (que están en <code>BOVEDA_DOCUMENTAL</code>) y pon la Contraseña Maestra de Documentos del sobre para obtener los PDFs originales (pólizas, escrituras, etc.).
+                            </p>
+                        </div>
+
+                        <div style="background: rgba(88, 86, 214, 0.04); padding: 1.25rem; border-radius: 8px; border-left: 3px solid var(--accent-indigo);">
+                            <h4 style="margin: 0 0 0.5rem 0; color: var(--accent-indigo); font-size: 1.1rem;">Paso 6: Consulta el Directorio de Activos</h4>
+                            <p style="margin: 0; color: var(--text-muted); line-height: 1.6; font-size: 0.95rem;">
+                                Ve a la pestaña de "Inventario Cuentas" en este panel local para consultar la lista de servicios y ejecutar ordenadamente la "Acción de Emergencia" descrita para cada cuenta (llamar a seguros, notificar defunción a bancos, gestionar bajas, etc.).
+                                <br><br>
+                                <strong style="color: var(--text-main);">Nota si estás en un ordenador nuevo:</strong> Si al entrar ves el inventario vacío, recuerda que los datos se almacenan localmente en el navegador. Simplemente introduce tus claves para inicializar la sesión y haz clic en el botón <strong>"Importar JSON"</strong> seleccionando el archivo de copia de seguridad (.json) del USB.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DISCLAIMER TAB -->
+        <section id="disclaimer" class="tab-content">
+            <header class="section-header">
+                <span class="badge-tag" style="background-color: rgba(245, 158, 11, 0.1); color: var(--accent-orange);">Avisos y Limitaciones</span>
+                <h1>Avisos Legales (Disclaimers)</h1>
+                <p class="subtitle">Por favor, lee con atención las limitaciones de responsabilidad y seguridad del sistema.</p>
+            </header>
+            
+            <div class="grid-container">
+                <div class="card" style="grid-column: span 12;">
+                    <h3 style="color: var(--accent-orange); margin-bottom: 1rem; font-size: 1.25rem;">Nivel 1 — Aviso de Seguridad</h3>
+                    <div style="background-color: rgba(245, 158, 11, 0.05); border: 1px solid rgba(245, 158, 11, 0.15); padding: 1.25rem; border-radius: 8px; margin-bottom: 2rem;">
+                        <p style="margin-bottom: 0.75rem; line-height: 1.5; font-size: 0.95rem;"><strong>DISCLAIMER 1: USO GENERAL</strong><br><span style="color:var(--text-muted);">Este sistema se ofrece "tal cual" y sin garantía de resultados concretos. El usuario es responsable de revisar, probar y validar el contenido antes de usarlo con datos reales.</span></p>
+                        <p style="margin-bottom: 0.75rem; line-height: 1.5; font-size: 0.95rem;"><strong>DISCLAIMER 2: SEGURIDAD</strong><br><span style="color:var(--text-muted);">Este sistema ayuda a organizar y cifrar información, pero no elimina todos los riesgos. La seguridad final también depende del dispositivo, del sistema operativo, de las copias y de la forma de uso.</span></p>
+                        <p style="line-height: 1.5; font-size: 0.95rem;"><strong>DISCLAIMER 3: HERENCIA DIGITAL</strong><br><span style="color:var(--text-muted);">Este sistema no sustituye asesoramiento legal, notarial, fiscal o sucesorio. Las decisiones sobre herencia digital, cuentas y accesos dependen de la normativa aplicable y de cada servicio.</span></p>
+                    </div>
+
+                    <h3 style="color: var(--primary); margin-bottom: 0.5rem; font-size: 1.25rem;">Nivel 2 — Aviso Técnico Ampliado</h3>
+                    <p style="margin-bottom: 1.5rem; color: var(--text-muted); line-height: 1.6; font-size: 0.95rem;">La protección mediante cifrado reduce riesgos, pero no los elimina. Un equipo comprometido, una contraseña débil, una copia sin cifrar o una mala configuración pueden exponer datos sensibles incluso si el cifrado es correcto.</p>
+                    
+                    <h3 style="color: var(--primary); margin-bottom: 0.5rem; font-size: 1.25rem;">Terceros y Dependencias</h3>
+                    <p style="color: var(--text-muted); line-height: 1.6; font-size: 0.95rem;">Cualquier referencia a Passbolt, Google, servicios de almacenamiento en nube u otras herramientas de terceros se realiza únicamente con fines de interoperabilidad o ejemplo. Cada producto mantiene sus propias licencias, políticas, actualizaciones y responsabilidades.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ADD INVENTORY ENTRY MODAL -->
+    <div id="add-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="card-title" id="modal-action-title">Añadir Cuenta al Inventario</h3>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <form id="inventory-form" onsubmit="saveInventoryEntry(event)">
+                <input type="hidden" id="entry-id">
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="f-name">Nombre del Servicio *</label>
+                        <input type="text" id="f-name" required placeholder="Ej. Banco Santander, Gmail...">
+                    </div>
+                    <div class="form-group">
+                        <label for="f-category">Categoría *</label>
+                        <select id="f-category" required>
+                            <option value="Principales">Principales (Móvil, Correos, Recuperación)</option>
+                            <option value="Bancos">Bancos y Brokers</option>
+                            <option value="Seguros">Seguros y Salud</option>
+                            <option value="Suministros">Suministros y Proveedores</option>
+                            <option value="Suscripciones">Suscripciones</option>
+                            <option value="Apps">Apps</option>
+                            <option value="Otros">Otros / Independientes</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="f-holder">Titular de la cuenta *</label>
+                        <select id="f-holder" required>
+                            <option value="Andrés">Andrés</option>
+                            <option value="Maeva">Maeva</option>
+                            <option value="Compartido" selected>Compartido (Ambos)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="f-user">Usuario / Correo asociado</label>
+                        <input type="text" id="f-user" placeholder="Ej. correo@ejemplo.com">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="f-2fa">¿Usa Doble Factor (2FA)?</label>
+                        <select id="f-2fa">
+                            <option value="Sí">Sí</option>
+                            <option value="No" selected>No</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="f-secret-loc">Ubicación del Secreto</label>
+                        <input type="text" id="f-secret-loc" placeholder="Ej. Passbolt: Carpeta Bancos">
+                    </div>
+                </div>
+
+                <div class="form-group" style="grid-column: 1 / -1;">
+                    <label for="f-file-path">Ruta del Documento Físico (Opcional)</label>
+                    <input type="text" id="f-file-path" placeholder="Ej: BOVEDA_DOCUMENTAL\03_Seguros\seguro_mapfre.pcv">
+                    <small style="color:var(--text-muted); display:block; margin-top:0.25rem;">Ruta donde est&aacute; el archivo cifrado (.pcv) dentro de la carpeta BOVEDA_DOCUMENTAL.</small>`n<div style="margin-top: 1rem;"><label for="f-file-hash-upload">Seleccionar archivo para generar firma (Hash SHA-256):</label><input type="file" id="f-file-hash-upload" onchange="generateHash(event)" style="margin-top: 0.5rem;" /></div><div style="margin-top: 0.5rem;"><input type="text" id="f-file-hash" placeholder="Firma SHA-256 (se genera autom&aacute;ticamente)" readonly style="background: rgba(255,255,255,0.05);" /></div>
+                </div>
+
+                <div class="form-group" style="grid-column: 1 / -1;">
+                    <label for="f-action">Acción recomendada en caso de emergencia</label>
+                    <textarea id="f-action" placeholder="Ej. Notificar defunción y transferir fondos a la cuenta compartida. Cancelar suscripción."></textarea>
+                </div>
+
+                <div style="display:flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" id="modal-submit-btn">Guardar Entrada</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- PRINT PREVIEW CONTAINER (ONLY VISIBLE ON PRINT) -->
+    <div id="print-preview-container">
+        <!-- Rendered by JS -->
+    </div>
+
+    <script src="core/jspdf.umd.min.js"></script>`n    <script src="core/html2canvas.min.js"></script>`n    <script src="core/crypto.js"></script>
+    <script src="core/helpers.js"></script>
+    <script src="core/state.js"></script>
+    <script src="core/router.js"></script>
+    <script src="modules/print.js"></script>
+    <script src="modules/dashboard.js"></script>
+    <script src="modules/checklist.js"></script>
+    <script src="modules/inventario.js"></script>
+    <script src="modules/export-import.js"></script>
+    <script src="modules/pdf-generator.js"></script>`n    <script src="app.js"></script>
+</body>
+</html>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').then(reg => console.log('SW registrado', reg)).catch(err => console.log('SW error', err));
+  });
+}
+</script>

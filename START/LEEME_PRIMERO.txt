@@ -1,0 +1,21 @@
+======================================================================
+           SISTEMA DE LEGADO DIGITAL FAMILIAR - AVISO IMPORTANTE
+======================================================================
+
+DISCLAIMER 1: USO GENERAL
+Este sistema se ofrece "tal cual" y sin garantía de resultados concretos. 
+El usuario es responsable de revisar, probar y validar el contenido antes de usarlo con datos reales.
+
+DISCLAIMER 2: SEGURIDAD
+Este sistema ayuda a organizar y cifrar información, pero no elimina todos los riesgos. 
+La seguridad final también depende del dispositivo, del sistema operativo, de las copias y de la forma de uso.
+
+DISCLAIMER 3: DATOS Y PRIVACIDAD
+El usuario decide qué datos introduce, dónde los guarda y qué proveedor de nube usa. 
+No debe introducir información que no esté dispuesto a gestionar y proteger.
+
+DISCLAIMER 4: HERENCIA DIGITAL
+Este sistema no sustituye asesoramiento legal, notarial, fiscal o sucesorio. 
+Las decisiones sobre herencia digital, cuentas y accesos dependen de la normativa aplicable y de cada servicio.
+
+Si estás de acuerdo con estos términos, ejecuta el archivo 'Abrir-Legado.cmd'.
