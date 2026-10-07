@@ -200,7 +200,7 @@ async function loginSuccess(mode) {
     try {
         // Load and decrypt local storage vault
         const existingStr = localStorage.getItem('legado_vault_pre');
-        if (existingStr && sessionVMK) {
+        if (!sessionVMK) { backToMainMenu(); return; }`n        if (existingStr && sessionVMK) {
             const encObj = JSON.parse(existingStr);
             const decryptedVault = await Crypto.decrypt(encObj.ciphertext, encObj.iv, sessionVMK);
             
