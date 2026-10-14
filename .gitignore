@@ -10,7 +10,7 @@
 *.bkup
 *.c9r
 
-# Bóveda Documental (carpetas con PDFs reales de escrituras, seguros, etc.)
+# BÃ³veda Documental (carpetas con PDFs reales de escrituras, seguros, etc.)
 **/BOVEDA_DOCUMENTAL/
 **/BOVEDA_DOCUMENTAL/**/*
 
@@ -26,7 +26,7 @@ Desktop.ini
 .DS_Store
 .directory
 
-# Carpetas de caché, tareas del asistente e información del sistema
+# Carpetas de cachÃ©, tareas del asistente e informaciÃ³n del sistema
 .system_generated/
 scratch/
 *.log
