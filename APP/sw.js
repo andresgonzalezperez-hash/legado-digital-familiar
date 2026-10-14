@@ -1,27 +1,55 @@
-const CACHE_NAME = 'legado-digital-v1';
+const CACHE_NAME = 'legado-digital-v1.1';
 const urlsToCache = [
+  './',
   './index.html',
+  './index.css',
   './app.js',
-  './index.css'
+  './manifest.json',
+  './icon.png',
+  './core/jspdf.umd.min.js',
+  './core/html2canvas.min.js',
+  './core/crypto.js',
+  './core/helpers.js',
+  './core/state.js',
+  './core/router.js',
+  './modules/print.js',
+  './modules/dashboard.js',
+  './modules/checklist.js',
+  './modules/inventario.js',
+  './modules/export-import.js',
+  './modules/pdf-generator.js'
 ];
 
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => {
-        return cache.addAll(urlsToCache);
-      })
+      .then(cache => cache.addAll(urlsToCache))
+      .then(() => self.skipWaiting())
+  );
+});
+
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(keys => {
+      return Promise.all(
+        keys.map(key => {
+          if (key !== CACHE_NAME) {
+            return caches.delete(key);
+          }
+        })
+      );
+    }).then(() => self.clients.claim())
   );
 });
 
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request)
-      .then(response => {
-        if (response) {
-          return response; // Devuelve del cache si existe
+      .then(cachedResponse => {
+        if (cachedResponse) {
+          return cachedResponse;
         }
-        return fetch(event.request); // Si no, busca en la red
+        return fetch(event.request);
       })
   );
 });

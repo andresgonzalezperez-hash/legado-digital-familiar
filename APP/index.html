@@ -1041,7 +1041,14 @@
                 <div class="form-group" style="grid-column: 1 / -1;">
                     <label for="f-file-path">Ruta del Documento Físico (Opcional)</label>
                     <input type="text" id="f-file-path" placeholder="Ej: BOVEDA_DOCUMENTAL\03_Seguros\seguro_mapfre.pcv">
-                    <small style="color:var(--text-muted); display:block; margin-top:0.25rem;">Ruta donde est&aacute; el archivo cifrado (.pcv) dentro de la carpeta BOVEDA_DOCUMENTAL.</small>`n<div style="margin-top: 1rem;"><label for="f-file-hash-upload">Seleccionar archivo para generar firma (Hash SHA-256):</label><input type="file" id="f-file-hash-upload" onchange="generateHash(event)" style="margin-top: 0.5rem;" /></div><div style="margin-top: 0.5rem;"><input type="text" id="f-file-hash" placeholder="Firma SHA-256 (se genera autom&aacute;ticamente)" readonly style="background: rgba(255,255,255,0.05);" /></div>
+                    <small style="color:var(--text-muted); display:block; margin-top:0.25rem;">Ruta donde está el archivo cifrado (.pcv) dentro de la carpeta BOVEDA_DOCUMENTAL.</small>
+                    <div style="margin-top: 1rem;">
+                        <label for="f-file-hash-upload">Seleccionar archivo para generar firma (Hash SHA-256):</label>
+                        <input type="file" id="f-file-hash-upload" onchange="generateHash(event)" style="margin-top: 0.5rem;" />
+                    </div>
+                    <div style="margin-top: 0.5rem;">
+                        <input type="text" id="f-file-hash" placeholder="Firma SHA-256 (se genera automáticamente)" readonly style="background: rgba(255,255,255,0.05);" />
+                    </div>
                 </div>
 
                 <div class="form-group" style="grid-column: 1 / -1;">
@@ -1062,7 +1069,9 @@
         <!-- Rendered by JS -->
     </div>
 
-    <script src="core/jspdf.umd.min.js"></script>`n    <script src="core/html2canvas.min.js"></script>`n    <script src="core/crypto.js"></script>
+    <script src="core/jspdf.umd.min.js"></script>
+    <script src="core/html2canvas.min.js"></script>
+    <script src="core/crypto.js"></script>
     <script src="core/helpers.js"></script>
     <script src="core/state.js"></script>
     <script src="core/router.js"></script>
@@ -1071,14 +1080,14 @@
     <script src="modules/checklist.js"></script>
     <script src="modules/inventario.js"></script>
     <script src="modules/export-import.js"></script>
-    <script src="modules/pdf-generator.js"></script>`n    <script src="app.js"></script>
+    <script src="modules/pdf-generator.js"></script>
+    <script src="app.js"></script>
+    <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').then(reg => console.log('SW registrado', reg)).catch(err => console.log('SW error', err));
+      });
+    }
+    </script>
 </body>
 </html>
-
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js').then(reg => console.log('SW registrado', reg)).catch(err => console.log('SW error', err));
-  });
-}
-</script>

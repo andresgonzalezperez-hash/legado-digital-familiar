@@ -30,3 +30,7 @@ Desktop.ini
 .system_generated/
 scratch/
 *.log
+.tmp.*
+.env
+.env.*
+!.env.example
