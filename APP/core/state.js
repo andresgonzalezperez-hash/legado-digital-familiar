@@ -75,19 +75,20 @@ const state = {
 };
 
 async function saveVaultToStorage() {
+    if (!sessionVMK) {
+        console.warn("Operación bloqueada: no hay llave de sesión activa (sessionVMK) en memoria.");
+        return;
+    }
+
     const vaultData = {
         inventory: state.inventory,
         checklist: state.checklistState
     };
     
-    if (sessionVMK) {
-        try {
-            const encVault = await Crypto.encrypt(vaultData, sessionVMK);
-            localStorage.setItem('legado_vault_pre', JSON.stringify(encVault));
-        } catch (e) {
-            console.error("Failed to encrypt vault data on save", e);
-        }
-    } else {
-        localStorage.setItem('legado_vault_pre', JSON.stringify(vaultData));
+    try {
+        const encVault = await Crypto.encrypt(vaultData, sessionVMK);
+        localStorage.setItem('legado_vault_pre', JSON.stringify(encVault));
+    } catch (e) {
+        console.error("Failed to encrypt vault data on save", e);
     }
 }

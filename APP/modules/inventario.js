@@ -41,7 +41,7 @@ function renderInventory(searchTerm = currentSearchTerm) {
     });
 
     if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; color:var(--text-muted); padding: 2rem;">No se han encontrado registros.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="9" style="text-align:center; color:var(--text-muted); padding: 2rem;">No se han encontrado registros.</td></tr>`;
         return;
     }
 
@@ -55,7 +55,7 @@ function renderInventory(searchTerm = currentSearchTerm) {
             <td><span class="badge-2fa ${item.twoFactor === 'Sí' ? 'yes' : 'no'}">${escapeHtml(item.twoFactor || 'No')}</span></td>
             <td style="font-family:monospace; font-size:0.8rem; color:var(--primary-hover);">${escapeHtml(item.secretLoc || '-')}</td>
             <td style="font-size:0.85rem; color:var(--text-muted); max-width:180px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${escapeHtml(item.filePath || '')}">
-                ${item.filePath ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px; height:14px; vertical-align:middle; margin-right:4px; color:var(--accent-emerald)"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>${escapeHtml(item.filePath)}` : '-'}${item.fileHash ? `<br><small style="color:#f59e0b" title="Firma SHA-256: ${item.fileHash}">&#128274; Firmado</small>` : ''}
+                ${item.filePath ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px; height:14px; vertical-align:middle; margin-right:4px; color:var(--accent-emerald)"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>${escapeHtml(item.filePath)}` : '-'}${item.fileHash ? `<br><small onclick="verifyEntryHash('${escapeJsAttr(item.id)}')" style="color:#f59e0b; cursor:pointer; text-decoration:underline dotted;" title="Firma SHA-256: ${escapeHtml(item.fileHash)} — Haz clic para comprobar la integridad del archivo físico">&#128274; Firmado (Verificar)</small>` : ''}
             </td>
             <td style="font-size:0.85rem; color:var(--text-muted); max-width:200px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${escapeHtml(item.action || '')}">${escapeHtml(item.action || '-')}</td>
             <td class="actions-cell">
@@ -114,6 +114,8 @@ function filterHolder(holder) {
 function openAddModal() {
     document.getElementById('inventory-form').reset();
     document.getElementById('entry-id').value = '';
+    const hashInput = document.getElementById('f-file-hash');
+    if (hashInput) hashInput.value = '';
     document.getElementById('modal-action-title').innerText = 'Añadir Cuenta al Inventario';
     document.getElementById('modal-submit-btn').innerText = 'Guardar Cuenta';
     document.getElementById('add-modal').classList.add('active');
@@ -140,9 +142,9 @@ function editEntry(id) {
     
     document.getElementById('f-action').value = item.action || '';
     const hashInput = document.getElementById('f-file-hash');
-    if(hashInput) hashInput.value = item.fileHash || '';
+    if (hashInput) hashInput.value = item.fileHash || '';
     const hashUpload = document.getElementById('f-file-hash-upload');
-    if(hashUpload) hashUpload.value = '';
+    if (hashUpload) hashUpload.value = '';
 
     document.getElementById('modal-action-title').innerText = 'Editar Cuenta';
     document.getElementById('modal-submit-btn').innerText = 'Actualizar Cuenta';
@@ -194,15 +196,52 @@ function saveInventoryEntry(event) {
     updatePrintView();
 }
 
-
 async function generateHash(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-  try {
-    const hash = await Crypto.hashFile(file);
-    document.getElementById('f-file-hash').value = hash;
-    alert('Firma SHA-256 generada exitosamente: ' + hash);
-  } catch (e) {
-    alert('Error al generar la firma: ' + e.message);
-  }
+    const file = event.target.files[0];
+    if (!file) return;
+    try {
+        const hash = await Crypto.hashFile(file);
+        document.getElementById('f-file-hash').value = hash;
+        alert('Firma SHA-256 generada exitosamente:\n' + hash);
+    } catch (e) {
+        alert('Error al generar la firma: ' + e.message);
+    }
+}
+
+function verifyEntryHash(id) {
+    const item = state.inventory.find(x => x.id === id);
+    if (!item || !item.fileHash) return;
+
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.onchange = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        try {
+            const actualHash = (await Crypto.hashFile(file)).toLowerCase().trim();
+            const expectedHash = item.fileHash.toLowerCase().trim();
+            if (actualHash === expectedHash) {
+                alert(
+                    `✅ VERIFICACIÓN EXITOSA: ARCHIVO ÍNTEGRO\n\n` +
+                    `Activo: ${item.name}\n` +
+                    `Archivo analizado: ${file.name}\n\n` +
+                    `La huella matemática SHA-256 coincide exactamente con la firma original. El archivo no ha sufrido degradación física (bit-rot) ni alteraciones.\n\n` +
+                    `SHA-256: ${actualHash}`
+                );
+            } else {
+                alert(
+                    `❌ ALERTA CRÍTICA: ARCHIVO CORRUPTO O ALTERADO\n\n` +
+                    `Activo: ${item.name}\n` +
+                    `Archivo analizado: ${file.name}\n\n` +
+                    `La firma SHA-256 NO coincide con la registrada:\n` +
+                    `• Esperada: ${expectedHash}\n` +
+                    `• Calculada: ${actualHash}\n\n` +
+                    `RECOMENDACIÓN: No utilices esta copia. Acude al segundo USB de contingencia o descarga el respaldo desde Google Drive.`
+                );
+            }
+        } catch (err) {
+            alert('Error al verificar el archivo: ' + err.message);
+        }
+    };
+    input.click();
 }

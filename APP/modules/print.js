@@ -11,13 +11,19 @@ function updatePrintView() {
 
     let inventoryHtml = '';
     state.inventory.forEach(item => {
+        const docInfo = item.filePath
+            ? `<br><small>Archivo: <code>${escapeHtml(item.filePath)}</code></small>`
+            : '';
+        const hashInfo = item.fileHash
+            ? `<br><small style="font-family:monospace; font-size:7pt;">SHA-256: ${escapeHtml(item.fileHash)}</small>`
+            : '';
         inventoryHtml += `
             <tr>
                 <td><strong>${escapeHtml(item.name)}</strong><br><small>${escapeHtml(item.category)}</small></td>
                 <td>${escapeHtml(item.holder)}</td>
                 <td>${escapeHtml(item.user || '-')}</td>
-                <td>${item.twoFactor}</td>
-                <td><code>${escapeHtml(item.secretLoc || '-')}</code></td>
+                <td>${escapeHtml(item.twoFactor || 'No')}</td>
+                <td><code>${escapeHtml(item.secretLoc || '-')}</code>${docInfo}${hashInfo}</td>
                 <td><small>${escapeHtml(item.action || '-')}</small></td>
             </tr>
         `;

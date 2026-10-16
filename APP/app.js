@@ -1,27 +1,14 @@
 let selectedMode = null;
 let sessionVMK = null; // Decrypted VMK key in memory
 
-document.addEventListener("DOMContentLoaded", async () => {
-    // Check if session is already authenticated and key is in session storage
-    const savedMode = sessionStorage.getItem('legado_authenticated');
-    const savedVmkBase64 = sessionStorage.getItem('legado_session_vmk');
-    
-    if (savedMode && savedVmkBase64) {
-        try {
-            sessionVMK = await Crypto.decryptVMK(
-                JSON.parse(savedVmkBase64), 
-                await Crypto.deriveKey("session-temp-key", Crypto.base64ToBuffer(sessionStorage.getItem('legado_session_salt')))
-            );
-            loginSuccess(savedMode);
-        } catch (e) {
-            console.error("Session key restoration failed", e);
-            backToMainMenu();
-        }
-    } else {
-        document.body.classList.add('not-logged-in');
-        document.getElementById('landing-overlay').style.display = 'flex';
-        checkInitializationState();
-    }
+document.addEventListener("DOMContentLoaded", () => {
+    // Por seguridad criptográfica, la clave maestra (sessionVMK) vive exclusivamente en RAM
+    sessionStorage.removeItem('legado_session_vmk');
+    sessionStorage.removeItem('legado_session_salt');
+    sessionStorage.removeItem('legado_authenticated');
+    document.body.classList.add('not-logged-in');
+    document.getElementById('landing-overlay').style.display = 'flex';
+    checkInitializationState();
 });
 
 function resetCredentialsAndSetup() {
@@ -72,36 +59,30 @@ async function setupMasterPasswords(event) {
         
         // 2. Generate Vault Master Key (VMK)
         const vmk = await Crypto.generateVMK();
-        sessionVMK = vmk;
         
         // 3. Encrypt VMK with both passwords
         const encVmkMaestra = await Crypto.encryptVMK(vmk, derivedKeyMaestra);
         const encVmkFamiliar = await Crypto.encryptVMK(vmk, derivedKeyFamiliar);
         
-        // 4. Save metadata to localStorage
+        // 4. Re-import VMK as non-extractable for active RAM session
+        sessionVMK = await Crypto.decryptVMK(encVmkMaestra, derivedKeyMaestra);
+        
+        // 5. Save metadata to localStorage
         localStorage.setItem('legado_salt', Crypto.bufferToBase64(salt));
         localStorage.setItem('legado_vmk_maestra', JSON.stringify(encVmkMaestra));
         localStorage.setItem('legado_vmk_familiar', JSON.stringify(encVmkFamiliar));
         
-        // 5. Encrypt and save initial vault data
+        // 6. Encrypt and save initial vault data
         const initialVault = {
             inventory: [...state.defaultInventory],
             checklist: {}
         };
         state.checklistKeys.forEach(k => initialVault.checklist[k] = false);
         
-        const encVault = await Crypto.encrypt(initialVault, vmk);
+        const encVault = await Crypto.encrypt(initialVault, sessionVMK);
         localStorage.setItem('legado_vault_pre', JSON.stringify(encVault));
         
-        // 6. Cache VMK in sessionStorage for current browser session (survives refreshes)
-        const sessionSalt = window.crypto.getRandomValues(new Uint8Array(16));
-        const tempKey = await Crypto.deriveKey("session-temp-key", sessionSalt);
-        const encSessionVmk = await Crypto.encryptVMK(vmk, tempKey);
-        
-        sessionStorage.setItem('legado_session_vmk', JSON.stringify(encSessionVmk));
-        sessionStorage.setItem('legado_session_salt', Crypto.bufferToBase64(sessionSalt));
         sessionStorage.setItem('legado_authenticated', 'actualizar');
-        
         loginSuccess('actualizar');
     } catch (e) {
         console.error("Initialization failed", e);
@@ -167,16 +148,8 @@ async function submitMasterPassword(event) {
         const encryptedVmkObj = JSON.parse(encryptedVmkStr);
         const decryptedVmk = await Crypto.decryptVMK(encryptedVmkObj, derivedKey);
         
-        // Decryption succeeded = Password is correct!
+        // Decryption succeeded = Password is correct! Key is non-extractable in RAM
         sessionVMK = decryptedVmk;
-        
-        // Save VMK securely in session storage
-        const sessionSalt = window.crypto.getRandomValues(new Uint8Array(16));
-        const tempKey = await Crypto.deriveKey("session-temp-key", sessionSalt);
-        const encSessionVmk = await Crypto.encryptVMK(decryptedVmk, tempKey);
-        
-        sessionStorage.setItem('legado_session_vmk', JSON.stringify(encSessionVmk));
-        sessionStorage.setItem('legado_session_salt', Crypto.bufferToBase64(sessionSalt));
         sessionStorage.setItem('legado_authenticated', selectedMode);
         
         loginSuccess(selectedMode);

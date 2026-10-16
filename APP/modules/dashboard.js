@@ -5,8 +5,8 @@ function updateDashboardMetrics() {
     state.inventory.forEach(item => {
         if (counts[item.category] !== undefined) {
             counts[item.category]++;
-        } else if (item.category === 'Otros') {
-            counts.Apps++; // Map 'Otros' to 'Apps' for summary
+        } else if (item.category === 'Otros' || item.category === 'Suscripciones') {
+            counts.Apps++; // Map 'Otros' and 'Suscripciones' to 'Apps' for summary
         }
 
         if (item.holder === 'Andrés') holderCounts.Andres++;

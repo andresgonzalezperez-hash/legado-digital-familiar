@@ -8,13 +8,13 @@ Este proyecto es una plantilla de código abierto diseñada para ayudarte a orga
 
 ---
 
-## 🚀 Características Principales (v1.1.0)
+## 🚀 Características Principales (v1.2.0)
 
-*   **Cifrado Local (Web Crypto API)**: Todo el inventario se cifra matemáticamente en tu navegador (AES-256-GCM y PBKDF2). Los datos nunca tocan internet.
-*   **PWA Offline**: Se instala como aplicación de escritorio independiente y funciona al 100% sin conexión a la red.
-*   **Modo Familiar (Solo Lectura)**: Interfaz simplificada a prueba de fallos para que los beneficiarios puedan leer la información sin riesgo a borrarla accidentalmente.
-*   **Exportación a PDF**: Generación automatizada de un "Documento Maestro" formal listo para imprimir y guardar en la caja fuerte.
-*   **Auditoría Anti-Degradación**: Cálculo de huellas criptográficas (Hash SHA-256) de los documentos físicos para garantizar que no han sido alterados con los años.
+*   **Cifrado Local Blindado (Web Crypto API)**: Todo el inventario y los backups exportados se cifran matemáticamente en tu navegador (AES-256-GCM y PBKDF2 con 210.000 iteraciones). La llave de sesión se marca como `extractable: false` exclusivamente en memoria RAM.
+*   **PWA Offline Completa**: Se instala como aplicación de escritorio independiente con sus 17 módulos y librerías cacheados localmente para funcionar al 100% sin conexión a la red.
+*   **Modo Familiar (Solo Lectura)**: Interfaz simplificada a prueba de fallos para que los beneficiarios puedan consultar la guía, leer los activos y verificar archivos sin riesgo de borrado accidental.
+*   **Exportación a PDF Notarial y Vista Imprimible**: Generación automatizada de un "Documento Maestro" en formato A4 con ubicaciones de contingencia, inventario y firmas criptográficas listo para imprimir y guardar en la caja fuerte.
+*   **Generación y Verificación Activa SHA-256**: Cálculo de huellas criptográficas de tus contenedores `.pcv` (Picocrypt) y verificador interactivo en un clic (`🔒 Firmado (Verificar)`) para comprobar que los archivos no han sufrido degradación (*bit-rot*) con el paso de los años.
 
 ---
 

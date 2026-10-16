@@ -29,11 +29,12 @@ const Crypto = {
             derivedKey,
             ciphertext
         );
+        // Importar como NO extraíble (extractable: false) para blindar la clave en RAM
         return window.crypto.subtle.importKey(
             "raw",
             decryptedRaw,
             { name: "AES-GCM", length: 256 },
-            true,
+            false,
             ["encrypt", "decrypt"]
         );
     },
@@ -117,13 +118,12 @@ const Crypto = {
             bytes[i] = binary_string.charCodeAt(i);
         }
         return bytes.buffer;
+    },
+
+    async hashFile(file) {
+        const arrayBuffer = await file.arrayBuffer();
+        const hashBuffer = await window.crypto.subtle.digest('SHA-256', arrayBuffer);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
     }
-};
-
-
-Crypto.hashFile = async function(file) {
-  const arrayBuffer = await file.arrayBuffer();
-  const hashBuffer = await window.crypto.subtle.digest('SHA-256', arrayBuffer);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 };
