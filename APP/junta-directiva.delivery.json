@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "6d3d0411-da0d-4c92-b496-d5c65f6805ed",
+  "status": "current",
+  "command": "deliver",
+  "type": "workflow",
+  "input": "C:\\Proyectos\\legado-digital-familiar\\.archify\\workflow-junta-directiva-legado-20261103-204500\\candidate.json",
+  "output": "C:\\Proyectos\\legado-digital-familiar\\APP\\junta-directiva.html",
+  "specification": {
+    "sha256": "81482dcc2d7d9ba3f6ccd3c8c2d35a3d125e72d2407cbffacbbdee187bcb0a12",
+    "bytes": 6198
+  },
+  "artifact": {
+    "sha256": "f030f80c12f5a91f5fa0b6c3b418f813cefed2a1668ab197aef916bf3475f976",
+    "bytes": 856531
+  }
+}
