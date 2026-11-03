@@ -6,7 +6,7 @@
     <title>Craft UI/UX Showcase - Web & App Mockup</title>
     <style>
         :root {
-            /* COLOR TOKENS (OKLCH Precision) */
+            /* COLOR TOKENS */
             --bg-canvas: #090D16;
             --bg-surface: #101726;
             --bg-surface-elevated: #162033;
@@ -85,13 +85,13 @@
         }
 
         /* ==========================================================================
-           CONTROLES SUPERIORES DE PRESENTACIÓN (MOCKUP TOOLBAR)
+           CONTROLES SUPERIORES (TOOLBAR)
            ========================================================================== */
         .showcase-toolbar {
             position: sticky;
             top: 0;
             z-index: 1000;
-            background: rgba(9, 13, 22, 0.85);
+            background: rgba(9, 13, 22, 0.90);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border-subtle);
             padding: 0.75rem 1.5rem;
@@ -101,7 +101,7 @@
             gap: 1rem;
         }
         [data-theme="light"] .showcase-toolbar {
-            background: rgba(248, 250, 252, 0.85);
+            background: rgba(248, 250, 252, 0.90);
         }
 
         .toolbar-group {
@@ -123,7 +123,7 @@
             background: transparent;
             border: none;
             color: var(--text-muted);
-            padding: 0.4rem 0.9rem;
+            padding: 0.45rem 1rem;
             border-radius: 9999px;
             font-size: 0.85rem;
             font-weight: 500;
@@ -144,8 +144,8 @@
         }
 
         .accent-dot {
-            width: 14px;
-            height: 14px;
+            width: 16px;
+            height: 16px;
             border-radius: 50%;
             cursor: pointer;
             border: 2px solid transparent;
@@ -155,7 +155,7 @@
         .accent-dot.active { border-color: var(--text-main); transform: scale(1.15); }
 
         /* ==========================================================================
-           CONTENEDOR DEL CANVAS (WEB vs APP SIMULATOR)
+           CONTENEDOR DEL CANVAS (STAGE)
            ========================================================================== */
         .stage-container {
             flex: 1;
@@ -166,63 +166,59 @@
             transition: all 300ms var(--ease-spring);
         }
 
-        /* MODO WEB (FULL WIDTH BENTO) */
         .viewport-frame {
             width: 100%;
-            max-width: 1280px;
+            max-width: 1240px;
             background: var(--bg-surface);
             border: 1px solid var(--border-subtle);
             border-radius: var(--radius-lg);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08);
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.08);
             overflow: hidden;
             display: flex;
             flex-direction: column;
             transition: max-width 350ms var(--ease-spring), border-radius 350ms ease;
         }
 
-        /* MODO APP (MOBILE / COMPACT PHONE FRAME) */
+        /* MODO APP COMPACTA */
         .viewport-frame.mode-app {
-            max-width: 420px;
-            border-radius: 36px;
-            border: 8px solid #1E293B;
-            box-shadow: 0 25px 60px -15px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.1);
+            max-width: 414px;
+            border-radius: 40px;
+            border: 10px solid #1E293B;
+            box-shadow: 0 30px 70px -15px rgba(0,0,0,0.85);
         }
 
-        /* Dynamic Island / Notch para el modo App */
         .phone-notch {
             display: none;
-            height: 24px;
+            height: 28px;
             background: #1E293B;
             align-items: center;
             justify-content: center;
-            padding-top: 4px;
         }
         .mode-app .phone-notch {
             display: flex;
         }
         .notch-pill {
-            width: 90px;
+            width: 96px;
             height: 14px;
             background: #000;
             border-radius: 20px;
         }
 
         /* ==========================================================================
-           MOCKUP INTERFACE: APP SHELL & COMPONENTS
+           APP SHELL & SIDEBAR
            ========================================================================== */
         .app-shell {
             display: flex;
-            min-height: 780px;
+            min-height: 720px;
         }
         .mode-app .app-shell {
             flex-direction: column;
-            min-height: 720px;
+            min-height: 680px;
         }
 
-        /* SIDEBAR (Desktop) */
         .sidebar {
-            width: 240px;
-            background: rgba(0,0,0,0.15);
+            width: 250px;
+            background: rgba(0,0,0,0.18);
             border-right: 1px solid var(--border-subtle);
             padding: 1.5rem 1rem;
             display: flex;
@@ -262,10 +258,10 @@
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 0.25rem;
+            gap: 0.35rem;
         }
         .nav-item {
-            padding: 0.6rem 0.8rem;
+            padding: 0.65rem 0.85rem;
             border-radius: var(--radius-sm);
             color: var(--text-muted);
             font-size: 0.88rem;
@@ -274,7 +270,8 @@
             align-items: center;
             gap: 0.75rem;
             cursor: pointer;
-            transition: all 150ms ease;
+            transition: all 160ms ease;
+            user-select: none;
         }
         .nav-item:hover {
             color: var(--text-main);
@@ -285,11 +282,12 @@
             background: var(--bg-surface-elevated);
             box-shadow: var(--shadow-subtle);
             font-weight: 600;
+            border-left: 3px solid var(--accent);
         }
         .nav-badge {
             margin-left: auto;
             background: rgba(255,255,255,0.06);
-            padding: 0.15rem 0.45rem;
+            padding: 0.15rem 0.5rem;
             border-radius: 6px;
             font-size: 0.75rem;
             font-variant-numeric: tabular-nums;
@@ -300,7 +298,7 @@
             display: none;
             background: var(--bg-surface-elevated);
             border-top: 1px solid var(--border-subtle);
-            padding: 0.75rem 1rem;
+            padding: 0.75rem 0.5rem;
             justify-content: space-around;
         }
         .mode-app .app-bottom-bar {
@@ -310,22 +308,28 @@
             background: none;
             border: none;
             color: var(--text-muted);
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 0.25rem;
             cursor: pointer;
+            padding: 0.25rem 0.5rem;
+            border-radius: 8px;
+            transition: all 150ms ease;
         }
         .bottom-nav-btn.active {
             color: var(--accent);
             font-weight: 600;
+            background: var(--bg-card-hover);
         }
 
-        /* MAIN CONTENT AREA */
+        /* ==========================================================================
+           MAIN CONTENT & SCREEN MANAGEMENT
+           ========================================================================== */
         .content-area {
             flex: 1;
-            padding: 2rem;
+            padding: 2rem 2.25rem;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
@@ -334,6 +338,22 @@
         .mode-app .content-area {
             padding: 1.25rem;
             gap: 1.25rem;
+        }
+
+        /* PANTALLAS (VISTAS) */
+        .screen-view {
+            display: none;
+            flex-direction: column;
+            gap: 1.75rem;
+            animation: fadeInView 200ms var(--ease-spring);
+        }
+        .screen-view.active-screen {
+            display: flex;
+        }
+
+        @keyframes fadeInView {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* TOPBAR / HEADER */
@@ -345,7 +365,7 @@
             flex-wrap: wrap;
         }
         .page-heading h1 {
-            font-size: 1.45rem;
+            font-size: 1.4rem;
             font-weight: 700;
             letter-spacing: -0.02em;
         }
@@ -372,6 +392,7 @@
             cursor: pointer;
             border: 1px solid transparent;
             transition: all 160ms var(--ease-spring);
+            user-select: none;
         }
         .btn:active {
             transform: scale(0.97);
@@ -396,7 +417,7 @@
         }
 
         /* ==========================================================================
-           BENTO GRID CARDS (Linear / Stripe Style)
+           COMPONENTS: BENTO, TABLES, PROTOCOLS, BACKUPS
            ========================================================================== */
         .bento-grid {
             display: grid;
@@ -411,7 +432,7 @@
             background: var(--bg-card);
             border: 1px solid var(--border-subtle);
             border-radius: var(--radius-md);
-            padding: 1.25rem;
+            padding: 1.35rem;
             position: relative;
             overflow: hidden;
             display: flex;
@@ -424,21 +445,16 @@
             border-color: var(--border-hover);
             transform: translateY(-2px);
         }
-
         .bento-card::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
+            top: 0; left: 0; right: 0;
             height: 2px;
             background: var(--accent-gradient);
             opacity: 0;
             transition: opacity 200ms ease;
         }
-        .bento-card:hover::before {
-            opacity: 1;
-        }
+        .bento-card:hover::before { opacity: 1; }
 
         .card-header {
             display: flex;
@@ -468,16 +484,16 @@
             background: rgba(16, 185, 129, 0.12);
             color: var(--accent);
             border: 1px solid rgba(16, 185, 129, 0.25);
+            width: fit-content;
         }
 
-        /* DATA TABLE WITH PRECISION CRAFT */
+        /* TABLA DE ACTIVOS */
         .table-card {
             background: var(--bg-card);
             border: 1px solid var(--border-subtle);
             border-radius: var(--radius-md);
             overflow: hidden;
         }
-
         .table-toolbar {
             padding: 1rem 1.25rem;
             border-bottom: 1px solid var(--border-subtle);
@@ -487,7 +503,6 @@
             gap: 1rem;
             flex-wrap: wrap;
         }
-
         .search-box {
             position: relative;
             display: flex;
@@ -497,23 +512,43 @@
             background: var(--bg-surface);
             border: 1px solid var(--border-subtle);
             border-radius: var(--radius-sm);
-            padding: 0.45rem 0.8rem 0.45rem 2.2rem;
+            padding: 0.5rem 0.8rem 0.5rem 2.2rem;
             color: var(--text-main);
             font-size: 0.82rem;
             outline: none;
-            width: 220px;
+            width: 240px;
             transition: all 180ms ease;
         }
         .search-input:focus {
             border-color: var(--accent);
             box-shadow: 0 0 0 3px var(--accent-glow);
-            width: 260px;
+            width: 280px;
         }
         .search-icon {
             position: absolute;
             left: 0.75rem;
             color: var(--text-dim);
             font-size: 0.85rem;
+        }
+
+        .filter-pills {
+            display: flex;
+            gap: 0.4rem;
+        }
+        .filter-btn {
+            background: transparent;
+            border: 1px solid var(--border-subtle);
+            color: var(--text-muted);
+            padding: 0.3rem 0.65rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 140ms ease;
+        }
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--bg-surface-elevated);
+            color: var(--text-main);
+            border-color: var(--border-hover);
         }
 
         .data-table {
@@ -532,7 +567,7 @@
             letter-spacing: 0.04em;
         }
         .data-table td {
-            padding: 0.85rem 1.25rem;
+            padding: 0.95rem 1.25rem;
             border-bottom: 1px solid rgba(255,255,255,0.03);
             color: var(--text-main);
         }
@@ -558,8 +593,101 @@
         .tag-finance { background: rgba(56, 189, 248, 0.15); color: #38BDF8; }
         .tag-crypto { background: rgba(245, 158, 11, 0.15); color: #F59E0B; }
         .tag-doc { background: rgba(168, 85, 247, 0.15); color: #A855F7; }
+        .tag-cloud { background: rgba(16, 185, 129, 0.15); color: #10B981; }
 
-        /* LIVE FEEDBACK TOAST */
+        /* PROTOCOL & STEP LIST */
+        .step-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .step-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 1.25rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1.25rem;
+            transition: all 180ms ease;
+        }
+        .step-item:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--border-hover);
+        }
+        .step-number {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--bg-surface-elevated);
+            border: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+        .step-content h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        .step-content p {
+            font-size: 0.84rem;
+            color: var(--text-muted);
+            line-height: 1.45;
+        }
+
+        /* BACKUP DRIVES */
+        .backup-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+        }
+        .mode-app .backup-grid {
+            grid-template-columns: 1fr;
+        }
+
+        /* SETTINGS FORM */
+        .settings-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+        .setting-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            gap: 1rem;
+        }
+        .setting-info h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        .setting-info p {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-top: 0.2rem;
+        }
+        .setting-control select, .setting-control input {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-main);
+            padding: 0.45rem 0.75rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.82rem;
+            outline: none;
+        }
+
+        /* TOAST */
         .craft-toast {
             position: fixed;
             bottom: 2rem;
@@ -588,16 +716,16 @@
 <body data-theme="dark" data-accent="emerald">
 
     <!-- ========================================================================
-         SHOWCASE TOOLBAR (INTERACTIVE CONTROLS)
+         TOOLBAR SUPERIOR CON CONTROLES INTERACTIVOS
          ======================================================================== -->
     <header class="showcase-toolbar">
         <div class="toolbar-group">
             <span style="font-size: 0.85rem; font-weight: 600; color: var(--accent);">Craft UI/UX Engine</span>
             <span style="color: var(--text-dim);">/</span>
-            <span style="font-size: 0.82rem; color: var(--text-muted);">Simulador Interactivo de Prototipos</span>
+            <span style="font-size: 0.82rem; color: var(--text-muted);">Simulador Interactivo Multidispositivo</span>
         </div>
 
-        <!-- SELECTOR DE DISPOSITIVO (WEB DESKTOP vs APP MOBILE) -->
+        <!-- SELECTOR DE VISTA: WEB DESKTOP vs APP COMPACTA -->
         <div class="toolbar-group">
             <div class="pill-toggle">
                 <button class="pill-btn active" id="btn-view-web" onclick="switchView('web')">
@@ -629,13 +757,12 @@
          ======================================================================== -->
     <main class="stage-container">
         <div class="viewport-frame" id="viewport-frame">
-            <!-- NOTCH FOR APP MODE -->
             <div class="phone-notch">
                 <div class="notch-pill"></div>
             </div>
 
             <div class="app-shell">
-                <!-- SIDEBAR (DESKTOP) -->
+                <!-- SIDEBAR DESKTOP -->
                 <aside class="sidebar">
                     <div class="brand-badge">
                         <div class="brand-logo">L</div>
@@ -643,20 +770,20 @@
                     </div>
 
                     <ul class="nav-list">
-                        <li class="nav-item active" onclick="activateNav(this)">
+                        <li class="nav-item active" data-screen="dashboard" onclick="navigateTo('dashboard', this)">
                             <span>📊</span> Dashboard
                         </li>
-                        <li class="nav-item" onclick="activateNav(this)">
+                        <li class="nav-item" data-screen="inventario" onclick="navigateTo('inventario', this)">
                             <span>🔐</span> Inventario Activos
                             <span class="nav-badge">12</span>
                         </li>
-                        <li class="nav-item" onclick="activateNav(this)">
+                        <li class="nav-item" data-screen="protocolo" onclick="navigateTo('protocolo', this)">
                             <span>📋</span> Protocolo Notarial
                         </li>
-                        <li class="nav-item" onclick="activateNav(this)">
+                        <li class="nav-item" data-screen="backups" onclick="navigateTo('backups', this)">
                             <span>💾</span> Backups Cifrados
                         </li>
-                        <li class="nav-item" onclick="activateNav(this)">
+                        <li class="nav-item" data-screen="ajustes" onclick="navigateTo('ajustes', this)">
                             <span>⚙️</span> Ajustes de Llaves
                         </li>
                     </ul>
@@ -674,153 +801,418 @@
                     </div>
                 </aside>
 
-                <!-- MAIN WORKSPACE -->
+                <!-- CONTENIDO DINÁMICO DE PANTALLAS -->
                 <section class="content-area">
-                    <div class="header-section">
-                        <div class="page-heading">
-                            <h1>Patrimonio y Protocolos</h1>
-                            <p>Gestión offline-first con cifrado militar Argon2id y AES-256-GCM.</p>
+
+                    <!-- ========================================================
+                         PANTALLA 1: DASHBOARD
+                         ======================================================== -->
+                    <div class="screen-view active-screen" id="screen-dashboard">
+                        <div class="header-section">
+                            <div class="page-heading">
+                                <h1>Dashboard y Estado General</h1>
+                                <p>Visión ejecutiva del patrimonio digital y estado de contingencia.</p>
+                            </div>
+                            <div class="header-actions">
+                                <button class="btn btn-secondary" onclick="triggerToast('Firmas SHA-256 auditadas: 100% íntegras')">
+                                    🔍 Auditar Firmas
+                                </button>
+                                <button class="btn btn-primary" onclick="navigateTo('inventario')">
+                                    ＋ Gestionar Bóveda
+                                </button>
+                            </div>
                         </div>
-                        <div class="header-actions">
-                            <button class="btn btn-secondary" onclick="triggerToast('Firmas SHA-256 verificadas correctamente')">
-                                🔍 Verificar Firmas
-                            </button>
-                            <button class="btn btn-primary" onclick="triggerToast('Nueva entrada de activo simulada')">
-                                ＋ Nuevo Activo
-                            </button>
+
+                        <div class="bento-grid">
+                            <div class="bento-card">
+                                <div class="card-header">
+                                    <span>Activos Protegidos</span>
+                                    <span>Bóveda Local</span>
+                                </div>
+                                <div class="card-metric">12</div>
+                                <span class="status-pill">● Cifrado AES-256-GCM</span>
+                            </div>
+
+                            <div class="bento-card">
+                                <div class="card-header">
+                                    <span>Derivación de Clave</span>
+                                    <span>Argon2id</span>
+                                </div>
+                                <div class="card-metric" style="color: var(--accent);">64 MB / 3it</div>
+                                <span class="status-pill">● Blindaje Anti-Fuerza Bruta</span>
+                            </div>
+
+                            <div class="bento-card">
+                                <div class="card-header">
+                                    <span>Salud de Contingencia</span>
+                                    <span>Doble USB</span>
+                                </div>
+                                <div class="card-metric" style="font-size: 1.35rem; margin-top: 0.85rem;">2 / 2 USBs OK</div>
+                                <span class="status-pill" style="background: rgba(56, 189, 248, 0.12); color: #38BDF8; border-color: rgba(56, 189, 248, 0.25);">
+                                    ● Verificado Hoy
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="table-card">
+                            <div class="table-toolbar">
+                                <div style="font-weight: 600; font-size: 0.9rem;">Accesos y Eventos Recientes</div>
+                                <span style="font-size: 0.75rem; color: var(--text-dim);">Registro criptográfico local</span>
+                            </div>
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Evento</th>
+                                        <th>Dispositivo</th>
+                                        <th>Fecha / Hora</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Descifrado de Bóveda Notarial</strong></td>
+                                        <td>PC Master (Windows 11)</td>
+                                        <td>Hoy, 20:55</td>
+                                        <td><span class="status-pill">● Correcto</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Verificación de Backup Físico</strong></td>
+                                        <td>Pendrive Sandisk Ultra</td>
+                                        <td>Hoy, 19:40</td>
+                                        <td><span class="status-pill">● Hash Válido</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Sincronización Backup Cifrado</strong></td>
+                                        <td>Google Drive (Contingencia)</td>
+                                        <td>Ayer, 21:10</td>
+                                        <td><span class="status-pill">● Sincronizado</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
 
-                    <!-- BENTO CARDS -->
-                    <div class="bento-grid">
-                        <div class="bento-card">
-                            <div class="card-header">
-                                <span>Activos Bajo Bóveda</span>
-                                <span>🔒 100% Offline</span>
+                    <!-- ========================================================
+                         PANTALLA 2: INVENTARIO DE ACTIVOS
+                         ======================================================== -->
+                    <div class="screen-view" id="screen-inventario">
+                        <div class="header-section">
+                            <div class="page-heading">
+                                <h1>Inventario Criptográfico de Activos</h1>
+                                <p>Registro clasificado con firmas digitales y directrices de emergencia.</p>
                             </div>
-                            <div class="card-metric" id="metric-assets">12</div>
-                            <span class="status-pill">
-                                <span>●</span> Todos Cifrados
-                            </span>
+                            <div class="header-actions">
+                                <button class="btn btn-primary" onclick="triggerToast('Formulario de nueva entrada abierto')">
+                                    ＋ Añadir Activo
+                                </button>
+                            </div>
                         </div>
 
-                        <div class="bento-card">
-                            <div class="card-header">
-                                <span>Seguridad Criptográfica</span>
-                                <span>Argon2id</span>
+                        <div class="table-card">
+                            <div class="table-toolbar">
+                                <div class="search-box">
+                                    <span class="search-icon">🔍</span>
+                                    <input type="text" class="search-input" placeholder="Buscar por activo, banco o etiqueta..." oninput="filterTable(this.value)">
+                                </div>
+                                <div class="filter-pills">
+                                    <button class="filter-btn active" onclick="applyFilter('all', this)">Todos (4)</button>
+                                    <button class="filter-btn" onclick="applyFilter('Finanzas', this)">Finanzas</button>
+                                    <button class="filter-btn" onclick="applyFilter('Cripto', this)">Cripto</button>
+                                    <button class="filter-btn" onclick="applyFilter('Legal', this)">Legal</button>
+                                </div>
                             </div>
-                            <div class="card-metric" style="color: var(--accent);">99.8%</div>
-                            <span class="status-pill">
-                                <span>●</span> Grado Bancario
-                            </span>
-                        </div>
 
-                        <div class="bento-card">
-                            <div class="card-header">
-                                <span>Último Respaldo Físico</span>
-                                <span>USB Primario</span>
-                            </div>
-                            <div class="card-metric" style="font-size: 1.35rem; margin-top: 0.85rem;">Hoy, 20:55</div>
-                            <span class="status-pill" style="background: rgba(56, 189, 248, 0.12); color: #38BDF8; border-color: rgba(56, 189, 248, 0.25);">
-                                <span>●</span> Sincronizado
-                            </span>
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Activo / Entidad</th>
+                                        <th>Categoría</th>
+                                        <th>Firma SHA-256</th>
+                                        <th>Acción de Emergencia</th>
+                                        <th style="text-align: right;">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="assets-tbody">
+                                    <tr data-cat="Finanzas">
+                                        <td>
+                                            <div style="font-weight: 600;">Cuenta Corriente Principal</div>
+                                            <div style="font-size: 0.75rem; color: var(--text-dim);">BBVA España</div>
+                                        </td>
+                                        <td><span class="tag-pill tag-finance">Finanzas</span></td>
+                                        <td><span class="mono-val">e3b0c442...8bc9</span></td>
+                                        <td style="color: var(--text-muted); font-size: 0.8rem;">Presentar certificado defunción y transferir a herederos</td>
+                                        <td style="text-align: right;">
+                                            <button class="btn btn-secondary" style="padding: 0.3rem 0.6rem; font-size: 0.75rem;" onclick="triggerToast('Mostrando credenciales cifradas de BBVA')">Ver</button>
+                                        </td>
+                                    </tr>
+                                    <tr data-cat="Cripto">
+                                        <td>
+                                            <div style="font-weight: 600;">Ledger Nano X (Bóveda Fría)</div>
+                                            <div style="font-size: 0.75rem; color: var(--text-dim);">Bitcoin, Ethereum, Solana</div>
+                                        </td>
+                                        <td><span class="tag-pill tag-crypto">Cripto</span></td>
+                                        <td><span class="mono-val">7a91bf12...33d1</span></td>
+                                        <td style="color: var(--text-muted); font-size: 0.8rem;">Semilla de 24 palabras dividida en protocolo Shamir</td>
+                                        <td style="text-align: right;">
+                                            <button class="btn btn-secondary" style="padding: 0.3rem 0.6rem; font-size: 0.75rem;" onclick="triggerToast('Mostrando ubicación de la semilla Shamir')">Ver</button>
+                                        </td>
+                                    </tr>
+                                    <tr data-cat="Legal">
+                                        <td>
+                                            <div style="font-weight: 600;">Escritura Notarial de Propiedad</div>
+                                            <div style="font-size: 0.75rem; color: var(--text-dim);">Inmueble Madrid Centro</div>
+                                        </td>
+                                        <td><span class="tag-pill tag-doc">Legal</span></td>
+                                        <td><span class="mono-val">5b20da99...11fe</span></td>
+                                        <td style="color: var(--text-muted); font-size: 0.8rem;">Copia física en caja de seguridad bancaria #402</td>
+                                        <td style="text-align: right;">
+                                            <button class="btn btn-secondary" style="padding: 0.3rem 0.6rem; font-size: 0.75rem;" onclick="triggerToast('Mostrando datos notariales y protocolo físico')">Ver</button>
+                                        </td>
+                                    </tr>
+                                    <tr data-cat="Cloud">
+                                        <td>
+                                            <div style="font-weight: 600;">Servidores Cloud & Dominios</div>
+                                            <div style="font-size: 0.75rem; color: var(--text-dim);">Cloudflare / Hetzner / AWS</div>
+                                        </td>
+                                        <td><span class="tag-pill tag-cloud">Infraestructura</span></td>
+                                        <td><span class="mono-val">9f82ab77...22ca</span></td>
+                                        <td style="color: var(--text-muted); font-size: 0.8rem;">Migrar facturación y conservar dominios clave</td>
+                                        <td style="text-align: right;">
+                                            <button class="btn btn-secondary" style="padding: 0.3rem 0.6rem; font-size: 0.75rem;" onclick="triggerToast('Mostrando credenciales de infraestructura')">Ver</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
 
-                    <!-- DATA TABLE VIEW -->
-                    <div class="table-card">
-                        <div class="table-toolbar">
-                            <div class="search-box">
-                                <span class="search-icon">🔍</span>
-                                <input type="text" class="search-input" placeholder="Buscar en boveda..." oninput="filterTable(this.value)">
+                    <!-- ========================================================
+                         PANTALLA 3: PROTOCOLO NOTARIAL
+                         ======================================================== -->
+                    <div class="screen-view" id="screen-protocolo">
+                        <div class="header-section">
+                            <div class="page-heading">
+                                <h1>Protocolo Notarial y Albacea</h1>
+                                <p>Instrucciones secuenciales para familiares y herederos autorizados.</p>
                             </div>
-                            <div style="font-size: 0.78rem; color: var(--text-dim);">
-                                Mostrando 4 activos principales
+                            <div class="header-actions">
+                                <button class="btn btn-primary" onclick="triggerToast('Generando Documento Notarial Maestro PDF...')">
+                                    📄 Exportar PDF Notarial
+                                </button>
                             </div>
                         </div>
 
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th>Activo / Entidad</th>
-                                    <th>Categoría</th>
-                                    <th>Firma SHA-256</th>
-                                    <th>Protocolo de Emergencia</th>
-                                    <th style="text-align: right;">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="assets-tbody">
-                                <tr>
-                                    <td>
-                                        <div style="font-weight: 600;">Cuenta Bancaria Nodriza</div>
-                                        <div style="font-size: 0.75rem; color: var(--text-dim);">BBVA Corporativo</div>
-                                    </td>
-                                    <td><span class="tag-pill tag-finance">Finanzas</span></td>
-                                    <td><span class="mono-val">e3b0c442...8bc9</span></td>
-                                    <td style="color: var(--text-muted); font-size: 0.8rem;">Bloqueo y albacea notarial</td>
-                                    <td style="text-align: right;">
-                                        <button class="btn btn-secondary" style="padding: 0.3rem 0.6rem; font-size: 0.75rem;" onclick="triggerToast('Detalles del activo descifrados')">Ver</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div style="font-weight: 600;">Hardware Wallet Ledger</div>
-                                        <div style="font-size: 0.75rem; color: var(--text-dim);">Bóveda Fría Bitcoin/ETH</div>
-                                    </td>
-                                    <td><span class="tag-pill tag-crypto">Criptoactivos</span></td>
-                                    <td><span class="mono-val">7a91bf12...33d1</span></td>
-                                    <td style="color: var(--text-muted); font-size: 0.8rem;">Recuperación con semilla Shamir</td>
-                                    <td style="text-align: right;">
-                                        <button class="btn btn-secondary" style="padding: 0.3rem 0.6rem; font-size: 0.75rem;" onclick="triggerToast('Detalles del activo descifrados')">Ver</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div style="font-weight: 600;">Escrituras Notariales Finca</div>
-                                        <div style="font-size: 0.75rem; color: var(--text-dim);">Caja de Seguridad Madrid</div>
-                                    </td>
-                                    <td><span class="tag-pill tag-doc">Legal / Físico</span></td>
-                                    <td><span class="mono-val">5b20da99...11fe</span></td>
-                                    <td style="color: var(--text-muted); font-size: 0.8rem;">Entrega de llave a herederos</td>
-                                    <td style="text-align: right;">
-                                        <button class="btn btn-secondary" style="padding: 0.3rem 0.6rem; font-size: 0.75rem;" onclick="triggerToast('Detalles del activo descifrados')">Ver</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="step-list">
+                            <div class="step-item">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <h3>Toma de Control Físico del Pendrive Maestro</h3>
+                                    <p>Localizar el USB cifrado etiquetado como "LEGADO DIGITAL" en la caja ignífuga o caja fuerte del domicilio.</p>
+                                </div>
+                            </div>
+                            <div class="step-item">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <h3>Desbloqueo en Modo Desconectado (Offline)</h3>
+                                    <p>Insertar el USB en cualquier ordenador y abrir <code>inicio.html</code> sin necesidad de conexión a internet. La aplicación verificará las firmas locales.</p>
+                                </div>
+                            </div>
+                            <div class="step-item">
+                                <div class="step-number">3</div>
+                                <div class="step-content">
+                                    <h3>Introducción de la Llave Maestra Notarial</h3>
+                                    <p>Introducir la contraseña maestra entregada bajo pliego cerrado en el testamento notarial. El algoritmo Argon2id descifrará la bóveda en memoria RAM.</p>
+                                </div>
+                            </div>
+                            <div class="step-item">
+                                <div class="step-number">4</div>
+                                <div class="step-content">
+                                    <h3>Ejecución de Acciones Bancarias y Criptográficas</h3>
+                                    <p>Seguir las instrucciones específicas detalladas en la columna "Acción de Emergencia" para cada cuenta bancaria, monedero frío y servicio en la nube.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
+                    <!-- ========================================================
+                         PANTALLA 4: BACKUPS CIFRADOS
+                         ======================================================== -->
+                    <div class="screen-view" id="screen-backups">
+                        <div class="header-section">
+                            <div class="page-heading">
+                                <h1>Respaldos Físicos y Contingencia</h1>
+                                <p>Control de sincronización entre los dos pendrives físicos y la copia en la nube.</p>
+                            </div>
+                            <div class="header-actions">
+                                <button class="btn btn-primary" onclick="triggerToast('Generando nuevo backup cifrado AES-256-GCM...')">
+                                    💾 Generar Backup Cifrado
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="backup-grid">
+                            <div class="bento-card">
+                                <div class="card-header">
+                                    <span>USB A: Master Principal</span>
+                                    <span class="status-pill">● Sincronizado</span>
+                                </div>
+                                <div class="card-metric" style="font-size: 1.25rem; margin-top: 0.5rem;">SanDisk Ultra 64GB</div>
+                                <div style="font-size: 0.78rem; color: var(--text-muted); margin: 0.5rem 0;">
+                                    Hash SHA-256: <code class="mono-val">3a19ff02...890b</code><br>
+                                    Última escritura: <strong>Hoy, 20:55</strong>
+                                </div>
+                                <button class="btn btn-secondary" style="width: 100%; margin-top: 0.5rem;" onclick="triggerToast('Integridad de USB A verificada')">
+                                    Verificar Integridad
+                                </button>
+                            </div>
+
+                            <div class="bento-card">
+                                <div class="card-header">
+                                    <span>USB B: Espejo Notaría</span>
+                                    <span class="status-pill" style="background: rgba(245, 158, 11, 0.12); color: #F59E0B; border-color: rgba(245, 158, 11, 0.25);">● Requiere Sincronización</span>
+                                </div>
+                                <div class="card-metric" style="font-size: 1.25rem; margin-top: 0.5rem;">Kingston DataTraveler 32GB</div>
+                                <div style="font-size: 0.78rem; color: var(--text-muted); margin: 0.5rem 0;">
+                                    Ubicación: <strong>Caja de Seguridad / Notaría</strong><br>
+                                    Antigüedad: <strong>14 días</strong>
+                                </div>
+                                <button class="btn btn-secondary" style="width: 100%; margin-top: 0.5rem;" onclick="triggerToast('Preparando paquete de actualización para USB B')">
+                                    Actualizar USB Espejo
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ========================================================
+                         PANTALLA 5: AJUSTES DE LLAVES
+                         ======================================================== -->
+                    <div class="screen-view" id="screen-ajustes">
+                        <div class="header-section">
+                            <div class="page-heading">
+                                <h1>Ajustes de Seguridad y Derivación</h1>
+                                <p>Configuración de parámetros criptográficos y protección ante coacción.</p>
+                            </div>
+                            <div class="header-actions">
+                                <button class="btn btn-primary" onclick="triggerToast('Configuración criptográfica guardada')">
+                                    💾 Guardar Cambios
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="settings-card">
+                            <div class="setting-row">
+                                <div class="setting-info">
+                                    <h4>Algoritmo de Derivación de Clave</h4>
+                                    <p>Resistencia militar ante ataques con tarjetas gráficas (GPUs/ASICs).</p>
+                                </div>
+                                <div class="setting-control">
+                                    <select onchange="triggerToast('Algoritmo cambiado a ' + this.value)">
+                                        <option value="Argon2id" selected>Argon2id (Recomendado - 64MB)</option>
+                                        <option value="PBKDF2">PBKDF2 (Fallback universal - 100.000 it)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="setting-row">
+                                <div class="setting-info">
+                                    <h4>PIN de Coacción (Duress PIN)</h4>
+                                    <p>Abre una bóveda falsa señuelo con datos inocuos si eres forzado a desbloquear.</p>
+                                </div>
+                                <div class="setting-control">
+                                    <input type="password" value="••••" style="width: 100px; text-align: center;">
+                                </div>
+                            </div>
+
+                            <div class="setting-row">
+                                <div class="setting-info">
+                                    <h4>Tiempo de Autobloqueo por Inactividad</h4>
+                                    <p>Destruye las llaves de descifrado en memoria tras el tiempo especificado.</p>
+                                </div>
+                                <div class="setting-control">
+                                    <select onchange="triggerToast('Autobloqueo fijado en ' + this.value)">
+                                        <option value="5">5 minutos</option>
+                                        <option value="15" selected>15 minutos</option>
+                                        <option value="30">30 minutos</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </section>
             </div>
 
-            <!-- MOBILE BOTTOM BAR FOR APP VIEW -->
+            <!-- BOTTOM BAR EN MODO APP -->
             <nav class="app-bottom-bar">
-                <button class="bottom-nav-btn active" onclick="triggerToast('Sección Dashboard')">
+                <button class="bottom-nav-btn active" data-screen="dashboard" onclick="navigateTo('dashboard', this)">
                     <span style="font-size: 1.1rem;">📊</span> Inicio
                 </button>
-                <button class="bottom-nav-btn" onclick="triggerToast('Sección Bóveda')">
+                <button class="bottom-nav-btn" data-screen="inventario" onclick="navigateTo('inventario', this)">
                     <span style="font-size: 1.1rem;">🔐</span> Bóveda
                 </button>
-                <button class="bottom-nav-btn" onclick="triggerToast('Sección Protocolos')">
+                <button class="bottom-nav-btn" data-screen="protocolo" onclick="navigateTo('protocolo', this)">
                     <span style="font-size: 1.1rem;">📋</span> Protocolo
                 </button>
-                <button class="bottom-nav-btn" onclick="triggerToast('Sección Ajustes')">
+                <button class="bottom-nav-btn" data-screen="backups" onclick="navigateTo('backups', this)">
+                    <span style="font-size: 1.1rem;">💾</span> Backups
+                </button>
+                <button class="bottom-nav-btn" data-screen="ajustes" onclick="navigateTo('ajustes', this)">
                     <span style="font-size: 1.1rem;">⚙️</span> Ajustes
                 </button>
             </nav>
         </div>
     </main>
 
-    <!-- LIVE TOAST NOTIFICATION -->
+    <!-- TOAST NOTIFICATION -->
     <div class="craft-toast" id="craft-toast">
         <span>⚡</span>
-        <span id="toast-text">Acción completada con éxito</span>
+        <span id="toast-text">Acción completada</span>
     </div>
 
     <!-- ========================================================================
-         INTERACTIVE LOGIC (SWITCHER, THEMES, MICROINTERACTIONS)
+         SCRIPT DE NAVEGACIÓN Y MICROINTERACCIONES
          ======================================================================== -->
     <script>
-        // 1. Selector de Vista (Web Desktop vs App Compacta)
+        // 1. NAVEGACIÓN ENTRE PANTALLAS (SWAPPING DE VISTAS REAL)
+        function navigateTo(screenId, el) {
+            // Ocultar todas las pantallas y mostrar la elegida
+            document.querySelectorAll('.screen-view').forEach(screen => {
+                screen.classList.remove('active-screen');
+            });
+            const targetScreen = document.getElementById('screen-' + screenId);
+            if (targetScreen) {
+                targetScreen.classList.add('active-screen');
+            }
+
+            // Sincronizar clases activas en sidebar desktop
+            document.querySelectorAll('.nav-item').forEach(item => {
+                if (item.getAttribute('data-screen') === screenId) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+
+            // Sincronizar clases activas en bottom nav móvil
+            document.querySelectorAll('.bottom-nav-btn').forEach(btn => {
+                if (btn.getAttribute('data-screen') === screenId) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            const screenNames = {
+                dashboard: 'Dashboard General',
+                inventario: 'Inventario de Activos',
+                protocolo: 'Protocolo Notarial',
+                backups: 'Respaldos Cifrados',
+                ajustes: 'Ajustes de Seguridad'
+            };
+            triggerToast('Cargada vista: ' + (screenNames[screenId] || screenId));
+        }
+
+        // 2. CONMUTADOR DE DISPOSITIVO (WEB DESKTOP vs APP COMPACTA)
         function switchView(mode) {
             const frame = document.getElementById('viewport-frame');
             const btnWeb = document.getElementById('btn-view-web');
@@ -830,24 +1222,24 @@
                 frame.classList.add('mode-app');
                 btnApp.classList.add('active');
                 btnWeb.classList.remove('active');
-                triggerToast('Modo App Compacta activado (Marco Móvil 420px)');
+                triggerToast('Modo App Móvil Activado (Marco 414px)');
             } else {
                 frame.classList.remove('mode-app');
                 btnWeb.classList.add('active');
                 btnApp.classList.remove('active');
-                triggerToast('Modo Web Desktop activado (Bento Grid 1280px)');
+                triggerToast('Modo Web Desktop Activado (Bento Grid 1240px)');
             }
         }
 
-        // 2. Selector de Color de Acento
+        // 3. COLOR DE ACENTO
         function setAccent(color, el) {
             document.body.setAttribute('data-accent', color);
             document.querySelectorAll('.accent-dot').forEach(d => d.classList.remove('active'));
             if (el) el.classList.add('active');
-            triggerToast('Acento visual cambiado a ' + color.toUpperCase());
+            triggerToast('Acento visual: ' + color.toUpperCase());
         }
 
-        // 3. Toggle de Tema (Dark / Light)
+        // 4. MODO OSCURO / CLARO
         function toggleTheme() {
             const current = document.body.getAttribute('data-theme');
             const target = current === 'dark' ? 'light' : 'dark';
@@ -855,14 +1247,24 @@
             triggerToast('Tema cambiado a ' + target.toUpperCase());
         }
 
-        // 4. Navegación Interactiva
-        function activateNav(el) {
-            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-            el.classList.add('active');
-            triggerToast('Vista cambiada: ' + el.innerText.trim());
+        // 5. FILTROS DE TABLA POR CATEGORÍA
+        function applyFilter(category, el) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            if (el) el.classList.add('active');
+
+            const rows = document.querySelectorAll('#assets-tbody tr');
+            rows.forEach(r => {
+                const cat = r.getAttribute('data-cat');
+                if (category === 'all' || cat === category) {
+                    r.style.display = '';
+                } else {
+                    r.style.display = 'none';
+                }
+            });
+            triggerToast('Filtro aplicado: ' + category);
         }
 
-        // 5. Filtro de Búsqueda Instantánea
+        // 6. BÚSQUEDA INSTANTÁNEA
         function filterTable(query) {
             const rows = document.querySelectorAll('#assets-tbody tr');
             const q = query.toLowerCase();
@@ -872,7 +1274,7 @@
             });
         }
 
-        // 6. Toast Dinámico con Curva de Salida
+        // 7. TOAST FEEDBACK
         let toastTimeout;
         function triggerToast(msg) {
             const toast = document.getElementById('craft-toast');
@@ -882,7 +1284,7 @@
             clearTimeout(toastTimeout);
             toastTimeout = setTimeout(() => {
                 toast.classList.remove('visible');
-            }, 2500);
+            }, 2200);
         }
     </script>
 </body>
