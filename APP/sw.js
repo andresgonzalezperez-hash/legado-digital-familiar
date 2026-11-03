@@ -1,4 +1,4 @@
-const CACHE_NAME = 'legado-digital-v1.2';
+const CACHE_NAME = 'legado-digital-v1.3';
 const urlsToCache = [
   './',
   './index.html',
@@ -6,6 +6,8 @@ const urlsToCache = [
   './app.js',
   './manifest.json',
   './icon.png',
+  './icon-512.png',
+  './mapa-recuperacion.html',
   './core/jspdf.umd.min.js',
   './core/html2canvas.min.js',
   './core/crypto.js',

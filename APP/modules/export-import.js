@@ -28,9 +28,10 @@ async function exportData() {
         downloadAnchorNode.click();
         downloadAnchorNode.remove();
         setTimeout(() => URL.revokeObjectURL(url), 1000);
+        showToast("Backup cifrado AES-256 exportado correctamente.", "success");
     } catch (e) {
         console.error("Error al cifrar la exportación:", e);
-        alert("No se pudo generar la copia de seguridad cifrada.");
+        showToast("No se pudo generar la copia de seguridad cifrada.", "error");
     }
 }
 
@@ -118,10 +119,10 @@ function handleImport(event) {
             updateDashboardMetrics();
             updatePrintView();
             
-            alert('¡Datos importados con éxito! Se han validado (incluyendo firmas SHA-256) y guardado en tu bóveda cifrada.');
+            showToast('¡Datos importados con éxito! Firmas SHA-256 y bóveda actualizadas.', 'success');
         } catch (error) {
             console.error("Import error:", error);
-            alert('Error al importar datos: ' + (error.message || 'Archivo JSON no válido.'));
+            showToast('Error al importar datos: ' + (error.message || 'Archivo JSON no válido.'), 'error');
         }
     };
     reader.readAsText(file);

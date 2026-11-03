@@ -8,10 +8,12 @@ Este proyecto es una plantilla de código abierto diseñada para ayudarte a orga
 
 ---
 
-## 🚀 Características Principales (v1.2.0)
+## 🚀 Características Principales (v1.3.0)
 
+*   **Mapa Visual Interactivo de Emergencia (`Archify`)**: Incluye [`APP/mapa-recuperacion.html`](APP/mapa-recuperacion.html), un mapa interactivo autónomo con animaciones de flujo y modo oscuro/claro para guiar visualmente a los familiares paso a paso.
 *   **Cifrado Local Blindado (Web Crypto API)**: Todo el inventario y los backups exportados se cifran matemáticamente en tu navegador (AES-256-GCM y PBKDF2 con 210.000 iteraciones). La llave de sesión se marca como `extractable: false` exclusivamente en memoria RAM.
-*   **PWA Offline Completa**: Se instala como aplicación de escritorio independiente con sus 17 módulos y librerías cacheados localmente para funcionar al 100% sin conexión a la red.
+*   **PWA Offline Completa (Escritorio y Android WebAPK)**: Se instala como aplicación nativa independiente con sus 19 módulos, iconos 192/512px y librerías cacheados localmente para funcionar al 100% sin conexión a la red.
+*   **Interfaz Moderna (`<dialog>` y View Transitions)**: Diálogos modales nativos para la verificación criptográfica SHA-256, notificaciones Toast accesibles y transiciones fluidas entre secciones.
 *   **Modo Familiar (Solo Lectura)**: Interfaz simplificada a prueba de fallos para que los beneficiarios puedan consultar la guía, leer los activos y verificar archivos sin riesgo de borrado accidental.
 *   **Exportación a PDF Notarial y Vista Imprimible**: Generación automatizada de un "Documento Maestro" en formato A4 con ubicaciones de contingencia, inventario y firmas criptográficas listo para imprimir y guardar en la caja fuerte.
 *   **Generación y Verificación Activa SHA-256**: Cálculo de huellas criptográficas de tus contenedores `.pcv` (Picocrypt) y verificador interactivo en un clic (`🔒 Firmado (Verificar)`) para comprobar que los archivos no han sufrido degradación (*bit-rot*) con el paso de los años.

@@ -3,8 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[PRE] Legado Digital Familiar - Dashboard</title>
-    <link rel="stylesheet" href="index.css?v=6">
+    <meta name="theme-color" content="#121212">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon.png">
+    <link rel="apple-touch-icon" href="icon.png">
+    <title>Legado Digital Familiar - Bóveda Offline</title>
+    <link rel="stylesheet" href="index.css?v=7">
+    <style>
+        dialog#legado-native-dialog::backdrop {
+            background: rgba(2, 6, 23, 0.72);
+            backdrop-filter: blur(6px);
+        }
+        ::view-transition-old(root),
+        ::view-transition-new(root) {
+            animation-duration: 180ms;
+        }
+        @media print {
+            .print-table tr, .print-section, .print-field {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+            #legado-toast-container, dialog#legado-native-dialog {
+                display: none !important;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- GLOWING BACKGROUND NODES (AviFly Style) -->
@@ -196,10 +221,15 @@
 
         <!-- RECUPERAR GUIA TAB -->
         <section id="recuperar-guia" class="tab-content">
-            <header class="section-header">
-                <span class="badge-tag" style="background-color: rgba(239, 68, 68, 0.15); color: #f87171;">PROTOCOLO DE EMERGENCIA</span>
-                <h1>Guía de Recuperación del Legado</h1>
-                <p class="subtitle">Sigue estos pasos ordenadamente para acceder a las contraseñas, documentos y activos en caso de contingencia.</p>
+            <header class="section-header" style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:1rem;">
+                <div>
+                    <span class="badge-tag" style="background-color: rgba(239, 68, 68, 0.15); color: #f87171;">PROTOCOLO DE EMERGENCIA</span>
+                    <h1>Guía de Recuperación del Legado</h1>
+                    <p class="subtitle">Sigue estos pasos ordenadamente para acceder a las contraseñas, documentos y activos en caso de contingencia.</p>
+                </div>
+                <a href="mapa-recuperacion.html" target="_blank" class="btn btn-primary" style="text-decoration:none; display:inline-flex; align-items:center; gap:0.5rem; background:linear-gradient(135deg, #10b981, #059669); border:none;">
+                    🗺️ Abrir Mapa Visual Interactivo (Archify)
+                </a>
             </header>
 
             <div class="grid-container">

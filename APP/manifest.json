@@ -1,18 +1,36 @@
 {
+  "id": "/index.html",
   "name": "Legado Digital Familiar",
   "short_name": "Legado Digital",
   "description": "Bóveda local y protocolo de emergencia familiar 100% offline",
   "start_url": "index.html",
   "scope": "./",
   "display": "standalone",
+  "orientation": "any",
   "background_color": "#121212",
   "theme_color": "#121212",
+  "categories": ["security", "finance", "utilities"],
   "icons": [
     {
       "src": "icon.png",
       "sizes": "192x192",
       "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
       "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Mapa Visual de Recuperación",
+      "short_name": "Mapa Emergencia",
+      "description": "Abrir el diagrama interactivo paso a paso para familiares",
+      "url": "mapa-recuperacion.html",
+      "icons": [{ "src": "icon.png", "sizes": "192x192" }]
     }
   ]
 }

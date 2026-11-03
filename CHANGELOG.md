@@ -2,6 +2,14 @@
 
 Todas las actualizaciones notables de este proyecto se documentarán en este archivo.
 
+## [1.3.0] - 2026-11-03
+### Añadido
+- **Mapa Visual Interactivo de Recuperación (`APP/mapa-recuperacion.html`)**: Diagrama interactivo standalone generado con `archify` que guía a los familiares paso a paso por las 4 carrileras de emergencia (Arranque Físico/2FA, Desbloqueo Offline USB, Auditoría SHA-256 / Contingencia Drive y Ejecución Patrimonial).
+- **Modales Nativos `<dialog>` y Notificaciones Toast (`APP/core/helpers.js`)**: Sustitución de los `alert()` bloqueantes por diálogos modales accesibles con desenfoque de fondo, cierre al pulsar fuera (*light-dismiss*) y avisos flotantes (`aria-live="polite"`).
+- **View Transitions API (`APP/core/router.js`)**: Transiciones fluidas al navegar entre pestañas del panel con degradación elegante en navegadores antiguos.
+- **Empaquetado Móvil Android WebAPK (`APP/icon-512.png`, `APP/manifest.json`, `TOOLS/instalar_en_android.ps1`)**: Iconos adaptables de 512x512, accesos directos (`shortcuts`) y script de despliegue rápido por ADB para llevar la bóveda offline en los móviles de Andrés y Maeva.
+- **Sincronización Automática de Backups Cifrados (`START/sincronizar_drive.ps1`)**: Recolección automática de archivos `legado_backup_cifrado_*.json` hacia `BACKUPS_CIFRADOS/` y sincronización con Google Drive.
+
 ## [1.2.0] - 2026-10-16
 ### Seguridad y Criptografía
 - **Blindaje de Llave Maestra en RAM (`crypto.js`, `app.js`, `state.js`)**: La clave maestra de sesión (`sessionVMK`) ahora se importa con `extractable: false` en Web Crypto API y vive exclusivamente en memoria volátil, eliminando por completo el almacenamiento intermedio con clave estática en `sessionStorage` y cualquier escritura de respaldo en texto plano en `localStorage`.

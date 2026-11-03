@@ -2,15 +2,16 @@
 #             GITIGNORE - LEGADO DIGITAL FAMILIAR
 # =========================================================================
 
-# Bases de datos y llaves de cifrado
+# Bases de datos, backups personales y llaves de cifrado
 *.kdbx
 *.pcv
 *.key
 *.cryptomator
 *.bkup
 *.c9r
+BACKUPS_CIFRADOS/*.json
 
-# BÃ³veda Documental (carpetas con PDFs reales de escrituras, seguros, etc.)
+# Bóveda Documental (carpetas con PDFs reales de escrituras, seguros, etc.)
 **/BOVEDA_DOCUMENTAL/
 **/BOVEDA_DOCUMENTAL/**/*
 
@@ -26,8 +27,12 @@ Desktop.ini
 .DS_Store
 .directory
 
-# Carpetas de cachÃ©, tareas del asistente e informaciÃ³n del sistema
+# Carpetas de caché, artefactos intermedios de Archify y tareas del sistema
 .system_generated/
+.archify/
+*.finalize*.json
+*.browser-check.json
+*.receipt.json
 scratch/
 *.log
 .tmp.*

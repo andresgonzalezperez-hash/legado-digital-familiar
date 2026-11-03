@@ -1,4 +1,4 @@
-function switchTab(tabId) {
+function applyTabSwitch(tabId) {
     document.querySelectorAll('.tab-content').forEach(tab => {
         tab.classList.remove('active');
     });
@@ -6,16 +6,28 @@ function switchTab(tabId) {
         item.classList.remove('active');
     });
 
-    document.getElementById(tabId).classList.add('active');
+    const targetTab = document.getElementById(tabId);
+    if (targetTab) {
+        targetTab.classList.add('active');
+    }
     
     const navItems = document.querySelectorAll('.nav-item');
     navItems.forEach(item => {
-        if (item.getAttribute('onclick').includes(tabId)) {
+        const onclickAttr = item.getAttribute('onclick');
+        if (onclickAttr && onclickAttr.includes(tabId)) {
             item.classList.add('active');
         }
     });
 
     if (typeof closeMobileMenu === 'function') {
         closeMobileMenu();
+    }
+}
+
+function switchTab(tabId) {
+    if (typeof document.startViewTransition === 'function') {
+        document.startViewTransition(() => applyTabSwitch(tabId));
+    } else {
+        applyTabSwitch(tabId);
     }
 }

@@ -202,9 +202,9 @@ async function generateHash(event) {
     try {
         const hash = await Crypto.hashFile(file);
         document.getElementById('f-file-hash').value = hash;
-        alert('Firma SHA-256 generada exitosamente:\n' + hash);
+        showToast('Firma SHA-256 generada para ' + file.name, 'success');
     } catch (e) {
-        alert('Error al generar la firma: ' + e.message);
+        showToast('Error al generar la firma: ' + e.message, 'error');
     }
 }
 
@@ -221,26 +221,34 @@ function verifyEntryHash(id) {
             const actualHash = (await Crypto.hashFile(file)).toLowerCase().trim();
             const expectedHash = item.fileHash.toLowerCase().trim();
             if (actualHash === expectedHash) {
-                alert(
-                    `✅ VERIFICACIÓN EXITOSA: ARCHIVO ÍNTEGRO\n\n` +
-                    `Activo: ${item.name}\n` +
-                    `Archivo analizado: ${file.name}\n\n` +
-                    `La huella matemática SHA-256 coincide exactamente con la firma original. El archivo no ha sufrido degradación física (bit-rot) ni alteraciones.\n\n` +
-                    `SHA-256: ${actualHash}`
-                );
+                showStatusDialog({
+                    type: 'success',
+                    badge: '✅ Verificación Criptográfica Exitosa',
+                    title: 'Archivo Íntegro (Sin Alteraciones)',
+                    bodyHtml: `
+                        <p style="margin:0 0 0.75rem 0;">El contenedor <strong>${escapeHtml(file.name)}</strong> correspondiente a <strong>${escapeHtml(item.name)}</strong> coincide matemáticamente con la huella original registrada.</p>
+                        <div style="background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.25); border-radius:8px; padding:0.75rem; font-family:monospace; font-size:0.78rem; word-break:break-all; color:#a7f3d0;">
+                            <strong>SHA-256 Verificado:</strong><br>${escapeHtml(actualHash)}
+                        </div>
+                    `
+                });
             } else {
-                alert(
-                    `❌ ALERTA CRÍTICA: ARCHIVO CORRUPTO O ALTERADO\n\n` +
-                    `Activo: ${item.name}\n` +
-                    `Archivo analizado: ${file.name}\n\n` +
-                    `La firma SHA-256 NO coincide con la registrada:\n` +
-                    `• Esperada: ${expectedHash}\n` +
-                    `• Calculada: ${actualHash}\n\n` +
-                    `RECOMENDACIÓN: No utilices esta copia. Acude al segundo USB de contingencia o descarga el respaldo desde Google Drive.`
-                );
+                showStatusDialog({
+                    type: 'error',
+                    badge: '❌ Alerta de Corrupción o Alteración',
+                    title: 'La Firma SHA-256 NO Coincide',
+                    bodyHtml: `
+                        <p style="margin:0 0 0.75rem 0;">El archivo <strong>${escapeHtml(file.name)}</strong> ha sufrido degradación física (bit-rot) o no corresponde al activo <strong>${escapeHtml(item.name)}</strong>.</p>
+                        <div style="background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.25); border-radius:8px; padding:0.75rem; font-family:monospace; font-size:0.76rem; word-break:break-all; color:#fca5a5;">
+                            <strong>Esperada:</strong><br>${escapeHtml(expectedHash)}<br><br>
+                            <strong>Calculada:</strong><br>${escapeHtml(actualHash)}
+                        </div>
+                        <p style="margin:0.75rem 0 0 0; font-size:0.85rem; color:#fde047;"><strong>Recomendación:</strong> No abras esta copia. Utiliza el segundo USB de contingencia o descarga el respaldo desde Google Drive.</p>
+                    `
+                });
             }
         } catch (err) {
-            alert('Error al verificar el archivo: ' + err.message);
+            showToast('Error al verificar el archivo: ' + err.message, 'error');
         }
     };
     input.click();

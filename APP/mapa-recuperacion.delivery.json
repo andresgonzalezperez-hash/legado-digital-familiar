@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "17fe003c-090b-475f-afb5-33cef16240b9",
+  "status": "current",
+  "command": "deliver",
+  "type": "workflow",
+  "input": "C:\\PROYECTOS\\legado-digital-familiar\\.archify\\workflow-protocolo-recuperacion-20261103-195000\\candidate.json",
+  "output": "C:\\Proyectos\\legado-digital-familiar\\APP\\mapa-recuperacion.html",
+  "specification": {
+    "sha256": "55ed4771b723eb18e4b9a78c071666c1feb221c8f07cc01723a055925a9e5313",
+    "bytes": 4866
+  },
+  "artifact": {
+    "sha256": "702280735531b032dec617e0d9afa49bf2b1c84ec6940632bc63126f0af728af",
+    "bytes": 850680
+  }
+}

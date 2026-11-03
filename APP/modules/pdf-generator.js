@@ -123,4 +123,7 @@ window.generateMasterPDF = async function() {
     }
 
     doc.save('Legado_Digital_Maestro.pdf');
+    if (typeof showToast === 'function') {
+        showToast('Documento Maestro PDF generado y descargado.', 'success');
+    }
 };

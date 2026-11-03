@@ -313,3 +313,18 @@ Este archivo registra cronolÃ³gicamente los pasos dados en el desarrollo del p
 **Fecha**: 16 de Septiembre de 2026
 **Acción**: Integración de la función `resetCredentialsAndSetup()` en `APP/app.js` y adición del botón *"Restablecer Contraseñas y Empezar de Cero"* en el panel inicial de `APP/index.html`.
 **Solución**: Permite limpiar las claves criptográficas derivadas anteriores (`legado_vmk_maestra`, `legado_vmk_familiar`, `legado_salt`) para reiniciar el flujo de primer arranque y permitir al usuario crear sus nuevas contraseñas desde cero con el nuevo nivel de cifrado.
+
+
+---
+
+## [03/11/2026] - Hito 32: Lanzamiento v1.3.0 (Mapa Archify, UI `<dialog>`, Glance, Drive y Android PWA)
+
+### Mejoras Implementadas
+1. **Mapa Visual Interactivo de Recuperación (`archify`)**: Generado [`APP/mapa-recuperacion.html`](file:///C:/PROYECTOS/legado-digital-familiar/APP/mapa-recuperacion.html) e integrado directamente en la Guía de Recuperación Familiar y en la barra lateral.
+2. **Backups Cifrados y Sincronización Google Drive**: Actualizado [`START/sincronizar_drive.ps1`](file:///C:/PROYECTOS/legado-digital-familiar/START/sincronizar_drive.ps1) con recolección automática de `legado_backup_cifrado_*.json` hacia `BACKUPS_CIFRADOS/`.
+3. **Integración en Glance Dashboard (`8081`)**: Registrado el servicio `http://127.0.0.1:8095` en el panel de monitorización de Glance.
+4. **Modernización Web (`<dialog>`, Toasts y View Transitions)**: Reemplazados los `alert()` nativos por un sistema de diálogo modal `<dialog>` y notificaciones Toast no intrusivas en `helpers.js`, `inventario.js`, `export-import.js` y `pdf-generator.js`.
+5. **Empaquetado Móvil Android (WebAPK)**: Añadido `APP/icon-512.png`, `shortcuts` en `APP/manifest.json` y script [`TOOLS/instalar_en_android.ps1`](file:///C:/PROYECTOS/legado-digital-familiar/TOOLS/instalar_en_android.ps1).
+
+### 📋 Backlog del Proyecto (Ideas en Cartera)
+- **[Pendiente] Recordatorio Semestral de Mantenimiento / Prueba de Vida (`n8n` / `angy-bot`)**: Automatizar un aviso por Telegram cada 6 meses cuando la fecha del último backup cifrado supere los 180 días, recordando comprobar los USBs físicos y verificar las firmas SHA-256. *(Anotado en backlog el 03/11/2026).*
