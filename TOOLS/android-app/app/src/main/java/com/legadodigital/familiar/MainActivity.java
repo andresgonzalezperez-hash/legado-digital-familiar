@@ -1,7 +1,9 @@
 package com.legadodigital.familiar;
 
 import android.annotation.SuppressLint;
+import android.net.Uri;
 import android.os.Bundle;
+import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
@@ -28,22 +30,33 @@ public class MainActivity extends AppCompatActivity {
         settings.setDatabaseEnabled(true);
         settings.setAllowFileAccess(false);
         settings.setAllowContentAccess(false);
+        settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
 
-        // Sirve los assets locales bajo https://appassets.androidcache.net/assets/
-        // Esto garantiza origen seguro (Secure Context) para WebCrypto API en modo offline
+        // WebViewAssetLoader mapea los assets locales en un dominio virtual HTTPS seguro
+        // Dominio oficial: appassets.androidplatform.net
         final WebViewAssetLoader assetLoader = new WebViewAssetLoader.Builder()
+                .setDomain("appassets.androidplatform.net")
                 .addPathHandler("/assets/", new WebViewAssetLoader.AssetsPathHandler(this))
                 .build();
+
+        webView.setWebChromeClient(new WebChromeClient());
 
         webView.setWebViewClient(new WebViewClientCompat() {
             @Override
             public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
                 return assetLoader.shouldInterceptRequest(request.getUrl());
             }
+
+            @Override
+            public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
+                return assetLoader.shouldInterceptRequest(Uri.parse(url));
+            }
         });
 
-        webView.loadUrl("https://appassets.androidcache.net/assets/index.html");
+        // Carga el punto de entrada local
+        webView.loadUrl("https://appassets.androidplatform.net/assets/index.html");
 
+        // Soporte para botón atrás del sistema en navegación SPA
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
