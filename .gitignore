@@ -39,3 +39,10 @@ scratch/
 .env
 .env.*
 !.env.example
+
+# Android build artifacts y caches
+TOOLS/android-app/.gradle/
+TOOLS/android-app/build/
+TOOLS/android-app/app/build/
+TOOLS/android-app/app/src/main/assets/
+*.apk

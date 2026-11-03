@@ -1,0 +1,2 @@
+rootProject.name = "LegadoDigital"
+include ':app'

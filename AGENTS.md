@@ -18,10 +18,15 @@ Start-Process "C:\PROYECTOS\legado-digital-familiar\inicio.html"
 
 ### 2. Detener Servidor
 ```powershell
-Get-Process -Name python -ErrorAction SilentlyContinue | Where-Object { $_.CommandLine -like "*8088*" } | Stop-Process
+Get-Process -Name python -ErrorAction SilentlyContinue | Where-Object { $_.CommandLine -like "*8095*" } | Stop-Process
 ```
 
-### 3. Reiniciar
+### 3. Compilar APK Android Offline
+```powershell
+powershell -ExecutionPolicy Bypass -File "C:\PROYECTOS\legado-digital-familiar\TOOLS\compilar_apk.ps1"
+```
+
+### 4. Reiniciar Servidor
 Ejecutar Detener y volver a Iniciar.
 
 ## Diagnóstico y Logs
