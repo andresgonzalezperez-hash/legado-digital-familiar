@@ -11,6 +11,12 @@
 
 **[English Documentation](#-english-documentation) · [Documentación en Español](#-documentación-en-español)**
 
+<p align="center" style="margin-top: 16px;">
+  <a href="https://andresgonzalezperez-hash.github.io/legado-digital-familiar/">
+    <img src="https://img.shields.io/badge/%F0%9F%9A%80%20TRY%20LIVE%20DEMO-Runs%20100%25%20In%20Your%20Browser-10b981?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Try Live Demo" height="36" />
+  </a>
+</p>
+
 ---
 
 <p align="center">
@@ -23,6 +29,12 @@
 # 🇬🇧 English Documentation
 
 ## 1. Executive Summary & Purpose
+
+> [!TIP]
+> **🚀 Try the Live Interactive Demo (Zero Installation & Zero Tracking):**  
+> Test the vault directly in your browser: **[andresgonzalezperez-hash.github.io/legado-digital-familiar](https://andresgonzalezperez-hash.github.io/legado-digital-familiar/)**  
+> Open DevTools (`F12` -> Network) and inspect for yourself: zero outbound requests, zero telemetries, 100% client-side Web Crypto execution.
+
 **Legado Digital Familiar** is an open-source, air-gapped sovereign infrastructure designed to organize, safeguard, and delegate your digital estate, asset inventory, and family emergency protocols. 
 
 Built entirely in **100% Pure W3C HTML5/CSS/JavaScript with the Web Crypto API**, it guarantees perpetual access across decades without relying on external servers, third-party cloud backends, subscriptions, or fragile mobile application stores (no APK/AppStore obsolescence).
@@ -138,6 +150,12 @@ This system and its generated reports serve solely as an informative, private in
 </p>
 
 ## 1. Resumen Ejecutivo y Propósito
+
+> [!TIP]
+> **🚀 Prueba la Demo Interactiva en Vivo (Sin instalación ni servidores):**  
+> Abre la bóveda directamente en tu navegador: **[andresgonzalezperez-hash.github.io/legado-digital-familiar](https://andresgonzalezperez-hash.github.io/legado-digital-familiar/)**  
+> Abre la consola de desarrollo (`F12` -> Red) y compruébalo tú mismo: cero conexiones salientes, cero cookies, ejecución local 100% segura en tu navegador.
+
 **Legado Digital Familiar** es una infraestructura soberana de código abierto diseñada para organizar, proteger y delegar tu patrimonio digital, inventario de activos y protocolos de emergencia familiares.
 
 Construida íntegramente en **HTML5/CSS/JavaScript puro W3C con la Web Crypto API**, garantiza el funcionamiento perpetuo a lo largo de décadas sin depender de servidores externos, servicios en la nube de terceros, suscripciones ni tiendas de aplicaciones móviles (sin riesgo de obsolescencia de APKs o App Store).
