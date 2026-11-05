@@ -13,6 +13,10 @@
 
 ---
 
+<p align="center">
+  <img src="docs/screenshots/en/02_vault_dashboard_freshness.png" alt="Digital Legacy Main Dashboard" width="95%" style="border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.4);" />
+</p>
+
 </div>
 
 <a id="english-documentation"></a>
@@ -26,6 +30,34 @@ Built entirely in **100% Pure W3C HTML5/CSS/JavaScript with the Web Crypto API**
 > [!WARNING]
 > **CRITICAL SECURITY ADVISORY:**
 > This repository is pre-configured with strict `.gitignore` rules. **NEVER commit or upload master passwords, cryptocurrency seed phrases, password databases (`.kdbx`), encrypted vault files (`.pcv`), or unencrypted personal PDFs to GitHub**. This software must run exclusively in a local, offline environment or on encrypted offline USB drives.
+
+---
+
+## 📸 Interface & Workflow Gallery
+
+<div align="center">
+
+### 1. Air-Gapped Sovereign Unlock & Keylogger Guard
+*Client-side local AES-256-GCM decryption with host security advisory notice.*
+<img src="docs/screenshots/en/01_vault_unlock_security.png" alt="Sovereign Vault Unlock" width="90%" style="border-radius: 8px; margin-bottom: 24px;" />
+
+### 2. Main Dashboard & Real-Time Data Freshness Tracker
+*Status of the 3 security layers (Passbolt, Picocrypt, Physical Kit) and obsolescence semaphore.*
+<img src="docs/screenshots/en/02_vault_dashboard_freshness.png" alt="Main Dashboard & Freshness" width="90%" style="border-radius: 8px; margin-bottom: 24px;" />
+
+### 3. Asset Directory & SHA-256 Bit-Rot Integrity Auditor
+*Banking, insurance policies, and cloud credentials catalog with live hash verification.*
+<img src="docs/screenshots/en/03_vault_inventory_sha256.png" alt="Asset Directory with SHA-256 Verification" width="90%" style="border-radius: 8px; margin-bottom: 24px;" />
+
+### 4. Heir Contingency Protocol & Printable Notary Worksheet
+*Cognitive-grief adapted steps for non-technical family members and sealed envelope worksheet.*
+<img src="docs/screenshots/en/04_vault_family_recovery_guide.png" alt="Heir Contingency Guide" width="90%" style="border-radius: 8px; margin-bottom: 24px;" />
+
+### 5. Interactive Visual Recovery Swimlanes (`Archify`)
+*Standalone, zero-dependency animated contingency map.*
+<img src="docs/screenshots/en/05_vault_archify_interactive_map.png" alt="Interactive Archify Recovery Map" width="90%" style="border-radius: 8px;" />
+
+</div>
 
 ---
 
@@ -74,6 +106,7 @@ legado-digital-familiar/
 │   └── index.html                   # Main application entry point
 ├── START/                           # Automated emergency scripts (e.g. Drive mirror)
 ├── TOOLS/                           # Recommended offline utilities (Picocrypt)
+├── docs/screenshots/                # High-resolution bilingual UI mockups (EN / ES)
 ├── inicio.html                      # Root launcher (open directly in any browser)
 ├── MATRIZ_CUMPLIMIENTO_ISO_SOC2.md  # Formal regulatory compliance audit matrix
 ├── DOCUMENTACION_MAESTRA.md         # Exhaustive technical and operational manual
@@ -100,6 +133,10 @@ This system and its generated reports serve solely as an informative, private in
 <a id="documentación-en-español"></a>
 # 🇪🇸 Documentación en Español
 
+<p align="center">
+  <img src="docs/screenshots/es/02_dashboard_frescura_es.png" alt="Panel de Control Principal Legado Digital" width="95%" style="border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.4);" />
+</p>
+
 ## 1. Resumen Ejecutivo y Propósito
 **Legado Digital Familiar** es una infraestructura soberana de código abierto diseñada para organizar, proteger y delegar tu patrimonio digital, inventario de activos y protocolos de emergencia familiares.
 
@@ -108,6 +145,34 @@ Construida íntegramente en **HTML5/CSS/JavaScript puro W3C con la Web Crypto AP
 > [!WARNING]
 > **ADVERTENCIA DE SEGURIDAD CRÍTICA:**
 > Este repositorio cuenta con un archivo `.gitignore` estricto. **NUNCA subas contraseñas maestras, frases semilla de criptomonedas, bases de datos (`.kdbx`), archivos cifrados (`.pcv`) ni PDFs personales desprotegidos a GitHub**. Este software debe utilizarse exclusivamente en entornos locales, desconectados de internet (Air-Gapped) o en unidades USB privadas.
+
+---
+
+## 📸 Galería Visual de Pantallas y Flujos
+
+<div align="center">
+
+### 1. Desbloqueo Seguro y Clave Maestra (Air-Gapped)
+*Descifrado AES-256-GCM local en navegador con advertencia preventiva contra keyloggers.*
+<img src="docs/screenshots/es/01_desbloqueo_seguridad_es.png" alt="Pantalla de Desbloqueo Seguro" width="90%" style="border-radius: 8px; margin-bottom: 24px;" />
+
+### 2. Panel Principal y Semáforo de Frescura en Tiempo Real
+*Supervisión de las 3 capas (Passbolt, Picocrypt, Soporte Físico) y alerta de obsolescencia.*
+<img src="docs/screenshots/es/02_dashboard_frescura_es.png" alt="Dashboard Principal" width="90%" style="border-radius: 8px; margin-bottom: 24px;" />
+
+### 3. Directorio de Activos y Verificador Criptográfico SHA-256
+*Inventario patrimonial con comprobación de integridad contra degradación magnética (bit-rot).*
+<img src="docs/screenshots/es/03_inventario_activos_es.png" alt="Inventario con Verificador SHA-256" width="90%" style="border-radius: 8px; margin-bottom: 24px;" />
+
+### 4. Modo Familiar y Hoja Notarial de Emergencia
+*Protocolo de contingencia paso a paso para herederos y plantilla para sobre cerrado.*
+<img src="docs/screenshots/es/04_guia_familiar_notarial_es.png" alt="Modo Familiar y Hoja Notarial" width="90%" style="border-radius: 8px; margin-bottom: 24px;" />
+
+### 5. Mapa Visual Interactivo de Contingencia (`Archify`)
+*Diagrama interactivo autónomo con las 4 carrileras de actuación en emergencia.*
+<img src="docs/screenshots/es/05_mapa_recuperacion_archify_es.png" alt="Mapa Visual Archify" width="90%" style="border-radius: 8px;" />
+
+</div>
 
 ---
 
@@ -156,6 +221,7 @@ legado-digital-familiar/
 │   └── index.html                   # Vista principal de la aplicación
 ├── START/                           # Scripts automatizados de respaldo
 ├── TOOLS/                           # Utilidades offline recomendadas (Picocrypt)
+├── docs/screenshots/                # Mockups visuales bilingües en alta resolución
 ├── inicio.html                      # Acceso directo raíz para el navegador
 ├── MATRIZ_CUMPLIMIENTO_ISO_SOC2.md  # Matriz de cumplimiento normativo
 ├── DOCUMENTACION_MAESTRA.md         # Manual técnico integral
