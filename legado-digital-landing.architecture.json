@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Arquitectura Dual Air-Gapped Legado Digital v1.3.1",
+    "output": "legado-digital-architecture.html",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    { "id": "usb_system", "type": "frontend", "label": "Sistema 1: USB Notarial", "sublabel": "inicio.html / Batch Offline", "pos": [40, 160], "size": [170, 64], "tag": "Desktop 1280px" },
+    { "id": "apk_system", "type": "frontend", "label": "Sistema 2: APK Android", "sublabel": "LegadoDigital.apk (6.03 MB)", "pos": [40, 360], "size": [170, 64], "tag": "Móvil 414px" },
+    { "id": "webcrypto_engine", "type": "security", "label": "Web Crypto API Subtlety", "sublabel": "window.crypto.subtle", "pos": [280, 260], "size": [180, 64], "tag": "RAM-Only" },
+    { "id": "kdf_module", "type": "security", "label": "Derivación Argon2 + PBKDF2", "sublabel": "210k iters / Sal 16B", "pos": [280, 120], "size": [180, 64] },
+    { "id": "ram_key", "type": "database", "label": "CryptoKey en Memoria RAM", "sublabel": "extractable: false", "pos": [530, 260], "size": [180, 64], "tag": "Zero-Leak" },
+    { "id": "sha256_audit", "type": "backend", "label": "Auditoría Anti Bit-Rot", "sublabel": "Firmas SHA-256 en Vivo", "pos": [530, 120], "size": [180, 64], "tag": "Integridad USB" },
+    { "id": "vault_data", "type": "database", "label": "Bóveda Cifrada AES-256", "sublabel": "GCM 128-bit Auth Tag", "pos": [780, 260], "size": [180, 64] },
+    { "id": "pdf_generator", "type": "backend", "label": "Generador PDF A4 Notarial", "sublabel": "Alta Resolución / Físico", "pos": [780, 120], "size": [180, 64] },
+    { "id": "family_guard", "type": "security", "label": "Modo Familiar Blindado", "sublabel": "Solo Lectura / Sin Borrado", "pos": [780, 400], "size": [180, 64], "tag": "Escudo Verde" }
+  ],
+  "boundaries": [
+    { "kind": "region", "label": "Frontera Air-Gapped (100% Fuera de Línea / Modo Avión)", "wraps": ["usb_system", "apk_system", "webcrypto_engine", "kdf_module"] },
+    { "kind": "security-group", "label": "Espacio Volátil Protegido (RAM & Custodia Patrimonial)", "wraps": ["ram_key", "sha256_audit", "vault_data", "pdf_generator", "family_guard"] }
+  ],
+  "connections": [
+    { "id": "usb-to-crypto", "from": "usb_system", "to": "webcrypto_engine", "label": "Doble Clic Offline", "variant": "emphasis" },
+    { "id": "apk-to-crypto", "from": "apk_system", "to": "webcrypto_engine", "label": "WebViewAssetLoader", "variant": "emphasis" },
+    { "id": "crypto-to-kdf", "from": "webcrypto_engine", "to": "kdf_module", "label": "Derivación Clave" },
+    { "id": "crypto-to-ram", "from": "webcrypto_engine", "to": "ram_key", "label": "Llave en RAM", "variant": "security" },
+    { "id": "ram-to-vault", "from": "ram_key", "to": "vault_data", "label": "Descifrado en Vuelo", "variant": "security" },
+    { "id": "usb-to-audit", "from": "kdf_module", "to": "sha256_audit", "label": "Verificación Hash" },
+    { "id": "vault-to-pdf", "from": "vault_data", "to": "pdf_generator", "label": "Exportar A4", "variant": "dashed" },
+    { "id": "vault-to-family", "from": "vault_data", "to": "family_guard", "label": "Vista Familiar", "variant": "emphasis" }
+  ],
+  "cards": [
+    { "dot": "emerald", "title": "Soberanía Air-Gapped", "items": ["0 dependencias de servidores en la nube", "Cero cuotas mensuales perpetuas", "Funciona 100% en Modo Avión en PC o Android"] },
+    { "dot": "cyan", "title": "Memoria Volátil RAM-Only", "items": ["La CryptoKey vive en RAM con extractable: false", "Al cerrar la pestaña se destruye la llave", "Protegido contra bit-rot con comprobación SHA-256"] },
+    { "dot": "amber", "title": "Modo Familiar Blindado", "items": ["Doble interfaz: Modo Titular vs Modo Familiar", "Ocultación absoluta de botones destructivos", "PDF Notarial A4 imprimible para la caja fuerte"] }
+  ]
+}

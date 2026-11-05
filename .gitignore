@@ -45,3 +45,12 @@ scratch/
 *.apk
 *.bin
 
+# Node & Frontend builds
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+.vite/
+**/vite.config.ts.timestamp*
+
+
