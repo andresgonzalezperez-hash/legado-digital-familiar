@@ -328,3 +328,21 @@ Este archivo registra cronolÃ³gicamente los pasos dados en el desarrollo del p
 
 ### 📋 Backlog del Proyecto (Ideas en Cartera)
 - **[Pendiente] Recordatorio Semestral de Mantenimiento / Prueba de Vida (`n8n` / `angy-bot`)**: Automatizar un aviso por Telegram cada 6 meses cuando la fecha del último backup cifrado supere los 180 días, recordando comprobar los USBs físicos y verificar las firmas SHA-256. *(Anotado en backlog el 03/11/2026).*
+
+
+---
+
+## [05/11/2026] - Hito 33: Hardening Normativo ISO/IEC 27001, ISO/IEC 27701 y SOC 2 Type II (v1.4.0 Pure HTML)
+
+### 1. Pivote Arquitectónico: Pure HTML W3C (Retirada de APK)
+- **Decisión de Longevidad**: Por instrucción expresa del usuario, se descartó el empaquetado Android (.apk) para blindar el principio de **inmortalidad del software (20-30 años)**. Un estándar web HTML5/CSS/JS estático W3C carece de dependencias de SDK de Google, firmas que expiran o permisos de sistema operativo.
+- **Limpieza de Archivos**: Eliminados todos los restos de `TOOLS/android-app/`, scripts de compilación `.apk` (`compilar_apk.ps1`, `instalar_en_android.ps1`) y binarios compilados tanto en el repositorio como en el Escritorio.
+- **Regla en .gitignore**: Prohibición explícita de cualquier binario o ejecutable (`*.exe`, `*.apk`, `*.bin`).
+
+### 2. Implementación de Controles Normativos de Seguridad
+1. **Content Security Policy (CSP) Hermética**: Inyectada en `APP/index.html` y `APP/mapa-recuperacion.html` con `connect-src 'none'`, `default-src 'none'`, `form-action 'none'` y `frame-ancestors 'none'`. Bloquea en origen cualquier intento de llamada a internet o fuga de datos.
+2. **Zeroización Activa en Memoria RAM**: Añadido `Crypto.zeroize()` en `APP/core/crypto.js` y ejecutado en `backToMainMenu()` (`APP/app.js`) para sobreescribir con ceros/aleatorios (`crypto.getRandomValues`) cualquier buffer de clave o contraseña al bloquear la bóveda.
+3. **Inmutabilidad en Runtime**: Aplicado `Object.freeze(Crypto)` para sellar las rutinas criptográficas contra extensiones de navegador hostiles.
+4. **Sanitización Integral Anti-XSS**: Verificación de escapado con `escapeHtml()` en todas las inyecciones de datos en el DOM.
+5. **Matriz Formal de Cumplimiento**: Creada `MATRIZ_CUMPLIMIENTO_ISO_SOC2.md` mapeando 16 controles de ISO 27001:2022, ISO 27701:2019 y SOC 2 Type II contra las líneas de código del proyecto.
+6. **Verificación Sintáctica**: Validación de integridad con `esprima` certificando 0 errores en todos los archivos JavaScript.
