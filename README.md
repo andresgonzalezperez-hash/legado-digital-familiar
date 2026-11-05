@@ -1,5 +1,5 @@
 # 🛡️ Legado Digital Familiar (Offline-First · Pure HTML)
-> **Versión**: 1.4.0 (Hardened ISO 27001, ISO 27701 & SOC 2)  
+> **Versión Actual**: v1.4.0 (Hardened ISO 27001, ISO 27701 & SOC 2)  
 > **Licencia**: MIT  
 
 Este proyecto es una infraestructura de código abierto diseñada para organizar tu legado digital, inventario de activos y protocolos de emergencia familiares de forma **100% privada, desconectada de internet (Air-Gapped) y en HTML puro**, garantizando su funcionamiento perpetuo sin depender de servidores externos ni aplicaciones nativas.
@@ -7,6 +7,20 @@ Este proyecto es una infraestructura de código abierto diseñada para organizar
 > [!WARNING]
 > **ADVERTENCIA DE SEGURIDAD CRÍTICA:**
 > Este repositorio incluye un archivo `.gitignore` configurado. **NUNCA subas tus contraseñas reales, frases semilla de criptomonedas, bases de datos (.kdbx) ni PDFs personales a GitHub**. Este código debe ser utilizado únicamente de forma local en tu ordenador o USB privado.
+
+---
+
+## 🏷️ Historial de Versiones Oficiales
+
+| Versión | Fecha | Hito Principal y Enlace |
+| :--- | :--- | :--- |
+| **`v1.4.0`** | **05/11/2026** | **Hardening Normativo & Pure HTML**: Blindaje bajo ISO/IEC 27001, ISO/IEC 27701 y SOC 2 Type II (CSP hermética, zeroización en RAM, anti-XSS y sellado de objetos). Retirada definitiva de APK para garantizar funcionamiento a 30 años en cualquier navegador W3C. [Ver detalles en Changelog](CHANGELOG.md#140---2026-11-05). |
+| **`v1.3.0`** | **03/11/2026** | **Mapa Archify & Modernización UI**: Incorporación del mapa interactivo de recuperación (`APP/mapa-recuperacion.html`), modales nativos `<dialog>`, notificaciones Toast y View Transitions API. [Ver detalles en Changelog](CHANGELOG.md#130---2026-11-03). |
+| **`v1.2.0`** | **16/10/2026** | **Blindaje Criptográfico en RAM**: Claves de sesión con `extractable: false`, exportación de copias de seguridad cifradas con AES-256-GCM y verificador activo de integridad SHA-256 en tiempo real. [Ver detalles en Changelog](CHANGELOG.md#120---2026-10-16). |
+| **`v1.1.0`** | **07/10/2026** | **PWA & Arquitectura Git**: Soporte para ejecución e instalación offline nativa mediante Service Worker, manifiesto web y exportación a PDF notarial. [Ver detalles en Changelog](CHANGELOG.md#110---2026-10-07). |
+| **`v1.0.0`** | **24/05/2026** | **Lanzamiento Inicial**: Bóveda offline-first en HTML/CSS/JS con cifrado local, inventario patrimonial y checklist de contingencia familiar. |
+
+*Para ver el registro exhaustivo de cambios, consulta el archivo [CHANGELOG.md](CHANGELOG.md) y la [Bitácora Histórica del Proyecto](información/bitacora_actualizacion.md).*
 
 ---
 
@@ -34,6 +48,7 @@ Este proyecto es una infraestructura de código abierto diseñada para organizar
 *   **`TOOLS/`**: Utilidades complementarias de cifrado físico (Picocrypt).
 *   **`MATRIZ_CUMPLIMIENTO_ISO_SOC2.md`**: Ficha técnica de auditoría y controles normativos.
 *   **`DOCUMENTACION_MAESTRA.md`**: Manual técnico exhaustivo del proyecto.
+*   **`CHANGELOG.md`**: Historial detallado de versiones y mejoras.
 
 ---
 

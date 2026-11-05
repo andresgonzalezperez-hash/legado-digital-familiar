@@ -16,6 +16,18 @@ A diferencia de los gestores comerciales en la nube (1Password, Bitwarden, etc.)
 
 ---
 
+## 🏷️ Historial de Versiones Oficiales
+
+| Versión | Fecha | Resumen de Cambios Clave |
+| :--- | :--- | :--- |
+| **`v1.4.0`** | **05/11/2026** | **Hardening Normativo ISO 27001, ISO 27701 & SOC 2 Type II**: Inyección de CSP hermética (`connect-src 'none'`), zeroización activa en memoria RAM, sellado inmutable `Object.freeze(Crypto)`, sanitización anti-XSS y elaboración de la matriz formal de cumplimiento. Retirada de la APK para consolidar la arquitectura 100% Pure HTML W3C. |
+| **`v1.3.0`** | **03/11/2026** | **Mapa Archify & Modernización UI/UX**: Incorporación del diagrama interactivo de contingencia familiar (`APP/mapa-recuperacion.html`), sustitución de `alert()` por diálogos modales nativos `<dialog>` y notificaciones Toast, View Transitions API y backup a Google Drive. |
+| **`v1.2.0`** | **16/10/2026** | **Blindaje Criptográfico en RAM**: Eliminación de claves estáticas intermedias en `sessionStorage`, aislamiento de clave maestra con `extractable: false`, copias de seguridad cifradas con AES-256-GCM y verificador activo de integridad SHA-256 en tiempo real. |
+| **`v1.1.0`** | **07/10/2026** | **PWA Offline & PDF Notarial**: Soporte de instalación local con Service Worker y manifiesto web, cálculo de firmas hash y exportación A4 para custodia notarial. |
+| **`v1.0.0`** | **24/05/2026** | **Lanzamiento Inicial**: Bóveda offline-first en HTML/CSS/JS con cifrado en cliente, inventario de activos y checklist familiar. |
+
+---
+
 ## 🏗️ 2. Arquitectura Técnica y Modelo de Seguridad
 
 ```
