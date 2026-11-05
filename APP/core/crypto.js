@@ -120,6 +120,21 @@ const Crypto = {
         return bytes.buffer;
     },
 
+        zeroize(target) {
+        if (!target) return;
+        try {
+            if (target instanceof ArrayBuffer) {
+                new Uint8Array(target).fill(0);
+            } else if (ArrayBuffer.isView(target)) {
+                new Uint8Array(target.buffer, target.byteOffset, target.byteLength).fill(0);
+            } else if (Array.isArray(target)) {
+                target.fill(0);
+            }
+        } catch (e) {
+            console.warn("Zeroization warning:", e);
+        }
+    },
+
     async hashFile(file) {
         const arrayBuffer = await file.arrayBuffer();
         const hashBuffer = await window.crypto.subtle.digest('SHA-256', arrayBuffer);
@@ -127,3 +142,5 @@ const Crypto = {
         return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
     }
 };
+
+Object.freeze(Crypto);

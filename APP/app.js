@@ -210,12 +210,23 @@ function backToMainMenu() {
     sessionStorage.removeItem('legado_authenticated');
     sessionStorage.removeItem('legado_session_vmk');
     sessionStorage.removeItem('legado_session_salt');
-    sessionVMK = null;
     
-    // Clear sensitive state in memory
+    // Zeroización activa de estado y referencias sensibles (ISO 27001 / SOC 2)
+    sessionVMK = null;
+    if (state.inventory && Array.isArray(state.inventory)) {
+        Crypto.zeroize(state.inventory);
+    }
     state.inventory = [];
     state.checklistState = {};
     
+    // Limpieza de campos DOM de credenciales
+    const passInput = document.getElementById('master-password-input');
+    if (passInput) passInput.value = '';
+    const setupPass1 = document.getElementById('setup-pass-recuperar');
+    if (setupPass1) setupPass1.value = '';
+    const setupPass2 = document.getElementById('setup-pass-actualizar');
+    if (setupPass2) setupPass2.value = '';
+
     document.body.classList.add('not-logged-in');
     document.body.classList.remove('mode-recuperar', 'mode-actualizar');
     document.getElementById('landing-overlay').style.display = 'flex';

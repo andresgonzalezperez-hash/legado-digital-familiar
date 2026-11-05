@@ -1,41 +1,43 @@
-# 🛡️ Plantilla de Legado Digital Familiar (Offline-First)
+# 🛡️ Legado Digital Familiar (Offline-First · Pure HTML)
+> **Versión**: 1.4.0 (Hardened ISO 27001, ISO 27701 & SOC 2)  
+> **Licencia**: MIT  
 
-Este proyecto es una plantilla de código abierto diseñada para ayudarte a organizar tu legado digital, inventario de activos y protocolos de emergencia familiares de forma 100% privada, offline y local.
+Este proyecto es una infraestructura de código abierto diseñada para organizar tu legado digital, inventario de activos y protocolos de emergencia familiares de forma **100% privada, desconectada de internet (Air-Gapped) y en HTML puro**, garantizando su funcionamiento perpetuo sin depender de servidores externos ni aplicaciones nativas.
 
 > [!WARNING]
 > **ADVERTENCIA DE SEGURIDAD CRÍTICA:**
-> Este repositorio incluye un archivo `.gitignore` configurado. **NUNCA subas tus contraseñas reales, frases semilla de criptomonedas, bases de datos (.kdbx) ni PDFs personales a GitHub**. Este código debe ser utilizado únicamente como plantilla local en tu ordenador o USB privado.
+> Este repositorio incluye un archivo `.gitignore` configurado. **NUNCA subas tus contraseñas reales, frases semilla de criptomonedas, bases de datos (.kdbx) ni PDFs personales a GitHub**. Este código debe ser utilizado únicamente de forma local en tu ordenador o USB privado.
 
 ---
 
-## 🚀 Características Principales (v1.3.0)
+## 🚀 Características Principales (v1.4.0)
 
-*   **Mapa Visual Interactivo de Emergencia (`Archify`)**: Incluye [`APP/mapa-recuperacion.html`](APP/mapa-recuperacion.html), un mapa interactivo autónomo con animaciones de flujo y modo oscuro/claro para guiar visualmente a los familiares paso a paso.
-*   **Cifrado Local Blindado (Web Crypto API)**: Todo el inventario y los backups exportados se cifran matemáticamente en tu navegador (AES-256-GCM y PBKDF2 con 210.000 iteraciones). La llave de sesión se marca como `extractable: false` exclusivamente en memoria RAM.
-*   **PWA Offline Completa (Escritorio y Android WebAPK)**: Se instala como aplicación nativa independiente con sus 19 módulos, iconos 192/512px y librerías cacheados localmente para funcionar al 100% sin conexión a la red.
-*   **Interfaz Moderna (`<dialog>` y View Transitions)**: Diálogos modales nativos para la verificación criptográfica SHA-256, notificaciones Toast accesibles y transiciones fluidas entre secciones.
-*   **Modo Familiar (Solo Lectura)**: Interfaz simplificada a prueba de fallos para que los beneficiarios puedan consultar la guía, leer los activos y verificar archivos sin riesgo de borrado accidental.
-*   **Exportación a PDF Notarial y Vista Imprimible**: Generación automatizada de un "Documento Maestro" en formato A4 con ubicaciones de contingencia, inventario y firmas criptográficas listo para imprimir y guardar en la caja fuerte.
-*   **Generación y Verificación Activa SHA-256**: Cálculo de huellas criptográficas de tus contenedores `.pcv` (Picocrypt) y verificador interactivo en un clic (`🔒 Firmado (Verificar)`) para comprobar que los archivos no han sufrido degradación (*bit-rot*) con el paso de los años.
+*   **100% Pure Web W3C (Sin APK)**: Funciona en cualquier navegador de cualquier sistema operativo (Windows, Mac, Linux, Android, iOS) simplemente abriendo `inicio.html`. Cero dependencias de tiendas de aplicaciones o permisos de sistema.
+*   **Hardening ISO 27001, ISO 27701 y SOC 2**:
+    *   **CSP Hermética**: Directiva de seguridad en cabecera `<meta>` que prohíbe cualquier conexión de red saliente (`connect-src 'none'`).
+    *   **Zeroización en RAM**: Sobreescritura activa de memoria con bytes aleatorios (`crypto.getRandomValues`) al cerrar la sesión o por inactividad.
+    *   **Inmutabilidad Runtime**: Sellado de objetos y funciones de descifrado con `Object.freeze()`.
+    *   **Sanitización Anti-XSS**: Escapado integral de todos los campos en el DOM.
+    *   **Matriz de Cumplimiento**: Documentada en [`MATRIZ_CUMPLIMIENTO_ISO_SOC2.md`](MATRIZ_CUMPLIMIENTO_ISO_SOC2.md).
+*   **Mapa Visual Interactivo de Emergencia (`Archify`)**: Diagrama interactivo autónomo ([`APP/mapa-recuperacion.html`](APP/mapa-recuperacion.html)) con animaciones y 4 carrileras de contingencia.
+*   **Cifrado Local Blindado (Web Crypto API)**: Todo el inventario se cifra con AES-256-GCM y PBKDF2 (210.000 iteraciones) / Argon2id. La clave de sesión vive exclusivamente en RAM con la directiva `extractable: false`.
+*   **Modo Familiar (Solo Lectura)**: Interfaz protegida para beneficiarios sin riesgo de borrado o alteración accidental de datos.
+*   **Exportación a PDF Notarial**: Generación de "Documento Maestro" A4 con salto de página inteligente listo para imprimir y archivar legalmente.
+*   **Auditoría de Integridad SHA-256**: Detección de degradación magnética de datos (*bit-rot*) con verificador interactivo en 1 clic.
 
 ---
 
 ## 📁 Estructura del Proyecto
 
-*   **`APP/`**: Contiene el motor lógico, la interfaz de usuario dividida en módulos (`core/` y `modules/`), el Service Worker y las librerías offline.
-*   **`START/`**: Scripts de conveniencia (por ejemplo, utilidades de automatización).
-*   **`TOOLS/`**: Directorio pensado para alojar tus binarios de cifrado (Picocrypt, KeePassXC).
+*   **`APP/`**: Motor lógico y de presentación modular (`core/`, `modules/`), Service Worker y librerías offline.
+*   **`START/`**: Scripts de arranque y sincronización de contingencia (`sincronizar_drive.ps1`).
+*   **`TOOLS/`**: Utilidades complementarias de cifrado físico (Picocrypt).
+*   **`MATRIZ_CUMPLIMIENTO_ISO_SOC2.md`**: Ficha técnica de auditoría y controles normativos.
+*   **`DOCUMENTACION_MAESTRA.md`**: Manual técnico exhaustivo del proyecto.
 
 ---
 
 ## ⚙️ Puesta en Marcha
 
-1.  Descarga este repositorio en tu equipo o USB de seguridad.
-2.  Haz doble clic en **`inicio.html`** (en la raíz) para abrir el cuadro de mando en tu navegador.
-3.  *(Opcional)*: Instala la aplicación (PWA) pulsando el icono de instalación en la barra de direcciones de Chrome o Edge.
-
----
-
-## ⚖️ Licencia y Exención de Responsabilidad
-
-Este proyecto se distribuye bajo la **Licencia MIT**, lo que significa que eres libre de usar, modificar y distribuir el código de forma gratuita y para cualquier fin, siempre que mantengas la atribución de autoría original. No obstante, el software se proporciona "tal cual", sin garantías de ningún tipo; el autor se exime de cualquier responsabilidad legal o técnica derivada de pérdidas de información, olvido de contraseñas maestras o fallos en las herramientas recomendadas.
+1.  Descarga este repositorio en tu ordenador o USB de seguridad.
+2.  Haz doble clic en **`inicio.html`** (en la raíz) para abrir la bóveda en tu navegador sin conexión a internet.

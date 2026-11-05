@@ -1,6 +1,6 @@
 # 🛡️ Legado Digital Familiar: Documentación Maestra del Proyecto
-> **Versión**: 1.3.1 (Edición Dual: USB Físico + APK Android Offline)  
-> **Filosofía**: 100% Offline-First · Soberanía de Datos · Cero Dependencia en la Nube  
+> **Versión**: 1.4.0 (Edición Hardened Pure HTML — Certificación y Controles ISO/IEC 27001, ISO/IEC 27701 & SOC 2 Type II)  
+> **Filosofía**: 100% Offline-First · Soberanía de Datos · Cero Dependencia en la Nube · Pure Web W3C  
 > **Licencia**: MIT  
 
 ---
@@ -12,7 +12,7 @@ El **Legado Digital Familiar** es una infraestructura de contingencia y custodia
 A diferencia de los gestores comerciales en la nube (1Password, Bitwarden, etc.) que dependen de servidores remotos, suscripciones recurrentes y políticas de recuperación de cuentas externas:
 * **Funciona 100% desconectado de internet (Modo Avión / Air-gapped)**.
 * **Cero servidores propietarios**: Los datos nunca viajan por redes públicas ni residen en bases de datos de terceros.
-* **Sistema Dual de Entrega**: Diseñado para ser ejecutado directamente desde un **Pendrive USB Notarial** en cualquier PC (Windows, Mac, Linux) o como una **Aplicación Nativa en Android (`.apk`)**.
+* **Estándar Web Puro Inmortal (W3C)**: No requiere instalación ni aplicaciones nativas compiladas (cero dependencias de APK o tiendas de apps). Se ejecuta directamente desde un **Pendrive USB Notarial** en cualquier navegador de cualquier dispositivo (Windows, Mac, Linux, Android, iOS).
 
 ---
 
@@ -21,13 +21,11 @@ A diferencia de los gestores comerciales en la nube (1Password, Bitwarden, etc.)
 ```
                              [ TITULAR / USUARIO ]
                                        │
-                ┌──────────────────────┴──────────────────────┐
-                ▼                                             ▼
-       [ SISTEMA 1: USB FÍSICO ]                   [ SISTEMA 2: ANDROID APK ]
-     inicio.html / iniciar_legado.bat                 LegadoDigital.apk
-        (Navegador Offline)                      (WebViewAssetLoader Seguro)
-                │                                             │
-                └──────────────────────┬──────────────────────┘
+                                       ▼
+                         [ PENDRIEVE USB FÍSICO NOTARIAL ]
+                         inicio.html / START/iniciar_legado.bat
+                         (Navegador Offline W3C Estándar)
+                                       │
                                        ▼
                      ┌───────────────────────────────────┐
                      │     MOTOR LÓGICO Y CRIPTOGRAFÍA   │
@@ -44,30 +42,26 @@ A diferencia de los gestores comerciales en la nube (1Password, Bitwarden, etc.)
 ### 2.1. Criptografía de Grado Militar (Web Crypto API)
 * **Derivación de Clave Maestra**: Se utiliza PBKDF2 (210.000 iteraciones con sal criptográfica única de 16 bytes) y compatibilidad con **Argon2id** (64 MB de memoria y 3 iteraciones) para neutralizar ataques de fuerza bruta asistidos por GPUs o ASICs.
 * **Cifrado Simétrico**: Algoritmo **AES-256-GCM** con Vector de Inicialización (IV) de 12 bytes aleatorio para cada operación de guardado y exportación.
-* **Aislamiento en Memoria**: La clave de sesión descifrada (`CryptoKey`) se genera con la directiva `extractable: false` y reside únicamente en la memoria volátil (RAM). Al cerrar la pestaña o la app, la clave desaparece sin dejar rastro en disco.
+* **Aislamiento en Memoria**: La clave de sesión descifrada (`CryptoKey`) se genera con la directiva `extractable: false` y reside únicamente en la memoria volátil (RAM). Al cerrar la pestaña o bloquear la bóveda, se ejecuta una rutina de **Zeroización** (`crypto.getRandomValues`) que destruye los buffers en memoria.
 
 ### 2.2. Verificación Activa de Integridad (SHA-256)
-Las memorias flash (USBs y smartphones) pueden sufrir degradación magnética o silenciosa (*bit-rot*) con los años. El sistema calcula y almacena la firma SHA-256 de cada archivo o contenedor `.pcv` (Picocrypt). 
+Las memorias flash (USBs) pueden sufrir degradación magnética o silenciosa (*bit-rot*) con los años. El sistema calcula y almacena la firma SHA-256 de cada archivo o contenedor `.pcv` (Picocrypt). 
 Desde la interfaz, el botón **`🔒 Firmado (Verificar)`** audita el archivo en tiempo real y confirma que ni un solo bit ha sido alterado.
 
 ---
 
-## 🚀 3. El Sistema Dual de Distribución
+## 🏛️ 3. Marco de Cumplimiento: ISO 27001, ISO 27701 & SOC 2 Type II
 
-El proyecto está concebido para poder presentarse y utilizarse en dos formatos complementarios:
+La versión 1.4.0 ha sido sometida a un riguroso proceso de **Hardening** documentado en [`MATRIZ_CUMPLIMIENTO_ISO_SOC2.md`](MATRIZ_CUMPLIMIENTO_ISO_SOC2.md):
 
-### 💾 Sistema A: USB Físico Notarial
-* **Uso**: Se guarda en la caja fuerte del hogar o se deposita en una notaría junto con el testamento.
-* **Arranque**:
-  1. Conectar el pendrive a cualquier ordenador.
-  2. Hacer doble clic en `inicio.html` o en `START/iniciar_legado.bat`.
-  3. No requiere instalar ningún software ni tener permisos de administrador.
-
-### 📱 Sistema B: Aplicación Nativa Android (`LegadoDigital.apk`)
-* **Uso**: Instalada en el smartphone del titular o facilitada en un archivo `.apk` autónomo (6.03 MB) a los beneficiarios.
-* **Seguridad de Red**: La aplicación no tiene salida a internet.
-* **Tecnología `WebViewAssetLoader`**: Sirve todos los archivos locales bajo el dominio virtual seguro `https://appassets.androidplatform.net/assets/`. Esto permite que el motor Chromium de Android habilite `window.crypto.subtle` de forma nativa en modo offline.
-* **Compilación Reproducible**: Mediante el script `TOOLS/compilar_apk.ps1`, se puede recompilar la app en un contenedor Docker en menos de 1 minuto sin ensuciar Windows con gigas de SDKs.
+1. **Content Security Policy (CSP) Hermética**:
+   Directiva en cabecera `<meta>` que prohíbe cualquier conexión externa (`connect-src 'none'`), bloqueando de raíz intentos de fuga de información o telemetría.
+2. **Sanitización Estricta Anti-XSS**:
+   Todo dato en el DOM se escapa mediante `escapeHtml()` y sanitizadores de atributos antes de su inserción en pantalla.
+3. **Inmutabilidad de Objetos (`Object.freeze`)**:
+   El objeto criptográfico `Crypto` y el motor de estado se sellan en tiempo de ejecución, impidiendo que extensiones maliciosas instaladas en el navegador del usuario puedan interceptar llamadas.
+4. **Zeroización de RAM**:
+   Destrucción activa de buffers de claves y contraseñas al pulsar "Cerrar Bóveda" o expirar la sesión por inactividad.
 
 ---
 
@@ -85,7 +79,7 @@ El sistema cuenta con un **Mapa Visual de Emergencia** (`APP/mapa-recuperacion.h
 
 1. **Modo Familiar (Solo Lectura)**: Al abrir la aplicación, el usuario puede seleccionar *"Soy Familiar / Beneficiario"*. La interfaz oculta los botones de edición y eliminación para evitar accidentes, permitiendo consultar el inventario, leer las directrices de emergencia y verificar las firmas.
 2. **Modo Titular (Gestión Completa)**: Requiere la contraseña maestra para desbloquear el inventario, añadir o editar activos, cambiar llaves criptográficas y generar respaldos.
-3. **Documento Notarial Maestro (PDF)**: Con un solo clic se genera un informe A4 de alta resolución (`modules/pdf-generator.js`) con salto de página inteligente (`break-inside: avoid`), listo para imprimir y archivar legalmente.
+3. **Documento Notarial Maestro (PDF)**: Con un solo clic se genera un informe A4 de alta resolución (`modules/pdf-generator.js`) con salto de página inteligente (`break-inside: avoid`), listo para imprimir y archivar legalmente en la notaría o caja fuerte.
 
 ---
 
@@ -101,11 +95,7 @@ Aunque el sistema es 100% offline, contempla una estrategia de redundancia pasiv
 
 El proyecto incorpora la skill nativa **`craft-ui-ux`**, que rechaza el diseño genérico de plantillas y aplica los estándares visuales de herramientas de primer nivel (Linear, Stripe, Raycast):
 * **Modo Oscuro Profundo (Obsidian)**: Fondos `#090D16` con bordes sutiles translúcidos y sombras multicapa difusas.
-* **Simulador de Prototipos (`MOCKUP_SHOWCASE.html`)**: Permite alternar en tiempo real entre:
-  * **Vista Web Desktop**: Bento Grid panorámico de 1280px con barra lateral y métricas en tiempo real.
-  * **Vista App Compacta**: Marco de smartphone de 414px con *Notch / Dynamic Island* y barra de navegación inferior.
-  * **5 Pantallas Funcionales**: Dashboard, Inventario Criptográfico, Protocolo Notarial, Respaldos Físicos y Ajustes de Llaves.
-  * **Personalización**: Alternador de modo oscuro/claro y 3 paletas de acento (Esmeralda, Cobalto y Ámbar).
+* **Simulador de Prototipos (`MOCKUP_SHOWCASE.html`)**: Permite alternar en tiempo real entre vista Web Desktop (1280px) y vista App Compacta (414px), con 5 pantallas funcionales (Dashboard, Inventario, Protocolo Notarial, Respaldos Físicos y Ajustes).
 
 ---
 
@@ -113,26 +103,26 @@ El proyecto incorpora la skill nativa **`craft-ui-ux`**, que rechaza el diseño 
 
 ```
 C:\PROYECTOS\legado-digital-familiar\
-├── LegadoDigital.apk               # Binario APK físico autónomo para Android (v1.3.1)
 ├── inicio.html                     # Lanzador web principal para navegadores
 ├── AGENTS.md                       # Ficha técnica de operaciones y asignación de puertos
 ├── README.md                       # Guía de inicio rápido para el repositorio público
 ├── DOCUMENTACION_MAESTRA.md        # Documentación técnica completa (este archivo)
-├── .gitignore                      # Reglas estrictas: prohíbe subir secretos y backups
+├── MATRIZ_CUMPLIMIENTO_ISO_SOC2.md # Matriz formal de controles ISO 27001, 27701 y SOC 2
+├── .gitignore                      # Reglas estrictas: prohíbe ejecutables, binarios y backups
 │
 ├── APP/                            # Núcleo de la Aplicación Web (100% Offline)
-│   ├── index.html                  # Punto de entrada de la interfaz de usuario
+│   ├── index.html                  # Punto de entrada con CSP hermética integrada
 │   ├── index.css                   # Sistema de diseño con variables y temas
-│   ├── app.js                      # Orquestador del ciclo de vida y eventos
-│   ├── manifest.json               # Manifiesto PWA / WebAPK con iconos y shortcuts
+│   ├── app.js                      # Orquestador del ciclo de vida y zeroización en RAM
+│   ├── manifest.json               # Manifiesto PWA para instalación de escritorio
 │   ├── sw.js                       # Service Worker para caché offline total
 │   ├── mapa-recuperacion.html      # Diagrama interactivo de contingencia (Archify)
 │   ├── mockup-showcase.html        # Simulador interactivo de prototipos (Craft UI)
 │   ├── core/                       # Módulos de infraestructura lógica
-│   │   ├── crypto.js               # Web Crypto API: Argon2id, PBKDF2, AES-256-GCM
+│   │   ├── crypto.js               # Web Crypto API: Zeroización, AES-256-GCM, Object.freeze
 │   │   ├── state.js                # Gestión reactiva de la bóveda en memoria
 │   │   ├── router.js               # Enrutamiento SPA con View Transitions API
-│   │   ├── helpers.js              # Diálogos modales <dialog> y alertas Toast
+│   │   ├── helpers.js              # Diálogos modales <dialog>, anti-XSS y alertas Toast
 │   │   ├── jspdf.umd.min.js        # Motor offline de generación de PDF
 │   │   └── html2canvas.min.js      # Rasterizador de elementos gráficos
 │   └── modules/                    # Módulos de negocio
@@ -147,11 +137,11 @@ C:\PROYECTOS\legado-digital-familiar\
 │   ├── iniciar_legado.bat          # Script de arranque en Windows desde USB
 │   └── sincronizar_drive.ps1       # Sincronizador de backups cifrados a Google Drive
 │
-└── TOOLS/                          # Utilidades y Empaquetado
-    ├── LegadoDigital-v1.3.0.apk    # Archivo APK firmado para sideloading
-    ├── compilar_apk.ps1            # Autocompilador Docker Android SDK (Gradle 8.6)
-    ├── instalar_en_android.ps1     # Instalador guiado de WebAPK por red local
-    └── android-app/                # Código fuente del wrapper nativo Android (Java/Gradle)
+└── TOOLS/                          # Utilidades de Bóveda y Herramientas Locales
+    ├── Picocrypt/                  # Herramienta standalone de cifrado de archivos físicos
+    ├── crear_estructura.ps1        # Inicializador de carpetas en nuevo pendrive
+    ├── extraer_apps.ps1            # Extractor de ejecutables portables
+    └── iniciar_ia_usb.bat          # Lanzador auxiliar
 ```
 
 ---
@@ -160,16 +150,11 @@ C:\PROYECTOS\legado-digital-familiar\
 
 ### Arrancar la Aplicación
 ```powershell
-# Opción 1: Apertura directa en navegador (sin servidor)
+# Opción 1: Apertura directa en navegador (sin servidor, 100% offline)
 Start-Process "C:\PROYECTOS\legado-digital-familiar\inicio.html"
 
-# Opción 2: Modo Servidor Local / PWA (Puerto 8095)
+# Opción 2: Modo Servidor Local (Puerto 8095)
 uv run python -m http.server 8095 --bind 127.0.0.1 --directory "C:\PROYECTOS\legado-digital-familiar\APP"
-```
-
-### Recompilar el APK Android
-```powershell
-powershell -ExecutionPolicy Bypass -File "C:\PROYECTOS\legado-digital-familiar\TOOLS\compilar_apk.ps1"
 ```
 
 ### Auditar Integridad del Código JavaScript
@@ -181,4 +166,4 @@ uv run --with esprima python -c "import os, esprima; [esprima.parseScript(open(o
 
 ## ⚖️ 9. Conclusión y Valor Diferencial
 
-El **Legado Digital Familiar** no es una simple aplicación; es un **sistema de custodia patrimonial autónomo**. Al desacoplarse por completo de la nube y ofrecerse tanto en soporte físico USB como en APK Android nativa, garantiza que ninguna suscripción cancelada, fallo de conectividad o empresa quebrada pueda impedir que tu familia recupere lo que legítimamente le pertenece.
+El **Legado Digital Familiar** no es una simple aplicación; es un **sistema de custodia patrimonial autónomo e inmortal**. Al sustentarse exclusivamente en los estándares web de W3C sin depender de aplicaciones móviles ni servidores externos, garantiza que ninguna actualización de sistema operativo, suscripción cancelada o empresa quebrada impida a tus familiares recuperar lo que les pertenece.
