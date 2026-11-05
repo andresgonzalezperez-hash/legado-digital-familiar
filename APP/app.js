@@ -180,10 +180,12 @@ async function loginSuccess(mode) {
             
             state.inventory = decryptedVault.inventory || [];
             state.checklistState = decryptedVault.checklist || {};
+            state.lastUpdated = decryptedVault.lastUpdated || null;
         } else {
             state.inventory = [...state.defaultInventory];
             state.checklistState = {};
             state.checklistKeys.forEach(k => state.checklistState[k] = false);
+            state.lastUpdated = null;
         }
     } catch (e) {
         console.error("Failed to decrypt inventory storage", e);
@@ -217,6 +219,7 @@ function backToMainMenu() {
         Crypto.zeroize(state.inventory);
     }
     state.inventory = [];
+    state.lastUpdated = null; // Reset freshness
     state.checklistState = {};
     
     // Limpieza de campos DOM de credenciales

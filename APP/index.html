@@ -13,6 +13,31 @@
     <title>Legado Digital Familiar - Bóveda Offline</title>
     <link rel="stylesheet" href="index.css?v=7">
     <style>
+        .badge-freshness {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.25rem 0.65rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .freshness-green {
+            background-color: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+        .freshness-amber {
+            background-color: rgba(245, 158, 11, 0.15);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+        .freshness-red {
+            background-color: rgba(239, 68, 68, 0.15);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
         dialog#legado-native-dialog::backdrop {
             background: rgba(2, 6, 23, 0.72);
             backdrop-filter: blur(6px);
@@ -71,6 +96,12 @@
                     <div id="password-error-msg" class="password-error-msg" style="display: none; margin-top: 0.5rem;">Clave incorrecta. Inténtalo de nuevo.</div>
                     <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1.25rem;">Validar y Entrar</button>
                 </form>
+                <!-- Host & Context Security Recommendation (Red Team Audit) -->
+                <div style="margin-top: 0.85rem; background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.25); padding: 0.75rem 0.9rem; border-radius: 8px; font-size: 0.8rem; text-align: left; color: #93c5fd; display: flex; align-items: flex-start; gap: 0.6rem;">
+                    <span style="font-size: 1.1rem; line-height: 1;">🛡️</span>
+                    <span><strong>Recomendación de seguridad:</strong> Introduce tu clave en un equipo de confianza o en modo seguro/desconectado de internet para evitar la captura por malware o keyloggers en el sistema anfitrión.</span>
+                </div>
+
                 
                 <!-- Sugerencias de Seguridad / Clave Maestra -->
                 <div style="margin-top: 1.5rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 1rem; border-radius: 8px; font-size: 0.8rem; text-align: left;">
@@ -362,6 +393,23 @@
             </header>
 
             <div class="grid-container">
+
+                <!-- Auditoría de Frescura / Última Actualización (Red Team) -->
+                <div class="card" style="grid-column: span 12; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; background: linear-gradient(135deg, rgba(15, 23, 42, 0.6) 0%, rgba(30, 41, 59, 0.4) 100%); border-left: 4px solid var(--primary);">
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div style="font-size: 1.75rem; background: rgba(59, 130, 246, 0.15); width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 10px;">⏱️</div>
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                <h4 class="card-title" style="margin: 0; font-size: 1.05rem;">Frescura de la Información</h4>
+                                <span id="vault-freshness-badge" class="badge-freshness freshness-green">Comprobando...</span>
+                            </div>
+                            <p id="vault-freshness-text" style="color: var(--text-muted); font-size: 0.85rem; margin: 0.3rem 0 0 0;">Cargando registro de última modificación...</p>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-secondary" onclick="switchTab('inventario')" style="font-size: 0.8rem; padding: 0.45rem 0.9rem;">
+                        ✏️ Actualizar Inventario
+                    </button>
+                </div>
                 <!-- Capacidad Global -->
                 <div class="card progress-card" style="grid-column: span 12;">
                     <div class="progress-header">
@@ -971,6 +1019,20 @@
                             </p>
                         </div>
 
+                        
+                        <!-- Botón de Hoja Notarial de Emergencia -->
+                        <div style="background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.2); padding: 1.25rem; border-radius: 8px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+                            <div>
+                                <h4 style="margin: 0 0 0.35rem 0; color: var(--accent-emerald); font-size: 1.05rem;">📋 Hoja de Acceso Notarial de Emergencia</h4>
+                                <p style="margin: 0; color: var(--text-muted); font-size: 0.88rem; line-height: 1.4;">
+                                    Plantilla formal en blanco lista para imprimir y rellenar a mano con la ubicación del USB, albaceas y pistas de claves para depositar en sobre notarial cerrado.
+                                </p>
+                            </div>
+                            <button type="button" class="btn btn-secondary" onclick="window.printEmergencyNotarySheet()" style="background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.4); color: #34d399; font-weight: 600;">
+                                🖨️ Imprimir Hoja Notarial
+                            </button>
+                        </div>
+
                         <div style="background: rgba(88, 86, 214, 0.04); padding: 1.25rem; border-radius: 8px; border-left: 3px solid var(--accent-indigo);">
                             <h4 style="margin: 0 0 0.5rem 0; color: var(--accent-indigo); font-size: 1.1rem;">Paso 6: Consulta el Directorio de Activos</h4>
                             <p style="margin: 0; color: var(--text-muted); line-height: 1.6; font-size: 0.95rem;">
@@ -997,6 +1059,8 @@
                     <h3 style="color: var(--accent-orange); margin-bottom: 1rem; font-size: 1.25rem;">Nivel 1 — Aviso de Seguridad</h3>
                     <div style="background-color: rgba(245, 158, 11, 0.05); border: 1px solid rgba(245, 158, 11, 0.15); padding: 1.25rem; border-radius: 8px; margin-bottom: 2rem;">
                         <p style="margin-bottom: 0.75rem; line-height: 1.5; font-size: 0.95rem;"><strong>DISCLAIMER 1: USO GENERAL</strong><br><span style="color:var(--text-muted);">Este sistema se ofrece "tal cual" y sin garantía de resultados concretos. El usuario es responsable de revisar, probar y validar el contenido antes de usarlo con datos reales.</span></p>
+                        
+                        <p style="margin-bottom: 0.75rem; line-height: 1.5; font-size: 0.95rem;"><strong>DISCLAIMER 5: ALCANCE LEGAL NOTARIAL Y SUCESORIO (Art. 96 LOPD-GDD y Código Civil)</strong><br><span style="color:var(--text-muted);">Este sistema y sus reportes impresos constituyen exclusivamente un inventario informativo privado de auxilio y orientación familiar. <strong>No constituye un testamento formal, título sucesorio ni autorización jurídica directa</strong> para disponer de fondos bancarios, cancelar contratos o transferir bienes con anterioridad a la obtención del Certificado de Defunción, Certificado de Últimas Voluntades, copia autorizada del Testamento o Declaración de Herederos y la liquidación tributaria preceptiva ante las entidades pertinentes.</span></p>
                         <p style="margin-bottom: 0.75rem; line-height: 1.5; font-size: 0.95rem;"><strong>DISCLAIMER 2: SEGURIDAD</strong><br><span style="color:var(--text-muted);">Este sistema ayuda a organizar y cifrar información, pero no elimina todos los riesgos. La seguridad final también depende del dispositivo, del sistema operativo, de las copias y de la forma de uso.</span></p>
                         <p style="line-height: 1.5; font-size: 0.95rem;"><strong>DISCLAIMER 3: HERENCIA DIGITAL</strong><br><span style="color:var(--text-muted);">Este sistema no sustituye asesoramiento legal, notarial, fiscal o sucesorio. Las decisiones sobre herencia digital, cuentas y accesos dependen de la normativa aplicable y de cada servicio.</span></p>
                     </div>

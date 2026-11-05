@@ -130,4 +130,35 @@ function updateDashboardMetrics() {
             }
         }
     }
+
+    // Indicador de Frescura / Última Actualización (Auditoría Red Team)
+    const elFreshnessBadge = document.getElementById('vault-freshness-badge');
+    const elFreshnessText = document.getElementById('vault-freshness-text');
+    if (elFreshnessBadge && elFreshnessText) {
+        if (!state.lastUpdated) {
+            elFreshnessBadge.innerText = 'Sin registrar';
+            elFreshnessBadge.className = 'badge-freshness freshness-amber';
+            elFreshnessText.innerText = 'Bóveda sin fecha de última edición guardada. Guarda un cambio para activar el registro.';
+        } else {
+            const lastDate = new Date(state.lastUpdated);
+            const now = new Date();
+            const diffDays = Math.floor((now - lastDate) / (1000 * 60 * 60 * 24));
+            const formattedDate = lastDate.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+            
+            if (diffDays < 90) {
+                elFreshnessBadge.innerText = '🟢 Actualizado (' + diffDays + ' d)';
+                elFreshnessBadge.className = 'badge-freshness freshness-green';
+                elFreshnessText.innerText = 'Información al día (' + formattedDate + '). Próxima revisión sugerida en ' + (90 - diffDays) + ' días.';
+            } else if (diffDays <= 180) {
+                elFreshnessBadge.innerText = '🟡 Revisión Recomendada (' + diffDays + ' d)';
+                elFreshnessBadge.className = 'badge-freshness freshness-amber';
+                elFreshnessText.innerText = 'Última actualización: ' + formattedDate + ' (hace ' + diffDays + ' días). Conviene verificar cuentas bancarias y pólizas.';
+            } else {
+                elFreshnessBadge.innerText = '🔴 Desactualizado (>180 d)';
+                elFreshnessBadge.className = 'badge-freshness freshness-red';
+                elFreshnessText.innerText = 'Atención: Bóveda sin revisar desde el ' + formattedDate + ' (' + diffDays + ' días). Riesgo de credenciales o cuentas obsoletas.';
+            }
+        }
+    }
+
 }

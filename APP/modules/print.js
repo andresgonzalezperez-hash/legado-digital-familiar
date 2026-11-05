@@ -29,7 +29,9 @@ function updatePrintView() {
         `;
     });
 
-    printContainer.innerHTML = `
+    // Injected legal notice
+        // end marker
+        printContainer.innerHTML = `
         <div class="print-doc">
             <div class="print-header">
                 <h1>DOCUMENTO MAESTRO: PROTOCOLO DE LEGADO DIGITAL</h1>
@@ -130,6 +132,77 @@ function updatePrintView() {
             <div class="print-section" style="margin-top: 3rem; text-align: center; font-size: 8.5pt; color: #777;">
                 <p>Fin del Protocolo de Legado. Mantén este sobre sellado y protegido físicamente.</p>
             </div>
+        
+            <div style="margin-top: 30px; padding: 12px; border-top: 1px solid #ccc; font-size: 7.5pt; color: #666; text-align: justify; line-height: 1.4;">
+                <strong>Aviso Legal (Art. 96 LOPD-GDD y Código Civil):</strong> Este documento impreso constituye exclusivamente un inventario informativo para facilitar la identificación de activos y servicios por parte de los causahabientes o albaceas. No constituye testamento ni confiere potestad dispositiva inmediata sobre cuentas o productos bancarios con anterioridad a la formal adjudicación de herencia y liquidación tributaria.
+            </div>
+    
         </div>
     `;
 }
+
+
+// Función para imprimir Hoja de Emergencia Notarial en blanco
+window.printEmergencyNotarySheet = function() {
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) {
+        alert('Por favor, permite ventanas emergentes para imprimir la hoja notarial.');
+        return;
+    }
+    const html = `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Hoja de Acceso Notarial de Emergencia</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; padding: 2.5cm 2cm; color: #111; line-height: 1.5; font-size: 11pt; }
+        h1 { font-size: 16pt; text-align: center; margin-bottom: 4px; text-transform: uppercase; border-bottom: 2px solid #333; padding-bottom: 8px; }
+        .subtitle { text-align: center; font-size: 9pt; color: #555; margin-bottom: 20px; }
+        .box { border: 1px solid #777; padding: 12px; margin-bottom: 16px; border-radius: 4px; }
+        .box-title { font-weight: bold; font-size: 10pt; margin-bottom: 8px; text-transform: uppercase; color: #222; }
+        .line-field { margin-bottom: 12px; display: flex; align-items: flex-end; }
+        .line-label { font-weight: 600; width: 220px; font-size: 9.5pt; }
+        .line-fill { flex-grow: 1; border-bottom: 1px dotted #444; height: 18px; }
+        .notice { font-size: 8pt; color: #666; margin-top: 25px; border-top: 1px solid #ccc; padding-top: 8px; text-align: justify; }
+        @media print { body { padding: 0; } }
+    </style>
+</head>
+<body>
+    <h1>Protocolo de Acceso Notarial de Emergencia</h1>
+    <div class="subtitle">Documento de custodia física para sobre cerrado notarial o caja de seguridad familiar</div>
+
+    <div class="box">
+        <div class="box-title">1. Datos de Identificación del Titular y Albacea</div>
+        <div class="line-field"><span class="line-label">Nombre del Titular:</span><span class="line-fill"></span></div>
+        <div class="line-field"><span class="line-label">DNI / NIE:</span><span class="line-fill"></span></div>
+        <div class="line-field"><span class="line-label">Persona de Contacto / Albacea:</span><span class="line-fill"></span></div>
+        <div class="line-field"><span class="line-label">Teléfono de Emergencia:</span><span class="line-fill"></span></div>
+    </div>
+
+    <div class="box">
+        <div class="box-title">2. Custodia de Dispositivos y Soportes Cifrados</div>
+        <div class="line-field"><span class="line-label">Ubicación física del USB Cifrado:</span><span class="line-fill"></span></div>
+        <div class="line-field"><span class="line-label">Ubicación del MiniPC / Portátil:</span><span class="line-fill"></span></div>
+        <div class="line-field"><span class="line-label">PIN / Desbloqueo Móvil Titular:</span><span class="line-fill"></span></div>
+        <div class="line-field"><span class="line-label">Pista de Contraseña Maestra:</span><span class="line-fill"></span></div>
+    </div>
+
+    <div class="box">
+        <div class="box-title">3. Notario y Registro Sucesorio</div>
+        <div class="line-field"><span class="line-label">Notaría de Depósito / Protocolo:</span><span class="line-fill"></span></div>
+        <div class="line-field"><span class="line-label">Nº de Protocolo Testamento (si existe):</span><span class="line-fill"></span></div>
+        <div class="line-field"><span class="line-label">Fecha de Confección:</span><span class="line-fill"></span></div>
+        <div class="line-field"><span class="line-label">Firma del Titular:</span><span class="line-fill" style="height: 40px;"></span></div>
+    </div>
+
+    <div class="notice">
+        <strong>Aviso Legal y de Seguridad:</strong> Este documento físico contiene indicaciones privadas para permitir a los legítimos herederos o albaceas la localización e inventario del patrimonio digital. Consérvese en sobre lacrado y sellado. Conforme al Art. 96 de la Ley Orgánica 3/2018 (LOPD-GDD) y el Código Civil, la ejecución patrimonial de saldos requerirá la aportación del Certificado de Defunción y título sucesorio legalmente habilitante.
+    </div>
+    <script>
+        window.onload = function() { window.print(); }
+    </script>
+</body>
+</html>`;
+    printWindow.document.write(html);
+    printWindow.document.close();
+};

@@ -10,7 +10,8 @@ const state = {
         'chk-s4-1', 'chk-s4-2', 'chk-s4-3', 'chk-s4-4'
     ],
     checklistState: {},
-        defaultInventory: []
+        defaultInventory: [],
+    lastUpdated: null
 };
 
 async function saveVaultToStorage() {
@@ -19,14 +20,17 @@ async function saveVaultToStorage() {
         return;
     }
 
+    state.lastUpdated = new Date().toISOString();
     const vaultData = {
         inventory: state.inventory,
-        checklist: state.checklistState
+        checklist: state.checklistState,
+        lastUpdated: state.lastUpdated
     };
     
     try {
         const encVault = await Crypto.encrypt(vaultData, sessionVMK);
         localStorage.setItem('legado_vault_pre', JSON.stringify(encVault));
+        if (typeof updateDashboardMetrics === 'function') updateDashboardMetrics();
     } catch (e) {
         console.error("Failed to encrypt vault data on save", e);
     }

@@ -4,6 +4,16 @@ Todas las actualizaciones notables de este proyecto se documentarán en este arc
 
 ---
 
+## [1.4.1] - 2026-11-05
+### Auditoría Red Team & Frescura de Información
+- **Semáforo de Frescura en Tiempo Real (`state.js`, `dashboard.js`, `index.html`)**: Registro automático de la fecha/hora de última modificación (`lastUpdated`) en la bóveda cifrada y cálculo de días transcurridos con semáforo dinámico (🟢 <90d Al día, 🟡 90-180d Revisión sugerida, 🔴 >180d Desactualizado) visible en el panel de control.
+- **Hoja de Acceso Notarial de Emergencia (`print.js`, `index.html`)**: Añadido generador e imprimible en blanco de la hoja de protocolo notarial (`printEmergencyNotarySheet()`) con campos para rellenar a mano (Ubicación física de USB, datos de albacea, notaría, número de protocolo) para depósito en sobre lacrado.
+- **Aviso de Seguridad en Pantalla de Desbloqueo (`index.html`)**: Alerta de protección preventiva recomendando teclear la clave maestra en equipos de confianza o en modo seguro/desconectado para evitar keyloggers.
+- **Cláusula Sucesoria y Legal (Art. 96 LOPD-GDD y Código Civil) (`index.html`, `print.js`, `pdf-generator.js`)**: Inclusión de descargo legal en la pestaña de disclaimers, vistas de impresión y PDF maestro clarificando que el inventario es una guía informativa y no constituye título sucesorio autónomo.
+- **Documentación Bilingüe Oficial (`README.md`)**: Reestructuración integral con sección en inglés en primer lugar y sección en español a continuación.
+
+---
+
 ## [1.4.0] - 2026-11-05
 ### Seguridad y Cumplimiento Normativo (ISO 27001, ISO 27701, SOC 2)
 - **Content Security Policy (CSP) Hermética (`APP/index.html`, `APP/mapa-recuperacion.html`)**: Inyectada cabecera `<meta>` que prohíbe de raíz cualquier conexión de red externa (`connect-src 'none'`), bloqueando exfiltración de datos, clickjacking y scripts maliciosos.
