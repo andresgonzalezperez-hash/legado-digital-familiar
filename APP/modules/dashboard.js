@@ -9,8 +9,8 @@ function updateDashboardMetrics() {
             counts.Apps++; // Map 'Otros' and 'Suscripciones' to 'Apps' for summary
         }
 
-        if (item.holder === 'Andrés') holderCounts.Andres++;
-        if (item.holder === 'Maeva') holderCounts.Maeva++;
+        if (item.holder === 'Titular' || item.holder === 'Andrés') holderCounts.Andres++;
+        if (item.holder === 'Cónyuge' || item.holder === 'Maeva') holderCounts.Maeva++;
         if (item.holder === 'Compartido') holderCounts.Shared++;
     });
 

@@ -10,68 +10,7 @@ const state = {
         'chk-s4-1', 'chk-s4-2', 'chk-s4-3', 'chk-s4-4'
     ],
     checklistState: {},
-    defaultInventory: [
-        {
-            id: "sample-1",
-            name: "Gmail Principal",
-            category: "Principales",
-            holder: "Compartido",
-            user: "correo.familiar@gmail.com",
-            twoFactor: "Sí",
-            secretLoc: "Passbolt: Compartido",
-            action: "Cuenta crítica de recuperación. 2FA en móvil de Andrés y respaldo en papel en el sobre."
-        },
-        {
-            id: "sample-2",
-            name: "Banco Santander",
-            category: "Bancos",
-            holder: "Andrés",
-            user: "andres.cuenta@santander.es",
-            twoFactor: "Sí",
-            secretLoc: "Passbolt: Personal (Andrés)",
-            action: "Cuenta personal. Notificar defunción y solicitar transferencia a cuenta hereditaria."
-        },
-        {
-            id: "sample-3",
-            name: "Cuenta Inversión (MyInvestor)",
-            category: "Bancos",
-            holder: "Maeva",
-            user: "maeva.inversion@myinvestor.es",
-            twoFactor: "Sí",
-            secretLoc: "Passbolt: Personal (Maeva)",
-            action: "Cuenta personal. Gestionar herencia de fondos de inversión."
-        },
-        {
-            id: "sample-4",
-            name: "Seguro de Hogar Mapfre",
-            category: "Seguros",
-            holder: "Compartido",
-            user: "Póliza Nº 12345-H",
-            twoFactor: "No",
-            secretLoc: "MiniPC: BÓVEDA/03_Seguros",
-            action: "Llamar a Mapfre para cambio de titularidad de la póliza o baja en caso de venta."
-        },
-        {
-            id: "sample-5",
-            name: "Netflix Familiar",
-            category: "Suscripciones",
-            holder: "Compartido",
-            user: "correo.familiar@gmail.com",
-            twoFactor: "No",
-            secretLoc: "Passbolt: Carpeta Ocio Familiar",
-            action: "Suscripción compartida con la familia. Administrar en Passbolt para cambios de contraseña."
-        },
-        {
-            id: "sample-6",
-            name: "Hardware Wallet (Ledger/Trezor)",
-            category: "Bancos",
-            holder: "Andrés",
-            user: "Dirección BTC: bc1q...",
-            twoFactor: "No",
-            secretLoc: "KeePassXC: Cripto / Semilla física en caja fuerte",
-            action: "La semilla de recuperación (24 palabras) está guardada en la caja fuerte física. Usar dispositivo de respaldo para recuperar fondos."
-        }
-    ]
+        defaultInventory: []
 };
 
 async function saveVaultToStorage() {

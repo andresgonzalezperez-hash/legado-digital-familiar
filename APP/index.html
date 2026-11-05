@@ -247,7 +247,7 @@
                             <ul style="color: var(--text-muted); line-height: 1.6; padding-left: 1.25rem; margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.35rem;">
                                 <li>El <strong>Manual Maestro Impreso</strong> con las claves anotadas a mano.</li>
                                 <li>El <strong>USB de contingencia offline</strong>.</li>
-                                <li>El <strong>PIN y PUK de los teléfonos móviles</strong> de Andrés y Maeva (críticos para recibir códigos de doble factor SMS o Google Authenticator).</li>
+                                <li>El <strong>PIN y PUK de los teléfonos móviles</strong> de los titulares (críticos para recibir códigos de doble factor SMS o Google Authenticator).</li>
                                 <li>Las claves de acceso de los correos electrónicos de recuperación principal de Gmail.</li>
                             </ul>
                         </div>
@@ -261,7 +261,7 @@
                         <div>
                             <h3 class="card-title" style="margin-top: 0.15rem;">Paso 2: Acceso a Dispositivos</h3>
                             <p style="color: var(--text-muted); line-height: 1.6; margin-top: 0.5rem; font-size: 0.95rem;">
-                                Enciende y desbloquea el móvil del titular (Andrés o Maeva). Usa el código de patrón o PIN anotado en el manual maestro del sobre.
+                                Enciende y desbloquea el móvil del titular. Usa el código de patrón o PIN anotado en el manual maestro del sobre.
                                 <br><br>
                                 <strong style="color: var(--text-main);">¿Por qué es necesario?</strong>
                                 <br>
@@ -493,11 +493,11 @@
                     <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1.25rem;">
                         <h4 style="font-size: 0.85rem; font-weight: 600; text-transform: uppercase; color: var(--primary-hover); margin-bottom: 0.25rem; letter-spacing: 0.05em;">Por Perfil</h4>
                         <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
-                            <span style="color: var(--text-muted);">Andrés</span>
+                            <span style="color: var(--text-muted);">Titular</span>
                             <strong id="summary-andres">0</strong>
                         </div>
                         <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
-                            <span style="color: var(--text-muted);">Maeva</span>
+                            <span style="color: var(--text-muted);">Cónyuge</span>
                             <strong id="summary-maeva">0</strong>
                         </div>
                         <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
@@ -609,8 +609,8 @@
             <div style="margin-bottom: 2rem; display: flex; gap: 0.5rem; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 0.75rem;">
                 <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; margin-right: 0.5rem;">Filtrar Titular:</span>
                 <button class="tab-btn active" id="btn-holder-all" onclick="filterHolder('all')" style="font-size: 0.9rem; padding: 0.25rem 0.75rem;">Todos</button>
-                <button class="tab-btn" id="btn-holder-andres" onclick="filterHolder('Andrés')" style="font-size: 0.9rem; padding: 0.25rem 0.75rem;">Andrés</button>
-                <button class="tab-btn" id="btn-holder-maeva" onclick="filterHolder('Maeva')" style="font-size: 0.9rem; padding: 0.25rem 0.75rem;">Maeva</button>
+                <button class="tab-btn" id="btn-holder-andres" onclick="filterHolder('Titular')" style="font-size: 0.9rem; padding: 0.25rem 0.75rem;">Titular</button>
+                <button class="tab-btn" id="btn-holder-maeva" onclick="filterHolder('Cónyuge')" style="font-size: 0.9rem; padding: 0.25rem 0.75rem;">Cónyuge</button>
                 <button class="tab-btn" id="btn-holder-shared" onclick="filterHolder('Compartido')" style="font-size: 0.9rem; padding: 0.25rem 0.75rem;">Compartidos</button>
             </div>
 
@@ -1043,9 +1043,9 @@
                     <div class="form-group">
                         <label for="f-holder">Titular de la cuenta *</label>
                         <select id="f-holder" required>
-                            <option value="Andrés">Andrés</option>
-                            <option value="Maeva">Maeva</option>
-                            <option value="Compartido" selected>Compartido (Ambos)</option>
+                            <option value="Titular" selected>Titular Principal</option>
+                            <option value="Cónyuge">Cónyuge / Pareja</option>
+                            <option value="Compartido">Compartido (Ambos)</option>
                         </select>
                     </div>
                     <div class="form-group">

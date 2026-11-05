@@ -41,7 +41,7 @@ function renderInventory(searchTerm = currentSearchTerm) {
     });
 
     if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="9" style="text-align:center; color:var(--text-muted); padding: 2rem;">No se han encontrado registros.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="9" style="text-align:center; color:var(--text-muted); padding: 2rem;">Bóveda vacía. Pulsa "+ Añadir Cuenta" para registrar tu primera cuenta o servicio.</td></tr>`;
         return;
     }
 
