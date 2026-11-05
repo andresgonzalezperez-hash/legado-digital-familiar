@@ -5,6 +5,9 @@ function applyTabSwitch(tabId) {
     document.querySelectorAll('.nav-item').forEach(item => {
         item.classList.remove('active');
     });
+    document.querySelectorAll('.bottom-nav-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
 
     const targetTab = document.getElementById(tabId);
     if (targetTab) {
@@ -18,6 +21,18 @@ function applyTabSwitch(tabId) {
             item.classList.add('active');
         }
     });
+
+    const bottomNavBtns = document.querySelectorAll('.bottom-nav-btn');
+    bottomNavBtns.forEach(btn => {
+        const dataTab = btn.getAttribute('data-tab');
+        const onclickAttr = btn.getAttribute('onclick');
+        if (dataTab === tabId || (onclickAttr && onclickAttr.includes(tabId))) {
+            btn.classList.add('active');
+        }
+    });
+
+    // Desplazar al inicio suavemente al cambiar de pestaña
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 
     if (typeof closeMobileMenu === 'function') {
         closeMobileMenu();

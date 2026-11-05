@@ -169,6 +169,7 @@
         .viewport-frame {
             width: 100%;
             max-width: 1240px;
+            overflow-x: hidden !important;
             background: var(--bg-surface);
             border: 1px solid var(--border-subtle);
             border-radius: var(--radius-lg);
@@ -331,6 +332,7 @@
             flex: 1;
             padding: 2rem 2.25rem;
             overflow-y: auto;
+            overflow-x: hidden !important;
             display: flex;
             flex-direction: column;
             gap: 1.75rem;
@@ -664,9 +666,42 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid rgba(255,255,255,0.04);
+            padding-bottom: 1.1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
             gap: 1rem;
+        }
+        .mode-app .settings-card {
+            padding: 1rem;
+        }
+        .mode-app .setting-row {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 0.65rem;
+            padding-bottom: 1.25rem;
+        }
+        .mode-app .setting-info {
+            width: 100%;
+        }
+        .mode-app .setting-info h4 {
+            font-size: 0.95rem;
+            line-height: 1.35;
+            white-space: normal;
+        }
+        .mode-app .setting-info p {
+            font-size: 0.82rem;
+            line-height: 1.4;
+        }
+        .mode-app .setting-control {
+            width: 100%;
+        }
+        .mode-app .setting-control select,
+        .mode-app .setting-control input {
+            width: 100% !important;
+            max-width: 100%;
+            min-height: 44px; /* Touch target accesible WCAG AAA */
+            padding: 0.65rem 0.85rem;
+            font-size: 0.9rem;
+            box-sizing: border-box;
         }
         .setting-info h4 {
             font-size: 0.9rem;
@@ -711,6 +746,52 @@
             transform: translateY(0);
             opacity: 1;
         }
+
+        @media (max-width: 768px) {
+            .showcase-toolbar {
+                flex-direction: column;
+                gap: 0.5rem;
+                padding: 0.75rem 1rem;
+            }
+            .stage-container {
+                padding: 0.5rem;
+                overflow-x: hidden !important;
+            }
+            .viewport-frame {
+                border-radius: 18px !important;
+                border: none !important;
+                max-width: 100% !important;
+            }
+            .sidebar {
+                display: none !important;
+            }
+            .app-bottom-bar {
+                display: flex !important;
+            }
+            .content-area {
+                padding: 1rem !important;
+                overflow-x: hidden !important;
+            }
+            .setting-row {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 0.65rem !important;
+                padding-bottom: 1.25rem !important;
+            }
+            .setting-info {
+                width: 100% !important;
+            }
+            .setting-control {
+                width: 100% !important;
+            }
+            .setting-control select,
+            .setting-control input {
+                width: 100% !important;
+                max-width: 100% !important;
+                box-sizing: border-box !important;
+            }
+        }
+
     </style>
 </head>
 <body data-theme="dark" data-accent="emerald">
@@ -1276,6 +1357,11 @@
 
         // 7. TOAST FEEDBACK
         let toastTimeout;
+        // Garantizar que siempre inicie en pantalla 'Inicio' (dashboard)
+        window.addEventListener('DOMContentLoaded', () => {
+            navigateTo('dashboard');
+        });
+
         function triggerToast(msg) {
             const toast = document.getElementById('craft-toast');
             const text = document.getElementById('toast-text');
