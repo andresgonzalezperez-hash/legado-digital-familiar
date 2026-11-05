@@ -135,6 +135,28 @@ legado-digital-familiar/
 
 ---
 
+## ❓ Frequently Asked Questions (FAQ)
+
+### 1. Why not just use Bitwarden, 1Password, or KeePass?
+> **Answer**: Password managers are exceptional at storing raw credentials, and we actively encourage storing your master keys and actual passwords inside them (e.g. KeePassXC or Passbolt). However, password managers are **not designed for grieving heirs**:
+> - An heir without technical expertise opening a vault with 400 credentials will experience panic and confusion.
+> - They do not know which bank accounts hold assets, what life insurance policies exist, which phone numbers to call, or what legal steps to take first.
+> - **Legado Digital is the orchestration and asset catalog layer**: it documents what exists, where it is kept, what immediate emergency actions to execute, and provides printable legal worksheets for notaries.
+
+### 2. Why not a native Android / iOS app (Why Pure W3C HTML)?
+> **Answer**: Mobile applications are fragile against the test of time:
+> - In 10 to 15 years, Android and iOS will deprecate current SDKs, change app store policies, ban legacy APIs, or reject sideloaded APKs.
+> - A digital estate solution must guarantee accessibility **30+ years into the future**.
+> - An offline, air-gapped W3C HTML5 document with Web Crypto runs natively in every modern and legacy browser across Windows, macOS, Linux, Android, and iOS without permissions, app stores, or compilation.
+
+### 3. What happens if the physical USB flash drive gets damaged or corrupted?
+> **Answer**: The system implements multi-tier contingency redundancy:
+> - **SHA-256 Bit-Rot Verification**: Detects magnetic or flash storage degradation with 1-click active hash verification.
+> - **Encrypted Cloud Mirror**: Automated AES-256-GCM encrypted backup synchronization via `START/sincronizar_drive.ps1` (mirroring to Google Drive).
+> - **Upcoming Cloud Storage Integrations**: Automated sync connectors for **Proton Drive, Nextcloud, Microsoft OneDrive, and Dropbox** are currently on the roadmap and will be rolled out in upcoming releases.
+
+---
+
 ## ⚖️ Legal & Inheritance Disclaimer
 *In accordance with Spanish Civil Code and Article 96 of Organic Law 3/2018 (LOPD-GDD):*  
 This system and its generated reports serve solely as an informative, private inventory to assist heirs and executors in identifying and locating assets. **It does not constitute a formal legal will, nor does it provide legal authority to transfer funds or close accounts prior to the official settlement of inheritance deeds and tax obligations.**
@@ -253,6 +275,28 @@ legado-digital-familiar/
 1. Descarga o clona este repositorio en un ordenador seguro o memoria USB de contingencia.
 2. Haz doble clic en **`inicio.html`** en la raíz del proyecto.
 3. La aplicación se ejecutará de forma instantánea en tu navegador sin requerir conexión a internet.
+
+---
+
+## ❓ Preguntas Frecuentes (FAQ)
+
+### 1. ¿Por qué no usar simplemente Bitwarden, 1Password o KeePass?
+> **Respuesta**: Los gestores de contraseñas son extraordinarios para custodiar credenciales, y recomendamos activamente guardar las contraseñas reales dentro de ellos (KeePassXC o Passbolt). Sin embargo, **no están adaptados para familiares en situación de duelo**:
+> - Un heredero sin conocimientos técnicos que abra una bóveda con 400 contraseñas crudas sufrirá confusión y bloqueo.
+> - No sabrá qué cuentas bancarias tienen saldo real, qué pólizas de vida existen, a qué teléfonos llamar de inmediato ni qué trámites legales realizar en los primeros días.
+> - **Legado Digital es la capa de orquestación y catálogo patrimonial**: documenta qué existe, dónde se custodia, qué acción de contingencia ejecutar ante cada entidad y genera hojas físicas de acceso para la notaría.
+
+### 2. ¿Por qué no una aplicación nativa para Android o iOS (Por qué HTML Puro)?
+> **Respuesta**: Las aplicaciones móviles son muy frágiles frente al paso de las décadas:
+> - En 10 o 15 años, Google y Apple habrán cambiado sus SDKs, políticas de tienda, permisos de sistema y habrán bloqueado las APKs antiguas.
+> - Un protocolo de legado digital debe garantizar su funcionamiento **a 30 años vista sin obsolescencia**.
+> - Un archivo HTML5 estándar con la Web Crypto API de la W3C funcionará de forma perpetua en cualquier navegador de cualquier ordenador o teléfono (Windows, Mac, Linux, Android, iOS) sin depender de tiendas ni actualizaciones del sistema operativo.
+
+### 3. ¿Qué ocurre si la memoria USB física se rompe o se degrada?
+> **Respuesta**: El sistema incorpora redundancia por capas:
+> - **Auditoría de Bit-Rot (SHA-256)**: Detecta la degradación magnética de la memoria mediante verificación de huella digital en 1 clic.
+> - **Espejo Cifrado en la Nube**: Respaldo automático cifrado con AES-256-GCM mediante `START/sincronizar_drive.ps1` (respaldando en Google Drive).
+> - **Próxima Integración con Otras Nubes**: El soporte para sincronización automatizada con **Proton Drive, Nextcloud, Microsoft OneDrive y Dropbox** está formalmente en hoja de ruta y se incorporará en las próximas versiones.
 
 ---
 
