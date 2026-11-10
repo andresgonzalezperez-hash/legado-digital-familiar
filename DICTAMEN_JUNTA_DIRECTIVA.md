@@ -1,5 +1,5 @@
 # 🏛️ Acta y Dictamen de la Sesión Extraordinaria de la Junta Directiva (OpenExecutive C-Suite)
-**Proyecto Evaluado**: Legado Digital Familiar (`v1.3.0`)  
+**Proyecto Evaluado**: Mi Legado (`v1.3.0`)  
 **Fecha de Sesión**: 03 de Noviembre de 2026  
 **Órgano**: Junta Directiva C-Suite (Marco OpenExecutive / SenteLabsAI)  
 **Comité Evaluador**: CSO, CPO, CISO & CTO, General Counsel, COO, CFO, CMO & Head of Sales  
@@ -10,7 +10,7 @@
 
 ## 1. Convocatoria y Orden del Día
 
-El Consejo Ejecutivo de Dirección se reúne en sesión extraordinaria con el objetivo de someter a auditoría técnica, estratégica, legal, operativa y financiera el proyecto **Legado Digital Familiar**, custodiado en el repositorio central `C:\Proyectos\legado-digital-familiar` y referenciado en el espacio de trabajo del usuario.
+El Consejo Ejecutivo de Dirección se reúne en sesión extraordinaria con el objetivo de someter a auditoría técnica, estratégica, legal, operativa y financiera el proyecto **Mi Legado**, custodiado en el repositorio central `C:\Proyectos\legado-digital-familiar` y referenciado en el espacio de trabajo del usuario.
 
 ### Orden del Día:
 1. Evaluación de posicionamiento estratégico y soberanía digital (CSO).
@@ -105,7 +105,7 @@ El Consejo Ejecutivo de Dirección se reúne en sesión extraordinaria con el ob
   1. *Patrimonio Salvaguardado*: Se calcula que miles de millones de euros en criptomonedas, acciones en neobancos (Revolut, Trade Republic, Degiro) y seguros de vida asociados a tarjetas quedan huérfanos anualmente por desconocimiento de los herederos. Este sistema reduce esa prima de pérdida a prácticamente cero.
   2. *Coste de Propiedad (TCO)*:
      * Plataformas SaaS de herencia digital comercial: \$120 - \$300 / año + riesgo de quiebra.
-     * Legado Digital Familiar: **\$0.00 / año de coste recurrente**. Inversión única de amortización en 2 pendrives USB (\$25 total).
+     * Mi Legado: **\$0.00 / año de coste recurrente**. Inversión única de amortización en 2 pendrives USB (\$25 total).
 * **Dictamen Financiero**: Proyecto de valor patrimonial incalculable con rentabilidad sobre la inversión (ROI) prácticamente infinita respecto al coste de desarrollo e implantación.
 
 ---

@@ -1,4 +1,4 @@
-# 🛡️ Legado Digital Familiar: Documentación Maestra del Proyecto
+# 🛡️ Mi Legado: Documentación Maestra del Proyecto
 > **Versión**: 1.4.0 (Edición Hardened Pure HTML — Certificación y Controles ISO/IEC 27001, ISO/IEC 27701 & SOC 2 Type II)  
 > **Filosofía**: 100% Offline-First · Soberanía de Datos · Cero Dependencia en la Nube · Pure Web W3C  
 > **Licencia**: MIT  
@@ -7,7 +7,7 @@
 
 ## 📌 1. Resumen Ejecutivo y Misión
 
-El **Legado Digital Familiar** es una infraestructura de contingencia y custodia de patrimonio digital diseñada para resolver el problema de la pérdida de activos, cuentas bancarias, seguros y credenciales críticas en caso de fallecimiento, incapacidad o emergencia sobrevenida del titular.
+El **Mi Legado** es una infraestructura de contingencia y custodia de patrimonio digital diseñada para resolver el problema de la pérdida de activos, cuentas bancarias, seguros y credenciales críticas en caso de fallecimiento, incapacidad o emergencia sobrevenida del titular.
 
 A diferencia de los gestores comerciales en la nube (1Password, Bitwarden, etc.) que dependen de servidores remotos, suscripciones recurrentes y políticas de recuperación de cuentas externas:
 * **Funciona 100% desconectado de internet (Modo Avión / Air-gapped)**.
@@ -178,4 +178,4 @@ uv run --with esprima python -c "import os, esprima; [esprima.parseScript(open(o
 
 ## ⚖️ 9. Conclusión y Valor Diferencial
 
-El **Legado Digital Familiar** no es una simple aplicación; es un **sistema de custodia patrimonial autónomo e inmortal**. Al sustentarse exclusivamente en los estándares web de W3C sin depender de aplicaciones móviles ni servidores externos, garantiza que ninguna actualización de sistema operativo, suscripción cancelada o empresa quebrada impida a tus familiares recuperar lo que les pertenece.
+El **Mi Legado** no es una simple aplicación; es un **sistema de custodia patrimonial autónomo e inmortal**. Al sustentarse exclusivamente en los estándares web de W3C sin depender de aplicaciones móviles ni servidores externos, garantiza que ninguna actualización de sistema operativo, suscripción cancelada o empresa quebrada impida a tus familiares recuperar lo que les pertenece.

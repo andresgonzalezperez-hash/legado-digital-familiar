@@ -1,7 +1,7 @@
 {
   "id": "/index.html",
-  "name": "Legado Digital Familiar",
-  "short_name": "Legado Digital",
+  "name": "Mi Legado",
+  "short_name": "Mi Legado",
   "description": "Bóveda local y protocolo de emergencia familiar 100% offline",
   "start_url": "index.html",
   "scope": "./",
@@ -26,8 +26,8 @@
   ],
   "shortcuts": [
     {
-      "name": "Mapa Visual de Recuperación",
-      "short_name": "Mapa Emergencia",
+      "name": "Mi Legado",
+      "short_name": "Mi Legado",
       "description": "Abrir el diagrama interactivo paso a paso para familiares",
       "url": "mapa-recuperacion.html",
       "icons": [{ "src": "icon.png", "sizes": "192x192" }]

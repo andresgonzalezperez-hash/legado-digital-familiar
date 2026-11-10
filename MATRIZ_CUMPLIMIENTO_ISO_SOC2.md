@@ -1,5 +1,5 @@
 # 🏛️ Matriz Formal de Cumplimiento y Auditoría de Seguridad
-## Legado Digital Familiar — Arquitectura Soberana Offline-First (Pure HTML)
+## Mi Legado — Arquitectura Soberana Offline-First (Pure HTML)
 > **Estándares Evaluados**: ISO/IEC 27001:2022 · ISO/IEC 27701:2019 · AICPA SOC 2 Type II (Trust Services Criteria)  
 > **Ámbito de Aplicación**: Aplicación Web Estática Desconectada (Air-Gapped) y Bóveda Notarial Criptográfica  
 > **Estado de Cumplimiento**: 100% Auditado y Verificado Empíricamente  
@@ -8,7 +8,7 @@
 
 ## 1. Declaración de Aplicabilidad y Principio Rector
 
-A diferencia de los sistemas de software como servicio (SaaS) convencionales, **Legado Digital Familiar no procesa ni almacena información en servidores de terceros ni en la nube pública**. 
+A diferencia de los sistemas de software como servicio (SaaS) convencionales, **Mi Legado no procesa ni almacena información en servidores de terceros ni en la nube pública**. 
 Por diseño (*Security and Privacy by Architecture*):
 * **No existe Responsable de Tratamiento externo ni Encargado del Tratamiento**.
 * **No se producen transferencias internacionales de datos**.

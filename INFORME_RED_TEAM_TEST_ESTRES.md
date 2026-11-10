@@ -1,4 +1,4 @@
-# 💥 Informe de Estrés Adversarial: Auditoría "Red Team" de Legado Digital Familiar
+# 💥 Informe de Estrés Adversarial: Auditoría "Red Team" de Mi Legado
 > **Fecha de Ejecución**: 05 de Noviembre de 2026  
 > **Comité de Auditoría Simulado**: 4 Agentes Hostiles Especializados (Criptoanálisis, Factor Humano, Derecho Sucesorio y Producto)  
 > **Objetivo**: Estresar la arquitectura, identificar vulnerabilidades no contempladas y proponer mitigaciones definitivas.  
@@ -7,7 +7,7 @@
 
 ## 🎯 Resumen Ejecutivo del Comité
 
-El concepto de **Legado Digital Familiar (Air-Gapped / 100% Offline)** es brillante y superior a los gestores en la nube en soberanía, privacidad y coste (\$0/año). Sin embargo, al someterlo a fuego cruzado adversarial, surgen **4 vulnerabilidades críticas** que amenazan su éxito en el mundo real si no se mitigan:
+El concepto de **Mi Legado (Air-Gapped / 100% Offline)** es brillante y superior a los gestores en la nube en soberanía, privacidad y coste (\$0/año). Sin embargo, al someterlo a fuego cruzado adversarial, surgen **4 vulnerabilidades críticas** que amenazan su éxito en el mundo real si no se mitigan:
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐

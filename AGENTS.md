@@ -1,4 +1,4 @@
-# Ficha de Operaciones: Legado Digital Familiar
+# Ficha de Operaciones: Mi Legado
 
 ## Propósito y Arquitectura
 - **Propósito**: Bóveda offline-first para gestión segura del patrimonio digital, inventario de activos, protocolos de emergencia y generación de documento maestro notarial para herederos.
